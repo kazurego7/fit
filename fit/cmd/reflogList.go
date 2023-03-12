@@ -4,13 +4,13 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	"kazurego7/fit/fit/gitexec"
 
 	"github.com/spf13/cobra"
 )
 
-// cmdlogListCmd represents the cmdlogList command
-var cmdlogListCmd = &cobra.Command{
+// reflogListCmd represents the reflogList command
+var reflogListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -20,20 +20,21 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("cmdlogList called")
+		gitSubCmd := []string{"reflog"}
+		gitexec.Git(gitSubCmd...)
 	},
 }
 
 func init() {
-	cmdlogCmd.AddCommand(cmdlogListCmd)
+	reflogCmd.AddCommand(reflogListCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// cmdlogListCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// reflogListCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// cmdlogListCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// reflogListCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
