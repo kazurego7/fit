@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 			"--abbrev-commit",
 			"--decorate=no",
 			"--date=format: %Y-%m-%d %H:%I:%S",
-			"--format=format: %C(03)%>|(26)%h%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)  %n  %>|(15)%C(reset)  %C(bold 1)%d%C(reset)  %C(bold 0)%s%C(reset)",
+			"--format=format: %C(03)%>|(26)%h%C(reset)  %C(bold 1)%d%C(reset)  %C(bold 0)%s%C(reset)  %n  %>|(15)%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)",
 			"--all",
 		}
 		gitexec.Git(gitSubCmd...)
