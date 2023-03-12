@@ -4,7 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	"kazurego7/fit/fit/gitexec"
 
 	"github.com/spf13/cobra"
 )
@@ -20,7 +20,16 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("historyLog called")
+		gitSubCmd := []string{
+			"log",
+			"--graph",
+			"--abbrev-commit",
+			"--decorate=no",
+			"--date=format: %Y-%m-%d %H:%I:%S",
+			"--format=format: %C(03)%>|(26)%h%C(reset)  %C(bold 1)%d%C(reset)  %C(bold 0)%s%C(reset)  %n  %>|(15)%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)",
+			"--all",
+		}
+		gitexec.Git(gitSubCmd...)
 	},
 }
 
