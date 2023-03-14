@@ -9,9 +9,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// remoteAddCmd represents the remoteAdd command
-var remoteAddCmd = &cobra.Command{
-	Use:   "add",
+// remoteSetCmd represents the remoteSet command
+var remoteSetCmd = &cobra.Command{
+	Use:   "remoteSet",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -26,15 +26,15 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	remoteCmd.AddCommand(remoteAddCmd)
+	remoteCmd.AddCommand(remoteSetCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// remoteAddCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// remoteSetCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// remoteAddCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// remoteSetCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
