@@ -4,7 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/gitexec"
 
 	"github.com/spf13/cobra"
 )

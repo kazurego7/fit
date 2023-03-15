@@ -1,4 +1,4 @@
-module kazurego7/fit/fit
+module github.com/kazurego7/fit/fit
 
 go 1.20
 
