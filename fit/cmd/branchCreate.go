@@ -7,7 +7,6 @@ import (
 	"errors"
 
 	"github.com/kazurego7/fit/fit/gitexec"
-
 	"github.com/spf13/cobra"
 )
 

@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
-
 	"github.com/spf13/cobra"
 )
 
