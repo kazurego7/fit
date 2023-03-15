@@ -27,7 +27,7 @@ to quickly create a Cobra application.`,
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"reset", args[0]}
+		gitSubCmd := []string{"reset", "--hard", args[0]}
 		gitexec.Git(gitSubCmd...)
 	},
 }
