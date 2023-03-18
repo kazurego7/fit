@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
+	"github.com/kazurego7/fit/fit/cmd/config"
 	"github.com/spf13/cobra"
 )
 
@@ -27,4 +28,5 @@ func Execute() {
 
 func init() {
 	RootCmd.AddCommand(branch.BranchCmd)
+	RootCmd.AddCommand(config.ConfigCmd)
 }
