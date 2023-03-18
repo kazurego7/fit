@@ -1,13 +1,11 @@
-package cmd
+package stash
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
-var stashListCmd = &cobra.Command{
-	Use:   "list",
+var StashCmd = &cobra.Command{
+	Use:   "stash",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -15,12 +13,4 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("stashList called")
-	},
-}
-
-func init() {
-	stashCmd.AddCommand(stashListCmd)
-
 }

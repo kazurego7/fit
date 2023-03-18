@@ -10,6 +10,7 @@ import (
 	"github.com/kazurego7/fit/fit/cmd/reflog"
 	"github.com/kazurego7/fit/fit/cmd/remote"
 	"github.com/kazurego7/fit/fit/cmd/repository"
+	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/spf13/cobra"
 )
 
@@ -39,4 +40,5 @@ func init() {
 	RootCmd.AddCommand(reflog.ReflogCmd)
 	RootCmd.AddCommand(remote.RemoteCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
+	RootCmd.AddCommand(stash.StashCmd)
 }
