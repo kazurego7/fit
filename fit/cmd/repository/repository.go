@@ -1,10 +1,10 @@
-package cmd
+package repository
 
 import (
 	"github.com/spf13/cobra"
 )
 
-var repositoryCmd = &cobra.Command{
+var RepositoryCmd = &cobra.Command{
 	Use:   "repository",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -16,6 +16,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	RootCmd.AddCommand(repositoryCmd)
-
+	RepositoryCmd.AddCommand(InitCmd)
+	RepositoryCmd.AddCommand(CloneCmd)
 }
