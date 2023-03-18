@@ -1,11 +1,11 @@
-package cmd
+package index
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
-var indexStatusCmd = &cobra.Command{
+var StatusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -18,9 +18,4 @@ to quickly create a Cobra application.`,
 		gitSubCmd := []string{"status", "--short"}
 		gitexec.Git(gitSubCmd...)
 	},
-}
-
-func init() {
-	indexCmd.AddCommand(indexStatusCmd)
-
 }

@@ -1,11 +1,12 @@
-package cmd
+package index
 
 import (
+	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
-var indexCmd = &cobra.Command{
-	Use:   "index",
+var RestoreCmd = &cobra.Command{
+	Use:   "restore",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -13,9 +14,9 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-}
-
-func init() {
-	RootCmd.AddCommand(indexCmd)
-
+	Run: func(cmd *cobra.Command, args []string) {
+		gitSubCmd := []string{"restore", "--staged"}
+		allArgs := append(gitSubCmd, args...)
+		gitexec.Git(allArgs...)
+	},
 }
