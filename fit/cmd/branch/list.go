@@ -1,11 +1,11 @@
-package cmd
+package branch
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
-var branchListCmd = &cobra.Command{
+var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -18,9 +18,4 @@ to quickly create a Cobra application.`,
 		gitSubCmd := []string{"branch", "--list", "--verbose", "--verbose"}
 		gitexec.Git(gitSubCmd...)
 	},
-}
-
-func init() {
-	branchCmd.AddCommand(branchListCmd)
-
 }
