@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -9,7 +6,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// stashListCmd represents the stashList command
 var stashListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
@@ -27,13 +23,4 @@ to quickly create a Cobra application.`,
 func init() {
 	stashCmd.AddCommand(stashListCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// stashListCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// stashListCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
