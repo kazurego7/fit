@@ -1,11 +1,11 @@
-package cmd
+package history
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
-var historyGraphCmd = &cobra.Command{
+var GraphCmd = &cobra.Command{
 	Use:   "graph",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -26,9 +26,4 @@ to quickly create a Cobra application.`,
 		}
 		gitexec.Git(gitSubCmd...)
 	},
-}
-
-func init() {
-	historyCmd.AddCommand(historyGraphCmd)
-
 }

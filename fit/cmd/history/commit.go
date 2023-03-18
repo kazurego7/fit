@@ -1,4 +1,4 @@
-package cmd
+package history
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var historyCommitCmd = &cobra.Command{
+var CommitCmd = &cobra.Command{
 	Use:   "commit",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -26,9 +26,4 @@ to quickly create a Cobra application.`,
 		gitSubCmd := []string{"commit", "-m", args[0]}
 		gitexec.Git(gitSubCmd...)
 	},
-}
-
-func init() {
-	historyCmd.AddCommand(historyCommitCmd)
-
 }

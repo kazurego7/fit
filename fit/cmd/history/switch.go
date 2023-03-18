@@ -1,11 +1,11 @@
-package cmd
+package history
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
-var historySwitchCmd = &cobra.Command{
+var SwitchCmd = &cobra.Command{
 	Use:   "switch",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -18,9 +18,4 @@ to quickly create a Cobra application.`,
 		gitSubCmd := []string{"switch", args[0]}
 		gitexec.Git(gitSubCmd...)
 	},
-}
-
-func init() {
-	historyCmd.AddCommand(historySwitchCmd)
-
 }
