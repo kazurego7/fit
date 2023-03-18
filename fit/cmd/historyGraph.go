@@ -8,9 +8,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// historyLogCmd represents the historyLog command
-var historyLogCmd = &cobra.Command{
-	Use:   "log",
+// historyGraphCmd represents the historyGraph command
+var historyGraphCmd = &cobra.Command{
+	Use:   "graph",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -33,15 +33,15 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	historyCmd.AddCommand(historyLogCmd)
+	historyCmd.AddCommand(historyGraphCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// historyLogCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// historyGraphCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// historyLogCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// historyGraphCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
