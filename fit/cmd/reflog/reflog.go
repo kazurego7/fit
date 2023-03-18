@@ -1,10 +1,10 @@
-package cmd
+package reflog
 
 import (
 	"github.com/spf13/cobra"
 )
 
-var reflogCmd = &cobra.Command{
+var ReflogCmd = &cobra.Command{
 	Use:   "reflog",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -16,6 +16,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	RootCmd.AddCommand(reflogCmd)
-
+	ReflogCmd.AddCommand(ListCmd)
+	ReflogCmd.AddCommand(ResetCmd)
 }
