@@ -1,13 +1,11 @@
-package cmd
+package tag
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
-var tagListCmd = &cobra.Command{
-	Use:   "list",
+var TagCmd = &cobra.Command{
+	Use:   "tag",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -15,12 +13,11 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("tagList called")
-	},
 }
 
 func init() {
-	tagCmd.AddCommand(tagListCmd)
-
+	TagCmd.AddCommand(CreateCmd)
+	TagCmd.AddCommand(DeleteCmd)
+	TagCmd.AddCommand(ListCmd)
+	TagCmd.AddCommand(MoveCmd)
 }

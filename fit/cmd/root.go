@@ -11,6 +11,7 @@ import (
 	"github.com/kazurego7/fit/fit/cmd/remote"
 	"github.com/kazurego7/fit/fit/cmd/repository"
 	"github.com/kazurego7/fit/fit/cmd/stash"
+	"github.com/kazurego7/fit/fit/cmd/tag"
 	"github.com/spf13/cobra"
 )
 
@@ -41,4 +42,5 @@ func init() {
 	RootCmd.AddCommand(remote.RemoteCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(stash.StashCmd)
+	RootCmd.AddCommand(tag.TagCmd)
 }
