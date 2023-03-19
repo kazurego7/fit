@@ -14,9 +14,13 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		targetScope := getTargetScope(flags)
-		gitSubCmd := []string{"config", targetScope, "--edit"}
+	RunE: func(cmd *cobra.Command, args []string) error {
+		flag, err := scopeFlag.toGitFlag()
+		if err != nil {
+			return err
+		}
+		gitSubCmd := []string{"config", flag, "--edit"}
 		gitexec.Git(gitSubCmd...)
+		return nil
 	},
 }

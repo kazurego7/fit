@@ -1,16 +1,10 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
-
-var flags Flags
-
-type Flags struct {
-	local  bool
-	global bool
-	system bool
-}
 
 var ConfigCmd = &cobra.Command{
 	Use:              "config",
@@ -29,23 +23,24 @@ func init() {
 	ConfigCmd.AddCommand(SetCmd)
 	ConfigCmd.AddCommand(UnsetCmd)
 	ConfigCmd.AddCommand(EditCmd)
-	ConfigCmd.PersistentFlags().BoolVar(&flags.local, "local", false, "local config")
-	ConfigCmd.PersistentFlags().BoolVar(&flags.global, "global", false, "blobal config")
-	ConfigCmd.PersistentFlags().BoolVar(&flags.system, "system", false, "system config")
-	ConfigCmd.MarkFlagsMutuallyExclusive("local", "global", "system")
+	ConfigCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "repository", "user" or "local"`)
 }
 
-func getTargetScope(flags Flags) string {
-	var targetScopeString string
-	switch flags {
-	case Flags{local: true, global: false, system: false}:
-		targetScopeString = "--local"
-	case Flags{local: false, global: true, system: false}:
-		targetScopeString = "--global"
-	case Flags{local: false, global: false, system: true}:
-		targetScopeString = "--system"
+var scopeFlag ScopeFlag
+
+type ScopeFlag struct {
+	arg string
+}
+
+func (scopeFlag ScopeFlag) toGitFlag() (string, error) {
+	switch scopeFlag.arg {
+	case "repository":
+		return "--local", nil
+	case "user":
+		return "--global", nil
+	case "system":
+		return "--system", nil
 	default:
-		targetScopeString = "--local"
+		return "", fmt.Errorf(`"%v" is invalid in "--scope" flag. use "repository", "user" or "system"`, scopeFlag.arg)
 	}
-	return targetScopeString
 }
