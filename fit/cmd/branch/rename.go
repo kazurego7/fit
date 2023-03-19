@@ -1,8 +1,7 @@
 package branch
 
 import (
-	"fmt"
-
+	"github.com/kazurego7/fit/fit/gitexec"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +15,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("branchRename called")
+		gitSubCmd := []string{"branch", "--move", args[0]}
+		gitexec.Git(gitSubCmd...)
 	},
 }
