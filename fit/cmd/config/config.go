@@ -28,6 +28,7 @@ func init() {
 	ConfigCmd.AddCommand(ListCmd)
 	ConfigCmd.AddCommand(SetCmd)
 	ConfigCmd.AddCommand(UnsetCmd)
+	ConfigCmd.AddCommand(EditCmd)
 	ConfigCmd.PersistentFlags().BoolVar(&flags.local, "local", false, "local config")
 	ConfigCmd.PersistentFlags().BoolVar(&flags.global, "global", false, "blobal config")
 	ConfigCmd.PersistentFlags().BoolVar(&flags.system, "system", false, "system config")
