@@ -21,5 +21,4 @@ func init() {
 	IndexCmd.AddCommand(RestoreCmd)
 	IndexCmd.AddCommand(SaveCmd)
 	IndexCmd.AddCommand(ListCmd)
-	IndexCmd.AddCommand(UnmanageCmd)
 }
