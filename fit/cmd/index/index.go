@@ -20,6 +20,6 @@ func init() {
 	IndexCmd.AddCommand(LoadCmd)
 	IndexCmd.AddCommand(RestoreCmd)
 	IndexCmd.AddCommand(SaveCmd)
-	IndexCmd.AddCommand(StatusCmd)
+	IndexCmd.AddCommand(ListCmd)
 	IndexCmd.AddCommand(UnmanageCmd)
 }
