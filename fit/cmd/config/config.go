@@ -23,7 +23,7 @@ func init() {
 	ConfigCmd.AddCommand(SetCmd)
 	ConfigCmd.AddCommand(UnsetCmd)
 	ConfigCmd.AddCommand(EditCmd)
-	ConfigCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "repository", "user" or "local"`)
+	ConfigCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "local", "user" or "system"`)
 }
 
 var scopeFlag ScopeFlag
@@ -34,13 +34,13 @@ type ScopeFlag struct {
 
 func (scopeFlag ScopeFlag) toGitFlag() (string, error) {
 	switch scopeFlag.arg {
-	case "repository":
+	case "local":
 		return "--local", nil
 	case "user":
 		return "--global", nil
 	case "system":
 		return "--system", nil
 	default:
-		return "", fmt.Errorf(`"%v" is invalid in "--scope" flag. use "repository", "user" or "system"`, scopeFlag.arg)
+		return "", fmt.Errorf(`"%v" is invalid in "--scope" flag. use "local", "user" or "system"`, scopeFlag.arg)
 	}
 }
