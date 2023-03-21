@@ -14,3 +14,11 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 }
+
+func init() {
+	StashCmd.AddCommand(ApplyCmd)
+	StashCmd.AddCommand(DropCmd)
+	StashCmd.AddCommand(ListCmd)
+	StashCmd.AddCommand(PushCmd)
+	StashCmd.AddCommand(ShowCmd)
+}
