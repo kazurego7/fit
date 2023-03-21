@@ -18,7 +18,7 @@ func ExecuteGit(args ...string) {
 
 func ExecuteGitOutput(args ...string) ([]byte, error) {
 	cmd := exec.Command("git", args...)
-	return cmd.CombinedOutput()
+	return cmd.Output()
 }
 
 func PrintGitCommand(args ...string) {
