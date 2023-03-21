@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +20,8 @@ to quickly create a Cobra application.`,
 			return err
 		}
 		gitSubCmd := []string{"config", flag, "--unset", args[0]}
-		gitexec.Git(gitSubCmd...)
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(gitSubCmd...)
 		return nil
 	},
 }

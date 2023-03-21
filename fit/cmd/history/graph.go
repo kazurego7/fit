@@ -1,7 +1,7 @@
 package history
 
 import (
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +24,7 @@ to quickly create a Cobra application.`,
 			"--format=format: %C(03)%>|(26)%h%C(reset)   %C(bold 1)%d%C(reset) %C(bold 0)%s%C(reset) %>|(140)%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)",
 			"--all",
 		}
-		gitexec.Git(gitSubCmd...)
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(gitSubCmd...)
 	},
 }

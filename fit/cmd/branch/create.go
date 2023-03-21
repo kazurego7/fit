@@ -3,7 +3,7 @@ package branch
 import (
 	"errors"
 
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +23,8 @@ to quickly create a Cobra application.`,
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		gitexec.Git("branch", args[0])
+		gitSubCmd := []string{"branch", args[0]}
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(gitSubCmd...)
 	},
 }

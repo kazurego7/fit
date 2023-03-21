@@ -1,7 +1,7 @@
 package stash
 
 import (
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +16,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"stash", "apply", "--index"}
-		gitexec.Git(gitSubCmd...)
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(gitSubCmd...)
 	},
 }

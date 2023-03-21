@@ -3,7 +3,7 @@ package reflog
 import (
 	"errors"
 
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +24,7 @@ to quickly create a Cobra application.`,
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--hard", args[0]}
-		gitexec.Git(gitSubCmd...)
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(gitSubCmd...)
 	},
 }

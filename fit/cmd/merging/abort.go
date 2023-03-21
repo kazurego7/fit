@@ -1,7 +1,7 @@
 package merging
 
 import (
-	"github.com/kazurego7/fit/fit/gitexec"
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -17,6 +17,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", "--abort"}
 		allArgs := append(gitSubCmd, args...)
-		gitexec.Git(allArgs...)
+		fitio.PrintGitCommand(gitSubCmd...)
+		fitio.ExecuteGit(allArgs...)
 	},
 }
