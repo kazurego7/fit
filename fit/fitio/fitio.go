@@ -16,6 +16,11 @@ func ExecuteGit(args ...string) {
 	defer cmd.Wait()
 }
 
+func ExecuteGitOutput(args ...string) ([]byte, error) {
+	cmd := exec.Command("git", args...)
+	return cmd.CombinedOutput()
+}
+
 func PrintGitCommand(args ...string) {
 	execMessage := fmt.Sprintf("execute command: git %v \n", strings.Join(args, " "))
 	fmt.Fprint(os.Stdout, execMessage)
