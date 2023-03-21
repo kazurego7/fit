@@ -1,4 +1,4 @@
-package index
+package file
 
 import (
 	"github.com/kazurego7/fit/fit/gitexec"
@@ -15,8 +15,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"restore", "--staged"}
-		allArgs := append(gitSubCmd, args...)
-		gitexec.Git(allArgs...)
+		gitSubCmd := append([]string{"restore"}, args...)
+		gitexec.Git(gitSubCmd...)
 	},
 }

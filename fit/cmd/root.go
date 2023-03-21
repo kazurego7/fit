@@ -5,8 +5,8 @@ import (
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
 	"github.com/kazurego7/fit/fit/cmd/config"
+	"github.com/kazurego7/fit/fit/cmd/file"
 	"github.com/kazurego7/fit/fit/cmd/history"
-	"github.com/kazurego7/fit/fit/cmd/index"
 	"github.com/kazurego7/fit/fit/cmd/merging"
 	"github.com/kazurego7/fit/fit/cmd/reflog"
 	"github.com/kazurego7/fit/fit/cmd/remote"
@@ -38,7 +38,7 @@ func init() {
 	RootCmd.AddCommand(branch.BranchCmd)
 	RootCmd.AddCommand(config.ConfigCmd)
 	RootCmd.AddCommand(history.HistoryCmd)
-	RootCmd.AddCommand(index.IndexCmd)
+	RootCmd.AddCommand(file.FileCmd)
 	RootCmd.AddCommand(merging.MergingCmd)
 	RootCmd.AddCommand(reflog.ReflogCmd)
 	RootCmd.AddCommand(remote.RemoteCmd)
