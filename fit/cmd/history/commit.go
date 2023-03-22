@@ -1,8 +1,6 @@
 package history
 
 import (
-	"errors"
-
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
@@ -16,15 +14,16 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) != 1 {
-			return errors.New("args error")
-		}
-		return nil
-	},
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"commit", "-m", args[0]}
+		gitSubCmd := []string{"commit", "--message", commitMessage}
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
 	},
+}
+
+var commitMessage string
+
+func init() {
+	CommitCmd.Flags().StringVarP(&commitMessage, "message", "m", "", "commit message")
+	CommitCmd.MarkFlagRequired("message")
 }
