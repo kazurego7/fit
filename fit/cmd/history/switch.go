@@ -22,17 +22,12 @@ to quickly create a Cobra application.`,
 		fitio.ExecuteGit(gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		// FIXME: 引数が0この時、ブランチ名でなくファイル名が補完されてしまう
-		if len(toComplete) == 0 {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-
 		gitSubCmd := []string{"for-each-ref", `--format="%(refname:short)"`, "refs/remotes", "refs/heads"}
 		out, err := fitio.ExecuteGitOutput(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		expect := strings.Split(strings.ReplaceAll(string(out), `"`, ""), "\n")
+		expect := strings.Split(strings.Trim(strings.ReplaceAll(string(out), `"`, ""), "\n"), "\n")
 		return expect, cobra.ShellCompDirectiveNoFileComp
 	},
 }
