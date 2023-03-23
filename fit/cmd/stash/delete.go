@@ -5,8 +5,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var DropCmd = &cobra.Command{
-	Use:   "drop",
+var DeleteCmd = &cobra.Command{
+	Use:   "delete",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
