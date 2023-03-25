@@ -1,4 +1,4 @@
-package branch
+package history
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
@@ -15,13 +15,21 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// すでに upstream が設定されている場合は、upstream を設定しない
+
 		var gitSubCmd []string
-		if !existsUpstreamBranch(pushFlags.branch) {
-			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
+		if pushFlags.tag != "" {
+			// タグ名が設定されていた場合
+			gitSubCmd = []string{"push", "origin", "--tags", pushFlags.tag, "--prune"}
 		} else {
-			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
+			// ブランチ名が設定されていた場合
+			if !existsUpstreamBranch(pushFlags.branch) {
+				// すでに upstream が設定されている場合は、upstream を設定しない
+				gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
+			} else {
+				gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
+			}
 		}
+
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
 	},
@@ -29,10 +37,13 @@ to quickly create a Cobra application.`,
 
 var pushFlags struct {
 	branch string
+	tag    string
 }
 
 func init() {
 	PushCmd.Flags().StringVarP(&pushFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
+	PushCmd.Flags().StringVarP(&pushFlags.tag, "tag", "t", "", "choose tag name")
+	PushCmd.MarkFlagsMutuallyExclusive("branch", "tag")
 }
 
 func existsUpstreamBranch(branchName string) bool {

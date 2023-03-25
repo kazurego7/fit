@@ -19,5 +19,4 @@ func init() {
 	TagCmd.AddCommand(CreateCmd)
 	TagCmd.AddCommand(DeleteCmd)
 	TagCmd.AddCommand(ListCmd)
-	TagCmd.AddCommand(PushCmd)
 }

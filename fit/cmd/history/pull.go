@@ -1,4 +1,4 @@
-package branch
+package history
 
 import (
 	"strings"
@@ -20,7 +20,7 @@ to quickly create a Cobra application.`,
 		currentBranch := getBranchName("HEAD")
 		flagBranch := getBranchName(pullFlags.branch)
 
-		// フラグ指定のブランチが HEAD の場合は pull, それ以外の場合は fetch
+		// pull したいブランチにチェックアウトしているか、そうでないかで処理を分岐
 		var gitSubCmd []string
 		if currentBranch == flagBranch {
 			gitSubCmd = []string{"pull", "origin", currentBranch, "--prune"}

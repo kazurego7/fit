@@ -21,7 +21,5 @@ func init() {
 	BranchCmd.AddCommand(ListCmd)
 	BranchCmd.AddCommand(LogCmd)
 	BranchCmd.AddCommand(MoveCmd)
-	BranchCmd.AddCommand(PullCmd)
-	BranchCmd.AddCommand(PushCmd)
 	BranchCmd.AddCommand(RenameCmd)
 }
