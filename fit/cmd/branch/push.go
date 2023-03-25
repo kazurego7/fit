@@ -1,4 +1,4 @@
-package remote
+package branch
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
@@ -17,20 +17,22 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// すでに upstream が設定されている場合は、upstream を設定しない
 		var gitSubCmd []string
-		if !existsUpstreamBranch(refspecFlag) {
-			gitSubCmd = []string{"push", "origin", refspecFlag, "--prune", "--set-upstream"}
+		if !existsUpstreamBranch(pushFlags.branch) {
+			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
 		} else {
-			gitSubCmd = []string{"push", "origin", refspecFlag, "--prune"}
+			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
 		}
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
 	},
 }
 
-var refspecFlag string
+var pushFlags struct {
+	branch string
+}
 
 func init() {
-	PushCmd.PersistentFlags().StringVar(&refspecFlag, "refspec", "HEAD", `refspec`)
+	PushCmd.Flags().StringVarP(&pushFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
 }
 
 func existsUpstreamBranch(branchName string) bool {
