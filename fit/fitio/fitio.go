@@ -23,5 +23,5 @@ func ExecuteGitOutput(args ...string) ([]byte, error) {
 
 func PrintGitCommand(args ...string) {
 	execMessage := fmt.Sprintf("execute command: git %v \n", strings.Join(args, " "))
-	fmt.Fprint(os.Stdout, execMessage)
+	fmt.Fprint(os.Stderr, execMessage)
 }
