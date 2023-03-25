@@ -22,7 +22,7 @@ to quickly create a Cobra application.`,
 		fitio.ExecuteGit(gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		gitSubCmd := []string{"ls-files", `-m`, "-o"}
+		gitSubCmd := []string{"ls-files", `--modified`, "--others"}
 		out, err := fitio.ExecuteGitOutput(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
