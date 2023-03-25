@@ -5,11 +5,11 @@ import (
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
 	"github.com/kazurego7/fit/fit/cmd/config"
-	"github.com/kazurego7/fit/fit/cmd/file"
 	"github.com/kazurego7/fit/fit/cmd/history"
 	"github.com/kazurego7/fit/fit/cmd/merging"
 	"github.com/kazurego7/fit/fit/cmd/remote"
 	"github.com/kazurego7/fit/fit/cmd/repository"
+	"github.com/kazurego7/fit/fit/cmd/snap"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
 	"github.com/spf13/cobra"
@@ -37,7 +37,7 @@ func init() {
 	RootCmd.AddCommand(branch.BranchCmd)
 	RootCmd.AddCommand(config.ConfigCmd)
 	RootCmd.AddCommand(history.HistoryCmd)
-	RootCmd.AddCommand(file.FileCmd)
+	RootCmd.AddCommand(snap.SnapCmd)
 	RootCmd.AddCommand(merging.MergingCmd)
 	RootCmd.AddCommand(remote.RemoteCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)

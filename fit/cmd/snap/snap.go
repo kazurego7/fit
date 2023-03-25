@@ -1,11 +1,11 @@
-package file
+package snap
 
 import (
 	"github.com/spf13/cobra"
 )
 
-var FileCmd = &cobra.Command{
-	Use:   "file",
+var SnapCmd = &cobra.Command{
+	Use:   "snap",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -16,9 +16,9 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	FileCmd.AddCommand(DiffCmd)
-	FileCmd.AddCommand(UnstageCmd)
-	FileCmd.AddCommand(StageCmd)
-	FileCmd.AddCommand(RestoreCmd)
-	FileCmd.AddCommand(ListCmd)
+	SnapCmd.AddCommand(DiffCmd)
+	SnapCmd.AddCommand(UnstageCmd)
+	SnapCmd.AddCommand(StageCmd)
+	SnapCmd.AddCommand(RestoreCmd)
+	SnapCmd.AddCommand(ListCmd)
 }
