@@ -18,7 +18,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var gitSubCmd []string
-		switch storeFlags.kind {
+		switch storeFlags.target {
 		case "all":
 			gitSubCmd = []string{"stash", "push", "--include-untracked"}
 		case "index":
@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 		case "worktree":
 			gitSubCmd = []string{"stash", "push", "--include-untracked", "--keep-index"}
 		default:
-			return errors.New("invalid kind of stash files")
+			return errors.New("invalid target of stash files")
 		}
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
@@ -35,9 +35,9 @@ to quickly create a Cobra application.`,
 }
 
 var storeFlags struct {
-	kind string
+	target string
 }
 
 func init() {
-	StoreCmd.Flags().StringVarP(&storeFlags.kind, "kind", "k", "all", `select kind of stash files from "index", "worktree", "all"`)
+	StoreCmd.Flags().StringVarP(&storeFlags.target, "target", "t", "all", `select target of stash files from "index", "worktree", "all"`)
 }
