@@ -1,12 +1,12 @@
-package merging
+package junction
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
-var CaptureCmd = &cobra.Command{
-	Use:   "capture",
+var MergeCmd = &cobra.Command{
+	Use:   "merge",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
