@@ -1,6 +1,8 @@
 package snap
 
 import (
+	"strings"
+
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
@@ -18,5 +20,14 @@ to quickly create a Cobra application.`,
 		gitSubCmd := append([]string{"restore", "--staged"}, args...)
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
+	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		gitSubCmd := []string{"diff", "--cached", "--name-only"}
+		out, err := fitio.ExecuteGitOutput(gitSubCmd...)
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		expect := strings.Split(strings.Trim(strings.ReplaceAll(string(out), `"`, ""), "\n"), "\n")
+		return expect, cobra.ShellCompDirectiveNoFileComp
 	},
 }
