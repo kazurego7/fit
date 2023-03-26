@@ -16,9 +16,11 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	StashCmd.AddCommand(RestoreCmd)
+
 	StashCmd.AddCommand(DeleteCmd)
 	StashCmd.AddCommand(ListCmd)
-	StashCmd.AddCommand(StoreCmd)
+	StashCmd.AddCommand(RestoreCmd)
+	StashCmd.AddCommand(SaveCmd)
 	StashCmd.AddCommand(ShowCmd)
+	StashCmd.AddCommand(StoreCmd)
 }
