@@ -1,4 +1,4 @@
-package snap
+package index
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"

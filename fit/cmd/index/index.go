@@ -1,12 +1,11 @@
-package snap
+package index
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
-var RestoreCmd = &cobra.Command{
-	Use:   "restore",
+var IndexCmd = &cobra.Command{
+	Use:   "index",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -14,9 +13,12 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := append([]string{"restore"}, args...)
-		fitio.PrintGitCommand(gitSubCmd...)
-		fitio.ExecuteGit(gitSubCmd...)
-	},
+}
+
+func init() {
+	IndexCmd.AddCommand(DiffCmd)
+	IndexCmd.AddCommand(UnstageCmd)
+	IndexCmd.AddCommand(StageCmd)
+	IndexCmd.AddCommand(RestoreCmd)
+	IndexCmd.AddCommand(ListCmd)
 }

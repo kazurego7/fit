@@ -1,4 +1,4 @@
-package snap
+package index
 
 import (
 	"strings"
@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var UnstageCmd = &cobra.Command{
-	Use:   "unstage",
+var StageCmd = &cobra.Command{
+	Use:   "stage",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -17,12 +17,12 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := append([]string{"restore", "--staged"}, args...)
+		gitSubCmd := append([]string{"add"}, args...)
 		fitio.PrintGitCommand(gitSubCmd...)
 		fitio.ExecuteGit(gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		gitSubCmd := []string{"diff", "--cached", "--name-only"}
+		gitSubCmd := []string{"ls-files", `--modified`, "--others"}
 		out, err := fitio.ExecuteGitOutput(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
