@@ -16,7 +16,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		exitCode := updateRef(args[0], args[1])
+		exitCode := moveBranch(args[0], args[1])
 		if exitCode != 0 {
 			return
 		}
@@ -24,8 +24,8 @@ to quickly create a Cobra application.`,
 	},
 }
 
-func updateRef(branch string, revision string) int {
-	gitSubCmd := []string{"update-ref", "-m", "reset: Reset " + branch + " to " + revision, "refs/heads/" + branch, revision}
+func moveBranch(branch string, revision string) int {
+	gitSubCmd := []string{"branch", "--force", branch, revision}
 	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	exitCode := fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
