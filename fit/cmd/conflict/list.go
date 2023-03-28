@@ -2,6 +2,7 @@ package conflict
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +18,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"diff", "--name-only", "--diff-filter=U"}
 		allArgs := append(gitSubCmd, args...)
-		fitio.PrintGitCommand(gitSubCmd...)
-		fitio.ExecuteGit(allArgs...)
+		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		fitio.ExecuteGit(global.Flags.Dryrun, allArgs...)
 	},
 }

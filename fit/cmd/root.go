@@ -12,6 +12,7 @@ import (
 	"github.com/kazurego7/fit/fit/cmd/repository"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -43,4 +44,6 @@ func init() {
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
+
+	RootCmd.PersistentFlags().BoolVarP(&global.Flags.Dryrun, "dry-run", "n", false, "don't actually run git command")
 }

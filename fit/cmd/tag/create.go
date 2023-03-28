@@ -2,6 +2,7 @@ package tag
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +17,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"tag", args[0]}
-		fitio.PrintGitCommand(gitSubCmd...)
-		fitio.ExecuteGit(gitSubCmd...)
+		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
 	},
 }

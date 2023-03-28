@@ -2,6 +2,7 @@ package branch
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -17,13 +18,13 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		{
 			gitSubCmd := []string{"update-ref", "-m", "reset: Reset " + args[0] + " to " + args[1], "refs/heads/" + args[0], args[1]}
-			fitio.PrintGitCommand(gitSubCmd...)
-			fitio.ExecuteGit(gitSubCmd...)
+			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+			fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
 		}
 		{
 			gitSubCmd := []string{"branch", "--unset-upstream", args[0]}
-			fitio.PrintGitCommand(gitSubCmd...)
-			fitio.ExecuteGit(gitSubCmd...)
+			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+			fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
 		}
 	},
 }

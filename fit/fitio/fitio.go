@@ -7,7 +7,10 @@ import (
 	"strings"
 )
 
-func ExecuteGit(args ...string) {
+func ExecuteGit(dryrun bool, args ...string) {
+	if dryrun {
+		return
+	}
 	cmd := exec.Command("git", args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -21,7 +24,11 @@ func ExecuteGitOutput(args ...string) ([]byte, error) {
 	return cmd.Output()
 }
 
-func PrintGitCommand(args ...string) {
-	execMessage := fmt.Sprintf("execute command: git %v \n", strings.Join(args, " "))
-	fmt.Fprint(os.Stderr, execMessage)
+func PrintGitCommand(dryrun bool, args ...string) {
+	cmd := "git " + strings.Join(args, " ")
+	if dryrun {
+		fmt.Fprint(os.Stderr, "dry-run: "+cmd)
+	} else {
+		fmt.Fprint(os.Stderr, "command: "+cmd)
+	}
 }

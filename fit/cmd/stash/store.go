@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -28,8 +29,8 @@ to quickly create a Cobra application.`,
 		default:
 			return errors.New("invalid target of stash files")
 		}
-		fitio.PrintGitCommand(gitSubCmd...)
-		fitio.ExecuteGit(gitSubCmd...)
+		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
 		return nil
 	},
 }

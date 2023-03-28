@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ to quickly create a Cobra application.`,
 		} else {
 			gitSubCmd := []string{"add", args[0]}
 			allArgs := append(gitSubCmd, args...)
-			fitio.PrintGitCommand(gitSubCmd...)
-			fitio.ExecuteGit(allArgs...)
+			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+			fitio.ExecuteGit(global.Flags.Dryrun, allArgs...)
 			return
 		}
 
