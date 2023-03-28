@@ -19,12 +19,12 @@ to quickly create a Cobra application.`,
 		{
 			gitSubCmd := []string{"stash", "push", "--include-untracked"}
 			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+			fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 		}
 		{
 			gitSubCmd := []string{"stash", "apply", "--index"}
 			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+			fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 		}
 
 	},

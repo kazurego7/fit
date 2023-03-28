@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func CommandGit(dryrun bool, args ...string) int {
+func GitCommand(dryrun bool, args ...string) int {
 	if dryrun {
 		return 0
 	}
@@ -19,7 +19,7 @@ func CommandGit(dryrun bool, args ...string) int {
 	return cmd.ProcessState.ExitCode()
 }
 
-func QueryGit(args ...string) ([]byte, error) {
+func GitQuery(args ...string) ([]byte, error) {
 	cmd := exec.Command("git", args...)
 	return cmd.Output()
 }

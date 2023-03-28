@@ -30,7 +30,7 @@ to quickly create a Cobra application.`,
 			return errors.New("invalid target of stash files")
 		}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 		return nil
 	},
 }

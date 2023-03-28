@@ -27,13 +27,13 @@ to quickly create a Cobra application.`,
 func moveBranch(branch string, revision string) int {
 	gitSubCmd := []string{"branch", "--force", branch, revision}
 	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }
 
 func unsetUpstream(branch string) int {
 	gitSubCmd := []string{"branch", "--unset-upstream", branch}
 	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }

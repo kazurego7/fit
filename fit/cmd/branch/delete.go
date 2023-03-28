@@ -18,6 +18,6 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--delete", "--force", args[0]}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
