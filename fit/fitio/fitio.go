@@ -7,9 +7,9 @@ import (
 	"strings"
 )
 
-func CommandGit(dryrun bool, args ...string) {
+func CommandGit(dryrun bool, args ...string) int {
 	if dryrun {
-		return
+		return 0
 	}
 	cmd := exec.Command("git", args...)
 	cmd.Stdin = os.Stdin
@@ -17,6 +17,7 @@ func CommandGit(dryrun bool, args ...string) {
 	cmd.Stderr = os.Stderr
 	cmd.Start()
 	defer cmd.Wait()
+	return cmd.ProcessState.ExitCode()
 }
 
 func QueryGit(args ...string) ([]byte, error) {
@@ -27,8 +28,8 @@ func QueryGit(args ...string) ([]byte, error) {
 func PrintGitCommand(dryrun bool, args ...string) {
 	cmd := "git " + strings.Join(args, " ")
 	if dryrun {
-		fmt.Fprint(os.Stderr, "dry-run: "+cmd)
+		fmt.Fprintln(os.Stderr, "dry-run: "+cmd)
 	} else {
-		fmt.Fprint(os.Stderr, "command: "+cmd)
+		fmt.Fprintln(os.Stderr, "command: "+cmd)
 	}
 }
