@@ -16,16 +16,24 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		{
-			gitSubCmd := []string{"stash", "push", "--include-untracked"}
-			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		exitCode := stashPush()
+		if exitCode != 0 {
+			return
 		}
-		{
-			gitSubCmd := []string{"stash", "apply", "--index"}
-			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
-		}
-
+		stashApply()
 	},
+}
+
+func stashPush() int {
+	gitSubCmd := []string{"stash", "push", "--include-untracked"}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
+}
+
+func stashApply() int {
+	gitSubCmd := []string{"stash", "apply", "--index", "--quiet"}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
 }
