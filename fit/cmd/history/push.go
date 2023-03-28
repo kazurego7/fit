@@ -32,7 +32,7 @@ to quickly create a Cobra application.`,
 		}
 
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
 
@@ -49,6 +49,6 @@ func init() {
 
 func existsUpstreamBranch(branchName string) bool {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", " --symbolic-full-name", `"` + branchName + `@{u}"`}
-	_, err := fitio.ExecuteGitOutput(gitSubCmd...)
+	_, err := fitio.QueryGit(gitSubCmd...)
 	return err != nil
 }

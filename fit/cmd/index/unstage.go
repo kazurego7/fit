@@ -20,11 +20,11 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := append([]string{"restore", "--staged"}, args...)
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"diff", "--cached", "--name-only"}
-		out, err := fitio.ExecuteGitOutput(gitSubCmd...)
+		out, err := fitio.QueryGit(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

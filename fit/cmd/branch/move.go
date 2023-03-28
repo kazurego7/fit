@@ -19,12 +19,12 @@ to quickly create a Cobra application.`,
 		{
 			gitSubCmd := []string{"update-ref", "-m", "reset: Reset " + args[0] + " to " + args[1], "refs/heads/" + args[0], args[1]}
 			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 		}
 		{
 			gitSubCmd := []string{"branch", "--unset-upstream", args[0]}
 			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 		}
 	},
 }

@@ -29,7 +29,7 @@ to quickly create a Cobra application.`,
 			gitSubCmd = append(gitSubCmd, "--reflog")
 		}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
 

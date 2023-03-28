@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ExecuteGit(dryrun bool, args ...string) {
+func CommandGit(dryrun bool, args ...string) {
 	if dryrun {
 		return
 	}
@@ -19,7 +19,7 @@ func ExecuteGit(dryrun bool, args ...string) {
 	defer cmd.Wait()
 }
 
-func ExecuteGitOutput(args ...string) ([]byte, error) {
+func QueryGit(args ...string) ([]byte, error) {
 	cmd := exec.Command("git", args...)
 	return cmd.Output()
 }

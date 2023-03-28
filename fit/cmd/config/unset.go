@@ -22,7 +22,7 @@ to quickly create a Cobra application.`,
 		}
 		gitSubCmd := []string{"config", flag, "--unset", args[0]}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 		return nil
 	},
 }

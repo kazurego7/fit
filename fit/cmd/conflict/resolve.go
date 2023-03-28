@@ -20,7 +20,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		checkCmd := []string{"-c", "core.whitespace=-trailing-space,-space-before-tab,-indent-with-non-tab,-tab-in-indent,-cr-at-eol", "diff", "--check", args[0]}
-		out, _ := fitio.ExecuteGitOutput(checkCmd...)
+		out, _ := fitio.QueryGit(checkCmd...)
 		if string(out) != "" {
 			fmt.Fprintln(os.Stderr, "conflict markers remain")
 			return
@@ -28,7 +28,7 @@ to quickly create a Cobra application.`,
 			gitSubCmd := []string{"add", args[0]}
 			allArgs := append(gitSubCmd, args...)
 			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.ExecuteGit(global.Flags.Dryrun, allArgs...)
+			fitio.CommandGit(global.Flags.Dryrun, allArgs...)
 			return
 		}
 

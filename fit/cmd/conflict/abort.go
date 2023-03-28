@@ -19,6 +19,6 @@ to quickly create a Cobra application.`,
 		gitSubCmd := []string{"merge", "--abort"}
 		allArgs := append(gitSubCmd, args...)
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, allArgs...)
+		fitio.CommandGit(global.Flags.Dryrun, allArgs...)
 	},
 }

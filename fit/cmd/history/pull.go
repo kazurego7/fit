@@ -29,7 +29,7 @@ to quickly create a Cobra application.`,
 			gitSubCmd = []string{"fetch", "origin", flagBranch + ":" + flagBranch, "--prune"}
 		}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.ExecuteGit(global.Flags.Dryrun, gitSubCmd...)
+		fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
 
@@ -43,7 +43,7 @@ func init() {
 
 func getBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
-	out, _ := fitio.ExecuteGitOutput(gitSubCmd...)
+	out, _ := fitio.QueryGit(gitSubCmd...)
 	return strings.Trim(string(out), "\n")
 
 }
