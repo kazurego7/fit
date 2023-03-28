@@ -15,8 +15,7 @@ func CommandGit(dryrun bool, args ...string) int {
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	cmd.Start()
-	defer cmd.Wait()
+	cmd.Run()
 	return cmd.ProcessState.ExitCode()
 }
 
