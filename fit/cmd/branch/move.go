@@ -16,15 +16,24 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		{
-			gitSubCmd := []string{"update-ref", "-m", "reset: Reset " + args[0] + " to " + args[1], "refs/heads/" + args[0], args[1]}
-			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+		exitCode := updateRef(args[0], args[1])
+		if exitCode != 0 {
+			return
 		}
-		{
-			gitSubCmd := []string{"branch", "--unset-upstream", args[0]}
-			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
-		}
+		unsetUpstream(args[0])
 	},
+}
+
+func updateRef(branch string, revision string) int {
+	gitSubCmd := []string{"update-ref", "-m", "reset: Reset " + branch + " to " + revision, "refs/heads/" + branch, revision}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
+}
+
+func unsetUpstream(branch string) int {
+	gitSubCmd := []string{"branch", "--unset-upstream", branch}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.CommandGit(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
 }
