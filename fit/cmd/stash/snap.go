@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var SaveCmd = &cobra.Command{
-	Use:   "save",
+var SnapCmd = &cobra.Command{
+	Use:   "snap",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:

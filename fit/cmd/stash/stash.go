@@ -20,7 +20,7 @@ func init() {
 	StashCmd.AddCommand(DeleteCmd)
 	StashCmd.AddCommand(ListCmd)
 	StashCmd.AddCommand(RestoreCmd)
-	StashCmd.AddCommand(SaveCmd)
+	StashCmd.AddCommand(SnapCmd)
 	StashCmd.AddCommand(ShowCmd)
 	StashCmd.AddCommand(StoreCmd)
 }
