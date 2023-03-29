@@ -1,8 +1,6 @@
 package branch
 
 import (
-	"errors"
-
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
@@ -17,12 +15,7 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) != 1 {
-			return errors.New("args error")
-		}
-		return nil
-	},
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", args[0]}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
