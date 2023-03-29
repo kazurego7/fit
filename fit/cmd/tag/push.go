@@ -15,18 +15,10 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: cobra.NoArgs,
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"push", "origin", "--tags", pushFlags.tag, "--prune"}
+		gitSubCmd := []string{"push", "origin", "--tags", args[0], "--prune"}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
-}
-
-var pushFlags struct {
-	tag string
-}
-
-func init() {
-	PushCmd.Flags().StringVarP(&pushFlags.tag, "tag", "t", "", "choose tag name")
 }
