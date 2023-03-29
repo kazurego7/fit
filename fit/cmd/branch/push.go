@@ -1,4 +1,4 @@
-package history
+package branch
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
@@ -19,19 +19,12 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var gitSubCmd []string
-		if pushFlags.tag != "" {
-			// タグ名が設定されていた場合
-			gitSubCmd = []string{"push", "origin", "--tags", pushFlags.tag, "--prune"}
+		if !existsUpstreamBranch(pushFlags.branch) {
+			// すでに upstream が設定されている場合は、upstream を設定しない
+			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
 		} else {
-			// ブランチ名が設定されていた場合
-			if !existsUpstreamBranch(pushFlags.branch) {
-				// すでに upstream が設定されている場合は、upstream を設定しない
-				gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
-			} else {
-				gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
-			}
+			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
 		}
-
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
@@ -39,13 +32,10 @@ to quickly create a Cobra application.`,
 
 var pushFlags struct {
 	branch string
-	tag    string
 }
 
 func init() {
 	PushCmd.Flags().StringVarP(&pushFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
-	PushCmd.Flags().StringVarP(&pushFlags.tag, "tag", "t", "", "choose tag name")
-	PushCmd.MarkFlagsMutuallyExclusive("branch", "tag")
 }
 
 func existsUpstreamBranch(branchName string) bool {
