@@ -1,4 +1,4 @@
-package remote
+package history
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"

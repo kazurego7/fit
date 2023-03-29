@@ -16,7 +16,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	RemoteCmd.AddCommand(FetchCmd)
 	RemoteCmd.AddCommand(ListCmd)
 	RemoteCmd.AddCommand(SetCmd)
 	RemoteCmd.AddCommand(UnsetCmd)
