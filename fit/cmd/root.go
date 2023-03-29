@@ -8,7 +8,6 @@ import (
 	"github.com/kazurego7/fit/fit/cmd/conflict"
 	"github.com/kazurego7/fit/fit/cmd/history"
 	"github.com/kazurego7/fit/fit/cmd/index"
-	"github.com/kazurego7/fit/fit/cmd/remote"
 	"github.com/kazurego7/fit/fit/cmd/repository"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
@@ -40,7 +39,6 @@ func init() {
 	RootCmd.AddCommand(history.HistoryCmd)
 	RootCmd.AddCommand(index.IndexCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)
-	RootCmd.AddCommand(remote.RemoteCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)

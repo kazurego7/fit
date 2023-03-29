@@ -1,4 +1,4 @@
-package remote
+package repository
 
 import (
 	"github.com/kazurego7/fit/fit/fitio"
@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var UnsetCmd = &cobra.Command{
-	Use:   "unset",
+var ListCmd = &cobra.Command{
+	Use:   "list",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -17,7 +17,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"remote", "remove", "origin"}
+		gitSubCmd := []string{"remote", "--verbose"}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},

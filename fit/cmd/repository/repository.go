@@ -16,6 +16,9 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	RepositoryCmd.AddCommand(InitCmd)
+	RepositoryCmd.AddCommand(AsyncCmd)
 	RepositoryCmd.AddCommand(CloneCmd)
+	RepositoryCmd.AddCommand(InitCmd)
+	RepositoryCmd.AddCommand(ListCmd)
+	RepositoryCmd.AddCommand(UnsyncCmd)
 }
