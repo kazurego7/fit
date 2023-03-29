@@ -1,8 +1,8 @@
 package remote
 
 import (
-	"fmt"
-
+	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +15,10 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("remoteUnset called")
+		gitSubCmd := []string{"remote", "remove", "origin"}
+		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
