@@ -4,9 +4,9 @@ import (
 	"os"
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
+	"github.com/kazurego7/fit/fit/cmd/change"
 	"github.com/kazurego7/fit/fit/cmd/conflict"
 	"github.com/kazurego7/fit/fit/cmd/history"
-	"github.com/kazurego7/fit/fit/cmd/index"
 	"github.com/kazurego7/fit/fit/cmd/repository"
 	"github.com/kazurego7/fit/fit/cmd/setting"
 	"github.com/kazurego7/fit/fit/cmd/stash"
@@ -37,7 +37,7 @@ func init() {
 	RootCmd.AddCommand(branch.BranchCmd)
 	RootCmd.AddCommand(setting.SettingCmd)
 	RootCmd.AddCommand(history.HistoryCmd)
-	RootCmd.AddCommand(index.IndexCmd)
+	RootCmd.AddCommand(change.ChangeCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(stash.StashCmd)

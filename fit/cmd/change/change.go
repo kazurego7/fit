@@ -1,13 +1,11 @@
-package index
+package change
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
-	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
 )
 
-var ListCmd = &cobra.Command{
-	Use:   "list",
+var ChangeCmd = &cobra.Command{
+	Use:   "change",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -15,10 +13,12 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: cobra.NoArgs,
-	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"status", "--short"}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
-	},
+}
+
+func init() {
+	ChangeCmd.AddCommand(DiffCmd)
+	ChangeCmd.AddCommand(UnstageCmd)
+	ChangeCmd.AddCommand(StageCmd)
+	ChangeCmd.AddCommand(RestoreCmd)
+	ChangeCmd.AddCommand(ListCmd)
 }
