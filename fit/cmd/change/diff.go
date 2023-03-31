@@ -1,8 +1,6 @@
 package change
 
 import (
-	"strings"
-
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -39,7 +37,7 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		expect := strings.Split(strings.Trim(strings.ReplaceAll(string(out), `"`, ""), "\n"), "\n")
+		expect := util.SplitLn(string(out))
 		return expect, cobra.ShellCompDirectiveNoFileComp
 	},
 }
