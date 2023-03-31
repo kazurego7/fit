@@ -24,7 +24,6 @@ to quickly create a Cobra application.`,
 			"--decorate=no",
 			"--date=format: %Y-%m-%d %H:%I:%S",
 			"--format=format: %C(03)%>|(26)%h%C(reset)   %C(bold 1)%d%C(reset) %C(bold 0)%s%C(reset) %>|(140)%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)",
-			"--all",
 		}
 		if allFlag {
 			gitSubCmd = append(gitSubCmd, "--reflog")
