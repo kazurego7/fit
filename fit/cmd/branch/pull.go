@@ -41,9 +41,9 @@ func pullFor(branch string) int {
 	currentBranch := getBranchName("HEAD")
 	var gitSubCmd []string
 	if currentBranch == branch {
-		gitSubCmd = []string{"pull", "origin", currentBranch, "--prune"}
+		gitSubCmd = []string{"pull", "origin", currentBranch, "--ff-only", "--prune"}
 	} else {
-		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--prune"}
+		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--ff-only", "--prune"}
 	}
 	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
