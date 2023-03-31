@@ -24,7 +24,7 @@ func init() {
 	ChangeCmd.AddCommand(DiffCmd)
 	ChangeCmd.AddCommand(UnstageCmd)
 	ChangeCmd.AddCommand(StageCmd)
-	ChangeCmd.AddCommand(ClearCmd)
+	ChangeCmd.AddCommand(DeleteCmd)
 	ChangeCmd.AddCommand(ListCmd)
 }
 

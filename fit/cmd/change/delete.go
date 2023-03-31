@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ClearCmd = &cobra.Command{
-	Use:   "clear",
+var DeleteCmd = &cobra.Command{
+	Use:   "delete",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -62,5 +62,5 @@ var clearFlag struct {
 }
 
 func init() {
-	ClearCmd.Flags().StringVarP(&clearFlag.target, "target", "t", "all", `clear target from "worktree", "index" or "all"`)
+	DeleteCmd.Flags().StringVarP(&clearFlag.target, "target", "t", "all", `clear target from "worktree", "index" or "all"`)
 }
