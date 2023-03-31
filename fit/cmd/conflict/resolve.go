@@ -21,7 +21,7 @@ to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		checkCmd := []string{"-c", "core.whitespace=-trailing-space,-space-before-tab,-indent-with-non-tab,-tab-in-indent,-cr-at-eol", "diff", "--check", args[0]}
-		out, _ := fitio.GitQuery(checkCmd...)
+		out, _, _ := fitio.GitQuery(checkCmd...)
 		if string(out) != "" {
 			fmt.Fprintln(os.Stderr, "conflict markers remain")
 			return

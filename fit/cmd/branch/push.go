@@ -40,6 +40,6 @@ func init() {
 
 func existsUpstreamBranch(branchName string) bool {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", " --symbolic-full-name", `"` + branchName + `@{u}"`}
-	_, err := fitio.GitQuery(gitSubCmd...)
+	_, _, err := fitio.GitQuery(gitSubCmd...)
 	return err != nil
 }

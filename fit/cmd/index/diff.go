@@ -35,7 +35,7 @@ to quickly create a Cobra application.`,
 		} else {
 			gitSubCmd = []string{"diff", "--name-only", "--relative"}
 		}
-		out, err := fitio.GitQuery(gitSubCmd...)
+		out, _, err := fitio.GitQuery(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

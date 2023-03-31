@@ -19,9 +19,11 @@ func GitCommand(dryrun bool, args ...string) int {
 	return cmd.ProcessState.ExitCode()
 }
 
-func GitQuery(args ...string) ([]byte, error) {
+func GitQuery(args ...string) ([]byte, int, error) {
 	cmd := exec.Command("git", args...)
-	return cmd.Output()
+	out, err := cmd.Output()
+	exitCode := cmd.ProcessState.ExitCode()
+	return out, exitCode, err
 }
 
 func PrintGitCommand(dryrun bool, args ...string) {

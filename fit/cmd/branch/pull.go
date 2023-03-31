@@ -44,7 +44,7 @@ func init() {
 
 func getBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
-	out, _ := fitio.GitQuery(gitSubCmd...)
+	out, _, _ := fitio.GitQuery(gitSubCmd...)
 	return strings.Trim(string(out), "\n")
 
 }

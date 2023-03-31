@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"diff", "--cached", "--name-only"}
-		out, err := fitio.GitQuery(gitSubCmd...)
+		out, _, err := fitio.GitQuery(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
