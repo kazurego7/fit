@@ -17,18 +17,14 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		currentBranch := getBranchName("HEAD")
 		flagBranch := getBranchName(pullFlags.branch)
-
-		// pull したいブランチにチェックアウトしているか、そうでないかで処理を分岐
-		var gitSubCmd []string
-		if currentBranch == flagBranch {
-			gitSubCmd = []string{"pull", "origin", currentBranch, "--prune"}
-		} else {
-			gitSubCmd = []string{"fetch", "origin", flagBranch + ":" + flagBranch, "--prune"}
+		exitCode := pullFor(flagBranch)
+		if exitCode != 0 {
+			return
 		}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		if !existsUpstreamFor(flagBranch) {
+			setUpstreamTo(flagBranch)
+		}
 	},
 }
 
@@ -38,4 +34,25 @@ var pullFlags struct {
 
 func init() {
 	PullCmd.Flags().StringVarP(&pullFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
+}
+
+func pullFor(branch string) int {
+	// pull したいブランチにチェックアウトしているか、そうでないかで処理を分岐
+	currentBranch := getBranchName("HEAD")
+	var gitSubCmd []string
+	if currentBranch == branch {
+		gitSubCmd = []string{"pull", "origin", currentBranch, "--prune"}
+	} else {
+		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--prune"}
+	}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
+}
+
+func setUpstreamTo(branch string) int {
+	gitSubCmd := []string{"branch", branch, "--set-upstream-to=origin/" + branch}
+	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return exitCode
 }
