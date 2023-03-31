@@ -20,9 +20,11 @@ to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		switch clearFlag.target {
 		case "worktree":
+			confirmBackup()
 			restoreWorktree(args[0])
 			clean(args[0])
 		case "index":
+			confirmBackup()
 			indexList := searchIndexList("", args[0])
 			worktreeList := searchWorktreeList("", args[0])
 			indexOnlyList := util.Difference(indexList, worktreeList)
@@ -38,6 +40,7 @@ to quickly create a Cobra application.`,
 				clean(cleanList...)
 			}
 		case "all":
+			confirmBackup()
 			indexList := searchIndexList("", args[0])
 			if len(indexList) != 0 {
 				restoreIndex(indexList...)

@@ -17,16 +17,25 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		exitCode := stashPush()
-		if exitCode != 0 {
-			return
-		}
-		stashApply()
+		Snap("")
 	},
 }
 
-func stashPush() int {
-	gitSubCmd := []string{"stash", "push", "--include-untracked"}
+func Snap(stashMessage string) int {
+	exitCode := stashPush(stashMessage)
+	if exitCode != 0 {
+		return exitCode
+	}
+	return stashApply()
+}
+
+func stashPush(stashMessage string) int {
+	var gitSubCmd []string
+	if stashMessage == "" {
+		gitSubCmd = []string{"stash", "push", "--include-untracked"}
+	} else {
+		gitSubCmd = []string{"stash", "push", "--include-untracked", "--message", stashMessage}
+	}
 	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode

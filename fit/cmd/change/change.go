@@ -1,6 +1,9 @@
 package change
 
 import (
+	"fmt"
+
+	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -61,4 +64,12 @@ func clean(filenameList ...string) int {
 	gitSubCmd := append([]string{"clean", "--force", "--"}, filenameList...)
 	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+}
+
+func confirmBackup() {
+	fmt.Print("Includes overwrite operations on worktree and index. \nDo you want to create backups? [yes/no]: ")
+	answer := util.InputYesOrNo(false)
+	if answer {
+		stash.Snap("fit auto backup")
+	}
 }

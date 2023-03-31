@@ -17,7 +17,15 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := append([]string{"add"}, args...)
+		// index にも worktree にもあるファイルは上書き対象となる
+		indexList := searchIndexList("", args[0])
+		overwriteList := searchWorktreeList("", indexList...)
+
+		// index への上書きがある場合は、バックアップを促す
+		if len(overwriteList) != 0 {
+			confirmBackup()
+		}
+		gitSubCmd := []string{"add", args[0]}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},

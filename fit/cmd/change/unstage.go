@@ -18,13 +18,14 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var restoreList []string
+		// index にも worktree にもあるファイルは上書き対象となる
 		indexList := searchIndexList("", args[0])
-		if indexList[0] != "" {
-			restoreList = searchWorktreeList("", indexList...)
-		}
-		if restoreList[0] != "" {
-			exitCode := restoreWorktree(restoreList...)
+		overwriteList := searchWorktreeList("", indexList...)
+
+		// worktree への上書きがある場合は、バックアップを促す
+		if len(overwriteList) != 0 {
+			confirmBackup()
+			exitCode := restoreWorktree(overwriteList...)
 			if exitCode != 0 {
 				return errors.New("restore index failed")
 			}

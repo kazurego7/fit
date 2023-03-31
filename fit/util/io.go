@@ -35,8 +35,10 @@ func PrintGitCommand(dryrun bool, args ...string) {
 	}
 }
 
-func InputYesOrNo(confirmMessage string, cancelMessage string) bool {
-	fmt.Print(confirmMessage)
+func InputYesOrNo(allwaysYes bool) bool {
+	if allwaysYes {
+		return true
+	}
 	for {
 		var ans string
 		fmt.Scanf("%s\n", &ans)
@@ -44,10 +46,9 @@ func InputYesOrNo(confirmMessage string, cancelMessage string) bool {
 		case "Yes", "Y", "yes", "y":
 			return true
 		case "No", "N", "no", "n":
-			fmt.Println(cancelMessage)
 			return false
 		default:
-			fmt.Print(`put "yes" or "no". ` + confirmMessage)
+			fmt.Print(`put "yes" or "no" : `)
 			continue
 		}
 	}
