@@ -4,11 +4,11 @@ import (
 	"os"
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
-	"github.com/kazurego7/fit/fit/cmd/config"
 	"github.com/kazurego7/fit/fit/cmd/conflict"
 	"github.com/kazurego7/fit/fit/cmd/history"
 	"github.com/kazurego7/fit/fit/cmd/index"
 	"github.com/kazurego7/fit/fit/cmd/repository"
+	"github.com/kazurego7/fit/fit/cmd/setting"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
 	"github.com/kazurego7/fit/fit/global"
@@ -35,7 +35,7 @@ func Execute() {
 
 func init() {
 	RootCmd.AddCommand(branch.BranchCmd)
-	RootCmd.AddCommand(config.ConfigCmd)
+	RootCmd.AddCommand(setting.SettingCmd)
 	RootCmd.AddCommand(history.HistoryCmd)
 	RootCmd.AddCommand(index.IndexCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)

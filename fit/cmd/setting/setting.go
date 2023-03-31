@@ -1,4 +1,4 @@
-package config
+package setting
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ConfigCmd = &cobra.Command{
-	Use:              "config",
+var SettingCmd = &cobra.Command{
+	Use:              "setting",
 	TraverseChildren: true,
 	Short:            "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -19,11 +19,11 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	ConfigCmd.AddCommand(ListCmd)
-	ConfigCmd.AddCommand(SetCmd)
-	ConfigCmd.AddCommand(UnsetCmd)
-	ConfigCmd.AddCommand(EditCmd)
-	ConfigCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "local", "user" or "system"`)
+	SettingCmd.AddCommand(ListCmd)
+	SettingCmd.AddCommand(SetCmd)
+	SettingCmd.AddCommand(UnsetCmd)
+	SettingCmd.AddCommand(EditCmd)
+	SettingCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "local", "user" or "system"`)
 }
 
 var scopeFlag ScopeFlag
