@@ -17,11 +17,11 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		flag, err := scopeFlag.toGitFlag()
+		scope, err := scopeFlag.toGitFlag()
 		if err != nil {
 			return err
 		}
-		gitSubCmd := []string{"config", flag, "--edit"}
+		gitSubCmd := []string{"config", scope, "--edit"}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 		return nil
