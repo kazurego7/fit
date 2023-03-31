@@ -44,4 +44,7 @@ func init() {
 	RootCmd.AddCommand(tag.TagCmd)
 
 	RootCmd.PersistentFlags().BoolVarP(&global.Flags.Dryrun, "dry-run", "n", false, "don't actually run git command")
+
+	RootCmd.CompletionOptions.DisableDefaultCmd = true
+	RootCmd.SetHelpCommand(&cobra.Command{Hidden: true})
 }

@@ -19,6 +19,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
+	SettingCmd.AddCommand(CompletionCmd)
 	SettingCmd.AddCommand(ListCmd)
 	SettingCmd.AddCommand(SetCmd)
 	SettingCmd.AddCommand(UnsetCmd)
