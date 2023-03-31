@@ -1,8 +1,6 @@
 package branch
 
 import (
-	"fmt"
-
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
@@ -19,23 +17,12 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		var deleteConfirmMessage = `do you delete "` + args[0] + `" branch ? [yes/no] : `
 		if !deleteFlag.yes {
-			fmt.Print(deleteConfirmMessage)
-		Prompt:
-			for {
-				var ans string
-				fmt.Scanf("%s\n", &ans)
-				switch ans {
-				case "Yes", "Y", "yes", "y":
-					break Prompt
-				case "No", "N", "no", "n":
-					fmt.Println("cancel delete branch")
-					return
-				default:
-					fmt.Print(`put "yes" or "no". ` + deleteConfirmMessage)
-					continue
-				}
+			var confirmMessage = `do you delete "` + args[0] + `" branch ? [yes/no] : `
+			var cancelMessage = "cancel delete branch"
+			isYes := fitio.InputYesOrNo(confirmMessage, cancelMessage)
+			if !isYes {
+				return
 			}
 		}
 		gitSubCmd := []string{"branch", "--delete", "--force", args[0]}
