@@ -1,6 +1,8 @@
 package change
 
 import (
+	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +21,44 @@ func init() {
 	ChangeCmd.AddCommand(DiffCmd)
 	ChangeCmd.AddCommand(UnstageCmd)
 	ChangeCmd.AddCommand(StageCmd)
-	ChangeCmd.AddCommand(RestoreCmd)
+	ChangeCmd.AddCommand(ClearCmd)
 	ChangeCmd.AddCommand(ListCmd)
+}
+
+func searchIndexList(diffFilter string, filenameList ...string) []string {
+	if len(filenameList) == 0 {
+		return []string{}
+	}
+	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	out, _, _ := util.GitQuery(gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.SplitLn(string(out))
+}
+
+func searchWorktreeList(diffFilter string, filenameList ...string) []string {
+	if len(filenameList) == 0 {
+		return []string{}
+	}
+	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	out, _, _ := util.GitQuery(gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.SplitLn(string(out))
+}
+
+func restoreWorktree(filenameList ...string) int {
+	gitSubCmd := append([]string{"restore", "--"}, filenameList...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+}
+
+func restoreIndex(filenameList ...string) int {
+	gitSubCmd := append([]string{"restore", "--staged", "--"}, filenameList...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+}
+
+func clean(filenameList ...string) int {
+	gitSubCmd := append([]string{"clean", "--force", "--"}, filenameList...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 }
