@@ -17,7 +17,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"stash", "apply", args[0], "--index"}
+		gitSubCmd := []string{"stash", "apply", args[0]}
 		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
