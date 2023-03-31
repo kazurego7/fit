@@ -19,7 +19,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var gitSubCmd []string
-		if !existsUpstreamBranch(pushFlags.branch) {
+		if !existsUpstreamFor(pushFlags.branch) {
 			// すでに upstream が設定されている場合は、upstream を設定しない
 			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
 		} else {
@@ -36,10 +36,4 @@ var pushFlags struct {
 
 func init() {
 	PushCmd.Flags().StringVarP(&pushFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
-}
-
-func existsUpstreamBranch(branchName string) bool {
-	gitSubCmd := []string{"rev-parse", "--abbrev-ref", " --symbolic-full-name", `"` + branchName + `@{u}"`}
-	_, _, err := fitio.GitQuery(gitSubCmd...)
-	return err != nil
 }

@@ -1,6 +1,9 @@
 package branch
 
 import (
+	"strings"
+
+	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/spf13/cobra"
 )
 
@@ -22,4 +25,16 @@ func init() {
 	BranchCmd.AddCommand(PullCmd)
 	BranchCmd.AddCommand(PushCmd)
 	BranchCmd.AddCommand(RenameCmd)
+}
+
+func existsUpstreamFor(branchName string) bool {
+	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", branchName + `@{u}`}
+	_, exitCode, _ := fitio.GitQuery(gitSubCmd...)
+	return exitCode == 0
+}
+
+func getBranchName(refspec string) string {
+	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
+	out, _, _ := fitio.GitQuery(gitSubCmd...)
+	return strings.Trim(string(out), "\n")
 }

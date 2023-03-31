@@ -1,8 +1,6 @@
 package branch
 
 import (
-	"strings"
-
 	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/spf13/cobra"
@@ -40,11 +38,4 @@ var pullFlags struct {
 
 func init() {
 	PullCmd.Flags().StringVarP(&pullFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
-}
-
-func getBranchName(refspec string) string {
-	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
-	out, _, _ := fitio.GitQuery(gitSubCmd...)
-	return strings.Trim(string(out), "\n")
-
 }
