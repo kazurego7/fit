@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -21,14 +21,14 @@ to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		checkCmd := []string{"-c", "core.whitespace=-trailing-space,-space-before-tab,-indent-with-non-tab,-tab-in-indent,-cr-at-eol", "diff", "--check", args[0]}
-		out, _, _ := fitio.GitQuery(checkCmd...)
+		out, _, _ := util.GitQuery(checkCmd...)
 		if string(out) != "" {
 			fmt.Fprintln(os.Stderr, "conflict markers remain")
 			return
 		} else {
 			gitSubCmd := []string{"add", args[0]}
-			fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+			util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+			util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 			return
 		}
 

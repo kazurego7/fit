@@ -1,8 +1,8 @@
 package stash
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -27,14 +27,14 @@ to quickly create a Cobra application.`,
 
 func stashPush() int {
 	gitSubCmd := []string{"stash", "push", "--include-untracked"}
-	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }
 
 func stashApply() int {
 	gitSubCmd := []string{"stash", "apply", "--index", "--quiet"}
-	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }

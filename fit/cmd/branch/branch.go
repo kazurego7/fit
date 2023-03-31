@@ -3,7 +3,7 @@ package branch
 import (
 	"strings"
 
-	"github.com/kazurego7/fit/fit/fitio"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -29,12 +29,12 @@ func init() {
 
 func existsUpstreamFor(branchName string) bool {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", branchName + `@{u}`}
-	_, exitCode, _ := fitio.GitQuery(gitSubCmd...)
+	_, exitCode, _ := util.GitQuery(gitSubCmd...)
 	return exitCode == 0
 }
 
 func getBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
-	out, _, _ := fitio.GitQuery(gitSubCmd...)
+	out, _, _ := util.GitQuery(gitSubCmd...)
 	return strings.Trim(string(out), "\n")
 }

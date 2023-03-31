@@ -1,4 +1,4 @@
-package fitio
+package util
 
 import (
 	"fmt"

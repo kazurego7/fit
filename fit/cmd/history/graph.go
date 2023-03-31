@@ -1,8 +1,8 @@
 package history
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -29,8 +29,8 @@ to quickly create a Cobra application.`,
 		if allFlag {
 			gitSubCmd = append(gitSubCmd, "--reflog")
 		}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 }
 

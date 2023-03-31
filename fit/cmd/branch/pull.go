@@ -1,8 +1,8 @@
 package branch
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -45,14 +45,14 @@ func pullFor(branch string) int {
 	} else {
 		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--ff-only", "--prune"}
 	}
-	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }
 
 func setUpstreamTo(branch string) int {
 	gitSubCmd := []string{"branch", branch, "--set-upstream-to=origin/" + branch}
-	fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return exitCode
 }

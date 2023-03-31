@@ -1,8 +1,8 @@
 package history
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +19,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", args[0]}
 		allArgs := append(gitSubCmd, args...)
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, allArgs...)
+		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.Flags.Dryrun, allArgs...)
 	},
 }

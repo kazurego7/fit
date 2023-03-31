@@ -3,8 +3,8 @@ package history
 import (
 	"strings"
 
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -20,12 +20,12 @@ to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", args[0]}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"for-each-ref", `--format="%(refname:short)"`, "refs/remotes", "refs/heads"}
-		out, _, err := fitio.GitQuery(gitSubCmd...)
+		out, _, err := util.GitQuery(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

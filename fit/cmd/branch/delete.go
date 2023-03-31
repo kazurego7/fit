@@ -1,8 +1,8 @@
 package branch
 
 import (
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +18,7 @@ to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--delete", "--force", args[0]}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 }

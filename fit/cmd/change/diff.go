@@ -3,8 +3,8 @@ package change
 import (
 	"strings"
 
-	"github.com/kazurego7/fit/fit/fitio"
 	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -25,8 +25,8 @@ to quickly create a Cobra application.`,
 		} else {
 			gitSubCmd = []string{"diff", args[0]}
 		}
-		fitio.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		fitio.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		var gitSubCmd []string
@@ -35,7 +35,7 @@ to quickly create a Cobra application.`,
 		} else {
 			gitSubCmd = []string{"diff", "--name-only", "--relative"}
 		}
-		out, _, err := fitio.GitQuery(gitSubCmd...)
+		out, _, err := util.GitQuery(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
