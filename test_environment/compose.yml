@@ -1,0 +1,13 @@
+# テスト用のコンテナ
+name: fit
+services:
+  test-repo-build:
+    build:
+      context: build
+      target: test_repo_build_stage
+  test-run:
+    build:
+      context: ../
+      dockerfile: ./test_environment/build/Dockerfile
+      target: test_run_stage
+    
