@@ -24,24 +24,28 @@ func init() {
 	SettingCmd.AddCommand(SetCmd)
 	SettingCmd.AddCommand(UnsetCmd)
 	SettingCmd.AddCommand(EditCmd)
-	SettingCmd.PersistentFlags().StringVar(&scopeFlag.arg, "scope", "user", `config scope from "local", "user" or "system"`)
+	SettingCmd.PersistentFlags().BoolVar(&settingFlag.local, "local", false, "config scope local")
+	SettingCmd.PersistentFlags().BoolVar(&settingFlag.user, "user", true, "config scope user")
+	SettingCmd.PersistentFlags().BoolVar(&settingFlag.system, "system", false, "config scope system")
+	SettingCmd.MarkFlagsMutuallyExclusive("local", "user", "system")
 }
 
-var scopeFlag ScopeFlag
+var settingFlag SettingFlag
 
-type ScopeFlag struct {
-	arg string
+type SettingFlag struct {
+	local  bool
+	user   bool
+	system bool
 }
 
-func (scopeFlag ScopeFlag) toGitFlag() (string, error) {
-	switch scopeFlag.arg {
-	case "local":
-		return "--local", nil
-	case "user":
-		return "--global", nil
-	case "system":
-		return "--system", nil
+func getScopeFlag() string {
+	fmt.Println(settingFlag)
+	switch {
+	case settingFlag.local:
+		return "--local"
+	case settingFlag.system:
+		return "--system"
 	default:
-		return "", fmt.Errorf(`"%v" is invalid in "--scope" flag. use "local", "user" or "system"`, scopeFlag.arg)
+		return "--global"
 	}
 }
