@@ -34,7 +34,6 @@ func searchIndexList(diffFilter string, filenameList ...string) []string {
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(gitSubCmd...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return util.SplitLn(string(out))
 }
 
@@ -44,7 +43,6 @@ func searchWorktreeList(diffFilter string, filenameList ...string) []string {
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(gitSubCmd...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return util.SplitLn(string(out))
 }
 
