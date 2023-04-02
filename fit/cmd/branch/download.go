@@ -8,7 +8,7 @@ import (
 
 var DownloadCmd = &cobra.Command{
 	Use:   "download",
-	Short: "Download a branch and git revisions from remote repository",
+	Short: "Download a branch and git revisions from remote repository and update local",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var branchName string

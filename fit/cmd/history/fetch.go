@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var DownloadCmd = &cobra.Command{
-	Use:   "download",
-	Short: "Download branches, tags, and git revisions from a remote repository",
+var FetchCmd = &cobra.Command{
+	Use:   "fetch",
+	Short: "Download branches, tags, and git revisions from a remote repository (do not update local)",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"fetch", "origin", "--prune"}
