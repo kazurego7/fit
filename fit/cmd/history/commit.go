@@ -15,17 +15,10 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: cobra.NoArgs,
+	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"commit", "--message", commitMessage}
+		gitSubCmd := append([]string{"commit", "--message"}, args...)
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
-}
-
-var commitMessage string
-
-func init() {
-	CommitCmd.Flags().StringVarP(&commitMessage, "message", "m", "", "commit message")
-	CommitCmd.MarkFlagRequired("message")
 }
