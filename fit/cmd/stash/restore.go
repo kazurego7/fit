@@ -20,7 +20,7 @@ to quickly create a Cobra application.`,
 
 		var stashRevision string
 		if len(args) == 0 {
-			stashRevision = `"stash@{0}"`
+			stashRevision = `stash@{0}`
 		} else {
 			stashRevision = args[0]
 		}
