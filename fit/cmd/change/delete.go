@@ -18,12 +18,21 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
 		case deleteFlag.worktree:
+			if !existsWorktreeDiff(args...) {
+				return
+			}
 			confirmBackup()
 			deleteWorktree(args...)
 		case deleteFlag.index:
+			if !existsIndexDiff(args...) {
+				return
+			}
 			confirmBackup()
 			deleteIndex(args...)
 		case deleteFlag.all:
+			if !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
+				return
+			}
 			confirmBackup()
 			deleteAll(args...)
 		}
@@ -41,6 +50,16 @@ func init() {
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "delete changes index to HEAD")
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.all, "all", "a", true, "delete changes index and worktree")
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index", "all")
+}
+
+func existsWorktreeDiff(args ...string) bool {
+	list := searchWorktreeList("", args[0])
+	return len(list) != 0
+}
+
+func existsIndexDiff(args ...string) bool {
+	list := searchIndexList("", args[0])
+	return len(list) != 0
 }
 
 func deleteWorktree(args ...string) {
