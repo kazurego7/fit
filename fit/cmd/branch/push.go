@@ -15,25 +15,23 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Args: cobra.NoArgs,
+	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		var gitSubCmd []string
-		if !existsUpstreamFor(pushFlags.branch) {
-			// すでに upstream が設定されている場合は、upstream を設定しない
-			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune", "--set-upstream"}
+		var branchName string
+		if len(args) == 0 {
+			branchName = "HEAD"
 		} else {
-			gitSubCmd = []string{"push", "origin", pushFlags.branch, "--prune"}
+			branchName = args[0]
+		}
+		var gitSubCmd []string
+		if !existsUpstreamFor(branchName) {
+			// すでに upstream が設定されている場合は、upstream を設定しない
+			gitSubCmd = []string{"push", "origin", branchName, "--prune", "--set-upstream"}
+		} else {
+			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
 		}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
-}
-
-var pushFlags struct {
-	branch string
-}
-
-func init() {
-	PushCmd.Flags().StringVarP(&pushFlags.branch, "branch", "b", "HEAD", "choose branch name or HEAD")
 }
