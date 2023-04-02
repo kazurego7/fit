@@ -17,7 +17,7 @@ to quickly create a Cobra application.`,
 
 func init() {
 	HistoryCmd.AddCommand(CommitCmd)
-	HistoryCmd.AddCommand(FetchCmd)
+	HistoryCmd.AddCommand(DownloadCmd)
 	HistoryCmd.AddCommand(GraphCmd)
 	HistoryCmd.AddCommand(MergeCmd)
 	HistoryCmd.AddCommand(SwitchCmd)
