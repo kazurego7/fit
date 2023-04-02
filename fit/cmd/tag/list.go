@@ -17,7 +17,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"tag", "--list"}
+		gitSubCmd := []string{"tag", "--list", "--sort=version:refname"}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
