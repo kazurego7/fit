@@ -8,14 +8,8 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Args: cobra.NoArgs,
+	Short: "List branches and their upstreams",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--list", "--verbose", "--verbose"}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)

@@ -8,7 +8,7 @@ import (
 
 var MergeCmd = &cobra.Command{
 	Use:   "merge",
-	Short: "A brief description of your command",
+	Short: "Merge the specified branch into the current branch",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

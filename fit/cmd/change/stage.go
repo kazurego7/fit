@@ -8,14 +8,8 @@ import (
 
 var StageCmd = &cobra.Command{
 	Use:   "stage",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Args: cobra.MinimumNArgs(1),
+	Short: "Staging worktree changes to the index",
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// index にも worktree にもあるファイルは上書き対象となる
 		indexList := searchIndexList("", args[0])
