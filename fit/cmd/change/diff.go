@@ -18,7 +18,7 @@ to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
-		if diffFlags.indexToHead {
+		if diffFlags.index {
 			gitSubCmd = []string{"diff", "--staged", args[0]}
 		} else {
 			gitSubCmd = []string{"diff", args[0]}
@@ -28,7 +28,7 @@ to quickly create a Cobra application.`,
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		var gitSubCmd []string
-		if diffFlags.indexToHead {
+		if diffFlags.index {
 			gitSubCmd = []string{"diff", "--staged", "--name-only", "--relative"}
 		} else {
 			gitSubCmd = []string{"diff", "--name-only", "--relative"}
@@ -43,12 +43,12 @@ to quickly create a Cobra application.`,
 }
 
 var diffFlags struct {
-	worktreeToIndex bool
-	indexToHead     bool
+	worktree bool
+	index    bool
 }
 
 func init() {
-	DiffCmd.Flags().BoolVarP(&diffFlags.worktreeToIndex, "worktree-to-index", "w", false, "diff worktree to index")
-	DiffCmd.Flags().BoolVarP(&diffFlags.indexToHead, "index-to-head", "i", false, "diff index to HEAD")
-	DiffCmd.MarkFlagsMutuallyExclusive("worktree-to-index", "index-to-head")
+	DiffCmd.Flags().BoolVarP(&diffFlags.worktree, "worktree", "w", false, "diff worktree to index")
+	DiffCmd.Flags().BoolVarP(&diffFlags.index, "index", "i", false, "diff index to HEAD")
+	DiffCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
