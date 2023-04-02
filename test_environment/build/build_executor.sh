@@ -11,8 +11,15 @@
 # コマンドのエラーでビルドエラーとなるように設定
 set -eu
 
+# ファイル存在チェック
+if [ ! -f $1 ]; then
+    echo "File $1 no exists"
+    exit 1
+fi
+
+
 # ビルドスクリプトからテストリポジトリ名の決定
-FILE_PATH=$1
+FILE_PATH=$(readlink --canonicalize $1)
 FILE_NAME=${FILE_PATH##*/}
 TEST_NAME=${FILE_NAME%.*}
 
