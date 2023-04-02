@@ -17,8 +17,22 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"status", "--short"}
+		var gitSubCmd []string
+		if listFlag.all {
+			gitSubCmd = []string{"status", "--short", "--untracked-files=all"}
+		} else {
+			gitSubCmd = []string{"status", "--short"}
+		}
+
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
+}
+
+var listFlag struct {
+	all bool
+}
+
+func init() {
+	ListCmd.Flags().BoolVarP(&listFlag.all, "all", "a", false, "Also shows individual files in untracked directories")
 }
