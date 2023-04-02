@@ -42,7 +42,7 @@ func pullFor(branch string) int {
 	if currentBranch == branch {
 		gitSubCmd = []string{"pull", "origin", currentBranch, "--ff-only", "--prune"}
 	} else {
-		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--ff-only", "--prune"}
+		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--prune"}
 	}
 	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
