@@ -35,18 +35,21 @@ func PrintGitCommand(dryrun bool, args ...string) {
 	}
 }
 
-func InputYesOrNo(allwaysYes bool) bool {
+func InputYesOrNo(allwaysYes bool) (bool, error) {
 	if allwaysYes {
-		return true
+		return true, nil
 	}
 	for {
 		var ans string
-		fmt.Scanf("%s\n", &ans)
+		_, err := fmt.Scanf("%s\n", &ans)
+		if err != nil {
+			return false, err
+		}
 		switch ans {
 		case "Yes", "Y", "yes", "y":
-			return true
+			return true, nil
 		case "No", "N", "no", "n":
-			return false
+			return false, nil
 		default:
 			fmt.Print(`put "yes" or "no" : `)
 			continue

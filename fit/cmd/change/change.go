@@ -74,7 +74,10 @@ func clean(filenameList ...string) int {
 
 func confirmBackup() {
 	fmt.Print("Includes overwrite operations on worktree and index. \nDo you want to create backups? [yes/no]: ")
-	answer := util.InputYesOrNo(false)
+	answer, err := util.InputYesOrNo(false)
+	if err != nil {
+		return
+	}
 	if answer {
 		stash.Snap("fit auto backup")
 	}
