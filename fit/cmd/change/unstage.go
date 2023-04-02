@@ -36,7 +36,7 @@ to quickly create a Cobra application.`,
 		return nil
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		gitSubCmd := []string{"diff", "--cached", "--name-only"}
+		gitSubCmd := []string{"diff", "--cached", "--name-only", "--relative"}
 		out, _, err := util.GitQuery(gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
