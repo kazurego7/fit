@@ -17,8 +17,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		scope := getScopeFlag()
-		gitSubCmd := []string{"config", scope, "--unset", args[0]}
+		scopeFlag := getScopeFlag()
+		gitSubCmd := []string{"config", scopeFlag, "--unset", args[0]}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 		return nil
