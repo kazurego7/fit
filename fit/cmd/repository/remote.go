@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ListCmd = &cobra.Command{
-	Use:   "list",
+var RemoteCmd = &cobra.Command{
+	Use:   "remote",
 	Short: "List remote repositories",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {

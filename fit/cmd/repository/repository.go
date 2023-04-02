@@ -13,6 +13,6 @@ func init() {
 	RepositoryCmd.AddCommand(AsyncCmd)
 	RepositoryCmd.AddCommand(CloneCmd)
 	RepositoryCmd.AddCommand(InitCmd)
-	RepositoryCmd.AddCommand(ListCmd)
+	RepositoryCmd.AddCommand(RemoteCmd)
 	RepositoryCmd.AddCommand(UnsyncCmd)
 }
