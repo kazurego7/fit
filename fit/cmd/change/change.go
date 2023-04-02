@@ -32,7 +32,7 @@ func searchIndexList(diffFilter string, filenameList ...string) []string {
 	if len(filenameList) == 0 {
 		return []string{}
 	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(gitSubCmd...)
 	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return util.SplitLn(string(out))
@@ -42,10 +42,16 @@ func searchWorktreeList(diffFilter string, filenameList ...string) []string {
 	if len(filenameList) == 0 {
 		return []string{}
 	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(gitSubCmd...)
 	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 	return util.SplitLn(string(out))
+}
+
+func removeIndex(filenameList ...string) int {
+	gitSubCmd := append([]string{"rm", "--cache", "--"}, filenameList...)
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 }
 
 func restoreWorktree(filenameList ...string) int {
