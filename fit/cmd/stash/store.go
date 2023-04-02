@@ -1,8 +1,6 @@
 package stash
 
 import (
-	"errors"
-
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -20,15 +18,13 @@ to quickly create a Cobra application.`,
 	Args: cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var gitSubCmd []string
-		switch storeFlags.target {
-		case "all":
+		switch {
+		case storeFlags.worktree && storeFlags.index || !storeFlags.worktree && !storeFlags.index:
 			gitSubCmd = []string{"stash", "push", "--include-untracked"}
-		case "index":
+		case storeFlags.index:
 			gitSubCmd = []string{"stash", "push", "--staged"}
-		case "worktree":
+		case storeFlags.worktree:
 			gitSubCmd = []string{"stash", "push", "--include-untracked", "--keep-index"}
-		default:
-			return errors.New("invalid target of stash files")
 		}
 		// メッセージがあれば追加
 		if len(args) != 0 {
@@ -41,9 +37,13 @@ to quickly create a Cobra application.`,
 }
 
 var storeFlags struct {
-	target string
+	worktree bool
+	index    bool
+	all      bool
 }
 
 func init() {
-	StoreCmd.Flags().StringVarP(&storeFlags.target, "target", "t", "all", `select target of stash files from "index", "worktree", "all"`)
+	StoreCmd.Flags().BoolVarP(&storeFlags.worktree, "worktree", "w", false, "stash only worktree")
+	StoreCmd.Flags().BoolVarP(&storeFlags.index, "index", "i", false, "stash only index")
+	StoreCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }

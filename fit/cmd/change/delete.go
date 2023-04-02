@@ -17,6 +17,12 @@ to quickly create a Cobra application.`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
+		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:
+			if !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
+				return
+			}
+			confirmBackup()
+			deleteAll(args...)
 		case deleteFlag.worktree:
 			if !existsWorktreeDiff(args...) {
 				return
@@ -29,12 +35,6 @@ to quickly create a Cobra application.`,
 			}
 			confirmBackup()
 			deleteIndex(args...)
-		case deleteFlag.all:
-			if !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
-				return
-			}
-			confirmBackup()
-			deleteAll(args...)
 		}
 	},
 }
@@ -42,14 +42,12 @@ to quickly create a Cobra application.`,
 var deleteFlag struct {
 	worktree bool
 	index    bool
-	all      bool
 }
 
 func init() {
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.worktree, "worktree", "w", false, "delete changes worktree to index")
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "delete changes index to HEAD")
-	DeleteCmd.Flags().BoolVarP(&deleteFlag.all, "all", "a", true, "delete changes index and worktree")
-	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index", "all")
+	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
 
 func existsWorktreeDiff(args ...string) bool {
