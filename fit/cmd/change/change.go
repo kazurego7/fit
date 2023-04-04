@@ -15,7 +15,7 @@ var ChangeCmd = &cobra.Command{
 }
 
 func init() {
-	ChangeCmd.AddCommand(DiffCmd)
+	ChangeCmd.AddCommand(ShowCmd)
 	ChangeCmd.AddCommand(UnstageCmd)
 	ChangeCmd.AddCommand(StageCmd)
 	ChangeCmd.AddCommand(DeleteCmd)

@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var DiffCmd = &cobra.Command{
-	Use:   "diff",
+var ShowCmd = &cobra.Command{
+	Use:   "show",
 	Short: "Diff files with changes in the index or worktree",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
-		if diffFlags.index {
+		if showFlags.index {
 			gitSubCmd = []string{"diff", "--staged", args[0]}
 		} else {
 			gitSubCmd = []string{"diff", args[0]}
@@ -22,7 +22,7 @@ var DiffCmd = &cobra.Command{
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		var gitSubCmd []string
-		if diffFlags.index {
+		if showFlags.index {
 			gitSubCmd = []string{"diff", "--staged", "--name-only", "--relative"}
 		} else {
 			gitSubCmd = []string{"diff", "--name-only", "--relative"}
@@ -36,13 +36,13 @@ var DiffCmd = &cobra.Command{
 	},
 }
 
-var diffFlags struct {
+var showFlags struct {
 	worktree bool
 	index    bool
 }
 
 func init() {
-	DiffCmd.Flags().BoolVarP(&diffFlags.worktree, "worktree", "w", false, "diff worktree to index")
-	DiffCmd.Flags().BoolVarP(&diffFlags.index, "index", "i", false, "diff index to HEAD")
-	DiffCmd.MarkFlagsMutuallyExclusive("worktree", "index")
+	ShowCmd.Flags().BoolVarP(&showFlags.worktree, "worktree", "w", false, "diff worktree to index")
+	ShowCmd.Flags().BoolVarP(&showFlags.index, "index", "i", false, "diff index to HEAD")
+	ShowCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
