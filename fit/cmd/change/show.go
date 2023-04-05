@@ -8,7 +8,7 @@ import (
 
 var ShowCmd = &cobra.Command{
 	Use:   "show",
-	Short: "Diff files with changes in the index or worktree",
+	Short: "Show files difference with changes in the index or worktree",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
