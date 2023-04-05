@@ -11,7 +11,8 @@ func GitCommand(dryrun bool, args ...string) int {
 	if dryrun {
 		return 0
 	}
-	cmd := exec.Command("git", args...)
+	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
+	cmd := exec.Command("git", extArgs...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -20,7 +21,8 @@ func GitCommand(dryrun bool, args ...string) int {
 }
 
 func GitQuery(args ...string) ([]byte, int, error) {
-	cmd := exec.Command("git", args...)
+	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
+	cmd := exec.Command("git", extArgs...)
 	out, err := cmd.Output()
 	exitCode := cmd.ProcessState.ExitCode()
 	return out, exitCode, err
