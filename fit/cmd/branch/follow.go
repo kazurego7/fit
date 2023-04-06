@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var DownloadCmd = &cobra.Command{
-	Use:   "download",
-	Short: "Download a branch and git revisions from remote repository and update local",
+var FollowCmd = &cobra.Command{
+	Use:   "follow",
+	Short: "Make a local branch follow the state of a remote branch",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var branchName string
