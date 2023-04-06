@@ -11,7 +11,7 @@ var HistoryCmd = &cobra.Command{
 
 func init() {
 	HistoryCmd.AddCommand(CommitCmd)
-	HistoryCmd.AddCommand(FetchCmd)
+	HistoryCmd.AddCommand(DownloadCmd)
 	HistoryCmd.AddCommand(GraphCmd)
 	HistoryCmd.AddCommand(MergeCmd)
 	HistoryCmd.AddCommand(SwitchCmd)
