@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "ワークツリーおよびインデックスの変更があるファイルを一覧表示する.",
+	Short: "ワークツリー・インデックスの変更があるファイルを一覧表示する.",
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
 		if listFlag.all {

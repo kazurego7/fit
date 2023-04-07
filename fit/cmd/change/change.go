@@ -11,7 +11,7 @@ import (
 
 var ChangeCmd = &cobra.Command{
 	Use:   "change",
-	Short: "ワークツリーやインデックスのファイルの変更に関する操作.",
+	Short: "ワークツリー・インデックスの変更に関する操作.",
 }
 
 func init() {
@@ -65,7 +65,7 @@ func clean(filenameList ...string) int {
 }
 
 func confirmBackup() {
-	fmt.Print("ワークツリーやインデックスに対する上書き操作を含んでいます。\nファイルのバックアップをスタッシュに保存しますか？ [yes/no]: ")
+	fmt.Print("ワークツリー・インデックスに対する上書き操作を含んでいます。\nファイルのバックアップをスタッシュに保存しますか？ [yes/no]: ")
 	answer, err := util.InputYesOrNo(false)
 	if err != nil {
 		return

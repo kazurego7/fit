@@ -8,7 +8,7 @@ import (
 
 var ShowCmd = &cobra.Command{
 	Use:   "show",
-	Short: "インデックスやワークツリーのファイルの変更内容を表示する.",
+	Short: "ワークツリー・インデックスのファイルの変更内容を表示する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string

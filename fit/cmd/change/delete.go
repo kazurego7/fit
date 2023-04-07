@@ -7,7 +7,7 @@ import (
 
 var DeleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "ワークツリーやインデックスの変更を削除する.",
+	Short: "ワークツリー・インデックスの変更を削除する.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {

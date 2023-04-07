@@ -8,7 +8,7 @@ import (
 
 var StoreCmd = &cobra.Command{
 	Use:   "store",
-	Short: "ワークツリーやインデックスの変更をスタッシュとして保存する.",
+	Short: "ワークツリー・インデックスの変更をスタッシュとして保存する.",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var gitSubCmd []string

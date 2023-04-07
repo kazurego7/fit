@@ -8,7 +8,7 @@ import (
 
 var RestoreCmd = &cobra.Command{
 	Use:   "restore",
-	Short: "保存されたスタッシュをワークツリーとインデックスに復元する.",
+	Short: "保存されたスタッシュをワークツリー・インデックスに復元する.",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 

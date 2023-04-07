@@ -8,7 +8,7 @@ import (
 
 var StashCmd = &cobra.Command{
 	Use:   "stash",
-	Short: "変更の一時保存場所であるスタッシュに関する操作.",
+	Short: "スタッシュに関する操作.",
 }
 
 func init() {

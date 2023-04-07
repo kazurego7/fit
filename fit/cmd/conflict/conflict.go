@@ -6,7 +6,7 @@ import (
 
 var ConflictCmd = &cobra.Command{
 	Use:   "conflict",
-	Short: "マージコンフリクトの解消に関する操作.",
+	Short: "マージコンフリクトに関する操作.",
 }
 
 func init() {
