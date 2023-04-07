@@ -8,7 +8,7 @@ import (
 
 var SwitchCmd = &cobra.Command{
 	Use:   "switch",
-	Short: "Switch to branch or git revision",
+	Short: "指定したブランチに移動する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", args[0]}

@@ -8,7 +8,7 @@ import (
 
 var StageCmd = &cobra.Command{
 	Use:   "stage",
-	Short: "Staging worktree changes to the index",
+	Short: "ワークツリーのファイルの変更をインデックスにステージングする.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// index にも worktree にもあるファイルは上書き対象となる

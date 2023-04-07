@@ -10,7 +10,7 @@ import (
 
 var DeleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "Delete stored stash",
+	Short: "保存されたスタッシュを削除する.",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var gitSubCmd []string
@@ -33,5 +33,5 @@ var deleteFlag struct {
 }
 
 func init() {
-	DeleteCmd.Flags().BoolVarP(&deleteFlag.all, "all", "a", false, "Delete all stash")
+	DeleteCmd.Flags().BoolVarP(&deleteFlag.all, "all", "a", false, "全スタッシュを削除する.")
 }

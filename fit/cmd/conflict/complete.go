@@ -8,7 +8,7 @@ import (
 
 var CompleteCmd = &cobra.Command{
 	Use:   "complete",
-	Short: "Complete resolving merge conflicts  and create merge commit",
+	Short: "マージコンフリクトの解消を完了し、マージコミットを作成する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", "--continue"}

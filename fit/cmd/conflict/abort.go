@@ -8,7 +8,7 @@ import (
 
 var AbortCmd = &cobra.Command{
 	Use:   "abort",
-	Short: "Abort resolving merge conflicts and undo worktree and index changes",
+	Short: "マージコンフリクトの解消を中止し、ワークツリーやインデックスの変更を元に戻す.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", "--abort"}

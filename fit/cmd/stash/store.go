@@ -8,7 +8,7 @@ import (
 
 var StoreCmd = &cobra.Command{
 	Use:   "store",
-	Short: "Stash away files that have changed in the worktree or index",
+	Short: "ワークツリーやインデックスの変更をスタッシュとして保存する.",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var gitSubCmd []string
@@ -37,7 +37,7 @@ var storeFlags struct {
 }
 
 func init() {
-	StoreCmd.Flags().BoolVarP(&storeFlags.worktree, "worktree", "w", false, "stash only worktree")
-	StoreCmd.Flags().BoolVarP(&storeFlags.index, "index", "i", false, "stash only index")
+	StoreCmd.Flags().BoolVarP(&storeFlags.worktree, "worktree", "w", false, "ワークツリーの変更だけをスタッシュとして保存する.")
+	StoreCmd.Flags().BoolVarP(&storeFlags.index, "index", "i", false, "インデックスの変更だけをスタッシュとして保存する.")
 	StoreCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }

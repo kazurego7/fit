@@ -8,7 +8,7 @@ import (
 
 var AsyncCmd = &cobra.Command{
 	Use:   "async",
-	Short: "Set up communication with the remote repository",
+	Short: "リモートリポジトリとの非同期接続を設定する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"remote", "add", "origin", args[0]}

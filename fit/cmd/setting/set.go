@@ -8,7 +8,7 @@ import (
 
 var SetCmd = &cobra.Command{
 	Use:   "set",
-	Short: "Add a setting",
+	Short: "設定を追加する.",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()

@@ -7,7 +7,7 @@ import (
 
 var DeleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "Delete index or worktree changes",
+	Short: "ワークツリーやインデックスの変更を削除する.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
@@ -39,8 +39,8 @@ var deleteFlag struct {
 }
 
 func init() {
-	DeleteCmd.Flags().BoolVarP(&deleteFlag.worktree, "worktree", "w", false, "delete changes worktree to index")
-	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "delete changes index to HEAD")
+	DeleteCmd.Flags().BoolVarP(&deleteFlag.worktree, "worktree", "w", false, "ワークツリーの変更を削除する.")
+	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "インデックスの変更を削除する.")
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
 

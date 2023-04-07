@@ -8,7 +8,7 @@ import (
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a tag on the current git revision",
+	Short: "現在のgitリビジョンにタグを付ける.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"tag", args[0]}

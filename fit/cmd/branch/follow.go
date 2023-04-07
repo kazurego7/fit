@@ -8,7 +8,7 @@ import (
 
 var FollowCmd = &cobra.Command{
 	Use:   "follow",
-	Short: "Make a local branch follow the state of a remote branch",
+	Short: "ローカルブランチをリモートブランチの状態に追従させる.",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var branchName string

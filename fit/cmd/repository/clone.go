@@ -8,7 +8,7 @@ import (
 
 var CloneCmd = &cobra.Command{
 	Use:   "clone",
-	Short: "Clone a remote repository locally",
+	Short: "リモートリポジトリからローカルへリポジトリをコピーする.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"clone", args[0]}

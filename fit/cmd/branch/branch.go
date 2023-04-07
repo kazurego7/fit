@@ -9,7 +9,7 @@ import (
 
 var BranchCmd = &cobra.Command{
 	Use:   "branch",
-	Short: "Operations on the branch that are temporary and moving marker of a git revision",
+	Short: "gitリビジョンを一時的に指し示すマーカーであるブランチに関する操作.",
 }
 
 func init() {

@@ -8,7 +8,7 @@ import (
 
 var ShowCmd = &cobra.Command{
 	Use:   "show",
-	Short: "Show files difference with changes in the index or worktree",
+	Short: "インデックスやワークツリーのファイルの変更内容を表示する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
@@ -42,7 +42,7 @@ var showFlags struct {
 }
 
 func init() {
-	ShowCmd.Flags().BoolVarP(&showFlags.worktree, "worktree", "w", false, "diff worktree to index")
-	ShowCmd.Flags().BoolVarP(&showFlags.index, "index", "i", false, "diff index to HEAD")
+	ShowCmd.Flags().BoolVarP(&showFlags.worktree, "worktree", "w", false, "ワークツリーのファイルの変更内容を表示する.")
+	ShowCmd.Flags().BoolVarP(&showFlags.index, "index", "i", false, "インデックスのファイルの変更内容を表示する.")
 	ShowCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }

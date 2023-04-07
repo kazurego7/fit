@@ -9,7 +9,7 @@ import (
 var SettingCmd = &cobra.Command{
 	Use:              "setting",
 	TraverseChildren: true,
-	Short:            "Operations on git settings",
+	Short:            "gitの設定に関する操作.",
 }
 
 func init() {

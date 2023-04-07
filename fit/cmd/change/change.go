@@ -11,7 +11,7 @@ import (
 
 var ChangeCmd = &cobra.Command{
 	Use:   "change",
-	Short: "Operations on index or worktree changes",
+	Short: "ワークツリーやインデックスのファイルの変更に関する操作.",
 }
 
 func init() {
@@ -65,12 +65,12 @@ func clean(filenameList ...string) int {
 }
 
 func confirmBackup() {
-	fmt.Print("Includes overwrite operations on worktree and index. \nDo you want to create backups? [yes/no]: ")
+	fmt.Print("ワークツリーやインデックスに対する上書き操作を含んでいます。\nファイルのバックアップをスタッシュに保存しますか？ [yes/no]: ")
 	answer, err := util.InputYesOrNo(false)
 	if err != nil {
 		return
 	}
 	if answer {
-		stash.Snap("fit auto backup")
+		stash.Snap("fit 自動バックアップ")
 	}
 }

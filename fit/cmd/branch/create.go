@@ -8,7 +8,7 @@ import (
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a branch on the current git revision and move to that branch",
+	Short: "現在のgitリビジョンにブランチを作成し、そのブランチに移動する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", "--create", args[0]}

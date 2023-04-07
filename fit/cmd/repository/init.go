@@ -8,7 +8,7 @@ import (
 
 var InitCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize the local repository",
+	Short: "ローカルリポジトリを初期化する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"init"}

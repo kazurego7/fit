@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List only the currently set items",
+	Short: "現在設定されている項目を一覧表示する.",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()

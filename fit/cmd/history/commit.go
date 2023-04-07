@@ -8,7 +8,7 @@ import (
 
 var CommitCmd = &cobra.Command{
 	Use:   "commit",
-	Short: "Create a new git revision from the index changes and move the branch to that revision",
+	Short: "インデックスから新しいgitリビジョンを作成し、現在のブランチをそのリビジョンに移動する.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := append([]string{"commit", "--message"}, args...)

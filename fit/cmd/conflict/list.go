@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List files with merge conflicts",
+	Short: "マージコンフリクトのあるファイルを一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"diff", "--name-only", "--diff-filter=U"}

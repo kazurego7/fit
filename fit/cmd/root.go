@@ -17,7 +17,7 @@ import (
 
 var RootCmd = &cobra.Command{
 	Use:   "fit",
-	Short: `"fit" means "fiddle arround with git"`,
+	Short: "単なるgitコマンドのファサード.",
 }
 
 func Execute() {
@@ -37,8 +37,6 @@ func init() {
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
 
-	RootCmd.PersistentFlags().BoolVarP(&global.Flags.Dryrun, "dry-run", "n", false, "don't actually run git command")
-
+	RootCmd.PersistentFlags().BoolVarP(&global.Flags.Dryrun, "dry-run", "n", false, "実際にgitコマンドを実行しない.")
 	RootCmd.CompletionOptions.DisableDefaultCmd = true
-	RootCmd.SetHelpCommand(&cobra.Command{Hidden: true})
 }

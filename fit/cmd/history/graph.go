@@ -8,7 +8,7 @@ import (
 
 var GraphCmd = &cobra.Command{
 	Use:   "graph",
-	Short: "Display the history of git revisions in graph",
+	Short: "gitリビジョンの履歴をグラフで表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{

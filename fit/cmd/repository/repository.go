@@ -6,7 +6,7 @@ import (
 
 var RepositoryCmd = &cobra.Command{
 	Use:   "repository",
-	Short: "Operations on local or remote repositories",
+	Short: "ローカルリポジトリ・リモートリポジトリに関する操作.",
 }
 
 func init() {

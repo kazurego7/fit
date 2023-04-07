@@ -9,7 +9,7 @@ import (
 
 var UnstageCmd = &cobra.Command{
 	Use:   "unstage",
-	Short: "Unstaging index changes to worktree",
+	Short: "インデックスにステージングされているファイルの変更をワークツリーに戻す.",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// index にも worktree にもあるファイルは上書き対象となる

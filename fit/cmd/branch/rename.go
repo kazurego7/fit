@@ -8,7 +8,7 @@ import (
 
 var RenameCmd = &cobra.Command{
 	Use:   "rename",
-	Short: "Rename current branch",
+	Short: "現在のブランチの名前を変更する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--move", args[0]}

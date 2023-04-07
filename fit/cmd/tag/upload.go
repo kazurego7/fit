@@ -8,7 +8,7 @@ import (
 
 var UploadCmd = &cobra.Command{
 	Use:   "upload",
-	Short: "Upload tags to remote repository (WARNING: UPLOADED TAGS CAN NOT BE DELETED)",
+	Short: "リモートリポジトリにタグをアップロードする(警告：アップロードされたタグは削除できません).",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"push", "origin", "--tags", args[0], "--prune"}

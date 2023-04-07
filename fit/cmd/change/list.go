@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List index or work tree changes",
+	Short: "ワークツリーおよびインデックスの変更があるファイルを一覧表示する.",
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
 		if listFlag.all {
@@ -27,5 +27,5 @@ var listFlag struct {
 }
 
 func init() {
-	ListCmd.Flags().BoolVarP(&listFlag.all, "all", "a", false, "Also shows individual files in untracked directories")
+	ListCmd.Flags().BoolVarP(&listFlag.all, "all", "a", false, "追跡されていないディレクトリにある個々のファイルも表示する")
 }

@@ -6,7 +6,7 @@ import (
 
 var HistoryCmd = &cobra.Command{
 	Use:   "history",
-	Short: "Operations on the history of git revisions",
+	Short: "gitリビジョンの履歴に関する操作.",
 }
 
 func init() {

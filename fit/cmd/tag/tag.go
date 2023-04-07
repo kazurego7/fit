@@ -6,7 +6,7 @@ import (
 
 var TagCmd = &cobra.Command{
 	Use:   "tag",
-	Short: "Operations on tags, which are fixed and unchanging landmarks",
+	Short: "固定さた目印としてのタグに関する操作.",
 }
 
 func init() {

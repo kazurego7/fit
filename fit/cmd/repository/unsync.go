@@ -8,7 +8,7 @@ import (
 
 var UnsyncCmd = &cobra.Command{
 	Use:   "unsync",
-	Short: "Stop communicating with remote repositories",
+	Short: "リモートリポジトリとの非同期接続をやめる.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"remote", "remove", "origin"}

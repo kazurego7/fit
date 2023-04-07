@@ -8,7 +8,7 @@ import (
 
 var RemoteCmd = &cobra.Command{
 	Use:   "remote",
-	Short: "List remote repositories",
+	Short: "リモートリポジトリを一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"remote", "--verbose"}

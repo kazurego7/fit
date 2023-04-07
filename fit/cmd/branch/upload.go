@@ -8,7 +8,7 @@ import (
 
 var UploadCmd = &cobra.Command{
 	Use:   "upload",
-	Short: "Upload a branch and git revisions to the remote repository",
+	Short: "ブランチとgitリビジョンをリモートリポジトリにアップロードする.",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 

@@ -8,7 +8,7 @@ import (
 
 var EditCmd = &cobra.Command{
 	Use:   "edit",
-	Short: "Open the settings file in your editor",
+	Short: "設定ファイルをエディターで開く.",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()

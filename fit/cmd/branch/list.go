@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List branches and their upstreams",
+	Short: "ブランチとその上流ブランチを一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--list", "--verbose", "--verbose"}
