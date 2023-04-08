@@ -15,14 +15,14 @@ var DeleteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
 		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:
-			if !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
+			if !existsUntrackedFiles(args...) && !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
 			deleteAll(args...)
 		case deleteFlag.worktree:
-			if !existsWorktreeDiff(args...) {
+			if !existsUntrackedFiles(args...) && !existsWorktreeDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
@@ -48,6 +48,17 @@ func init() {
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.worktree, "worktree", "w", false, "ワークツリーの変更を削除する.")
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "インデックスの変更を削除する.")
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
+}
+
+func existsUntrackedFiles(filenameList ...string) bool {
+	if len(filenameList) == 0 {
+		return false
+	}
+	gitSubCmd := append([]string{"ls-files", "--others", "--"}, filenameList...)
+	out, _, _ := util.GitQuery(gitSubCmd...)
+	list := util.SplitLn(string(out))
+
+	return len(list) != 0
 }
 
 func existsWorktreeDiff(args ...string) bool {
