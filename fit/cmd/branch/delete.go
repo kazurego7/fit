@@ -8,7 +8,7 @@ import (
 
 var DeleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "指定したブランチを削除する(ブランチの指すgitリビジョンは削除しない).",
+	Short: "指定したブランチを削除する(ブランチの指すコミットは削除しない).",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--delete", "--force", args[0]}

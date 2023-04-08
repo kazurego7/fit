@@ -8,7 +8,7 @@ import (
 
 var UncommitCmd = &cobra.Command{
 	Use:   "uncommit",
-	Short: "現在のブランチを1つ前のgitリビジョンに移動する.",
+	Short: "現在のブランチを1つ前のコミットに移動する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--soft", "HEAD^"}

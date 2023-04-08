@@ -8,7 +8,7 @@ import (
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "現在のgitリビジョンにブランチを作成し、そのブランチに移動する.",
+	Short: "現在のコミットにブランチを作成し、そのブランチに移動する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", "--create", args[0]}
