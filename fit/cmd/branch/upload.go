@@ -16,14 +16,14 @@ var UploadCmd = &cobra.Command{
 		if len(args) == 0 {
 			branchName = "HEAD"
 		} else {
-			branchName = args[0]
+			branchName = "heads/" + args[0]
 		}
 		var gitSubCmd []string
 		if !existsUpstreamFor(branchName) {
 			// すでに upstream が設定されている場合は、upstream を設定しない
-			gitSubCmd = []string{"push", "origin", "heads/" + branchName, "--prune", "--set-upstream"}
+			gitSubCmd = []string{"push", "origin", branchName, "--prune", "--set-upstream"}
 		} else {
-			gitSubCmd = []string{"push", "origin", "heads/" + branchName, "--prune"}
+			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
 		}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
