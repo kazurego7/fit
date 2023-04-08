@@ -8,11 +8,12 @@ import (
 
 var LogCmd = &cobra.Command{
 	Use:   "log",
-	Short: "コミットの履歴を表示する.",
+	Short: "コミットの改定履歴を表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{
 			"log",
+			"--all",
 			"--graph",
 			"--abbrev-commit",
 			"--decorate=no",
