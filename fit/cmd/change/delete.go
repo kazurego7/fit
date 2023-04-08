@@ -1,6 +1,9 @@
 package change
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
@@ -13,18 +16,21 @@ var DeleteCmd = &cobra.Command{
 		switch {
 		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:
 			if !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
+				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
 			deleteAll(args...)
 		case deleteFlag.worktree:
 			if !existsWorktreeDiff(args...) {
+				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
 			deleteWorktree(args...)
 		case deleteFlag.index:
 			if !existsIndexDiff(args...) {
+				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
