@@ -34,7 +34,7 @@ func pullFor(branch string) int {
 	currentBranch := getBranchName("HEAD")
 	var gitSubCmd []string
 	if currentBranch == branch {
-		gitSubCmd = []string{"pull", "origin", currentBranch, "--ff-only", "--prune"}
+		gitSubCmd = []string{"pull", "origin", currentBranch + ":" + currentBranch, "--ff-only", "--prune"}
 	} else {
 		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--prune"}
 	}
