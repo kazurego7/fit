@@ -11,7 +11,7 @@ var UploadCmd = &cobra.Command{
 	Short: "リモートリポジトリにタグをアップロードする(警告：アップロードされたタグは削除できません).",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"push", "origin", "--tags", args[0], "--prune"}
+		gitSubCmd := []string{"push", "origin", "tags/" + args[0], "--prune"}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 	},
