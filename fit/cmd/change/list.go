@@ -14,10 +14,8 @@ var ListCmd = &cobra.Command{
 		switch {
 		case listFlag.details:
 			gitSubCmd = []string{"-p", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
-		case listFlag.all:
-			gitSubCmd = []string{"status", "--short", "--untracked-files=all"}
 		default:
-			gitSubCmd = []string{"status", "--short"}
+			gitSubCmd = []string{"status", "--short", "--untracked-files=all"}
 		}
 		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
 		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
@@ -25,12 +23,9 @@ var ListCmd = &cobra.Command{
 }
 
 var listFlag struct {
-	all     bool
 	details bool
 }
 
 func init() {
-	ListCmd.Flags().BoolVarP(&listFlag.all, "all", "a", false, "追跡されていないディレクトリにある個々のファイルも表示する")
 	ListCmd.Flags().BoolVarP(&listFlag.details, "details", "d", false, "ファイルの変更の詳細を表示する")
-	ListCmd.MarkFlagsMutuallyExclusive("all", "details")
 }
