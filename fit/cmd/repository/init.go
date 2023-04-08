@@ -11,8 +11,28 @@ var InitCmd = &cobra.Command{
 	Short: "ローカルリポジトリを初期化する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"init"}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		initGit()
+		if existsHEADCommit() {
+			return
+		}
+		firstCommit()
 	},
+}
+
+func existsHEADCommit() bool {
+	gitSubCmd := []string{"rev-parse", "HEAD"}
+	_, exitCode, _ := util.GitQuery(gitSubCmd...)
+	return exitCode == 0
+}
+
+func initGit() {
+	gitSubCmd := []string{"init"}
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+}
+
+func firstCommit() {
+	gitSubCmd := []string{"commit", "--allow-empty", "-m", "first commit"}
+	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
 }
