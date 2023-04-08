@@ -1,4 +1,4 @@
-package history
+package revision
 
 import (
 	"github.com/kazurego7/fit/fit/global"

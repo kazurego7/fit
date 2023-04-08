@@ -1,4 +1,4 @@
-package history
+package revision
 
 import (
 	"github.com/kazurego7/fit/fit/global"
@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var GraphCmd = &cobra.Command{
-	Use:   "graph",
-	Short: "コミットの履歴をグラフで表示する.",
+var LogCmd = &cobra.Command{
+	Use:   "log",
+	Short: "コミットの履歴を表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{
@@ -30,5 +30,5 @@ var GraphCmd = &cobra.Command{
 var allFlag bool
 
 func init() {
-	GraphCmd.Flags().BoolVarP(&allFlag, "all", "a", false, "show all commits.")
+	LogCmd.Flags().BoolVarP(&allFlag, "all", "a", false, "show all commits.")
 }
