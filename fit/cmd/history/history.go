@@ -14,6 +14,7 @@ func init() {
 	HistoryCmd.AddCommand(DownloadCmd)
 	HistoryCmd.AddCommand(GraphCmd)
 	HistoryCmd.AddCommand(MergeCmd)
+	HistoryCmd.AddCommand(ShowCmd)
 	HistoryCmd.AddCommand(SwitchCmd)
 	HistoryCmd.AddCommand(UncommitCmd)
 }
