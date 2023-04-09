@@ -15,8 +15,10 @@
 
 
 ## 1. 注意事項
-以下の利用方法は、bash および powershell での実行を想定している
+
+以下の利用方法は、bash および powershell での実行を想定している  
 ただし、powershell の場合は、実行シェル上で以下の設定をしておく
+
 ```powershell
 # デフォルトの文字コードをUTF8-BOM付きにする
 $PSDefaultParameterValues['*:Encoding'] = 'utf8'
@@ -86,9 +88,9 @@ fit branch create feat-hoge
 # feat-hoge ブランチが作成され、現在のブランチが feat-hoge であることを確認
 fit branch list
 ```
-```bash
-# おっと間違えた！feat-foo_bar ブランチを作るんだった
-```
+
+おっと間違えた！feat-foo_bar ブランチを作るんだった
+
 ```bash
 # 現在のブランチ名を変更
 fit branch rename feat-foo_bar
@@ -118,9 +120,9 @@ fit change stage hoge
 # 2つのファイルがステージングされたことを確認
 fit change list
 ```
-```bash
-# おっと間違えた！second.txt をステージングしなくて良かったんだった
-```
+
+おっと間違えた！second.txt をステージングしなくて良かったんだった
+
 ```bash
 # second.txt ファイルのステージングをやめる
 fit change unstage hoge/second.txt
@@ -144,9 +146,9 @@ fit revision commit "最初のコミッ……"
 # 新しいコミットが作られたことを確認
 fit revision log
 ```
-```bash
-# おっと間違えた！コミットメッセージを修正しなきゃ
-```
+
+おっと間違えた！コミットメッセージを修正しなきゃ
+
 ```bash
 # コミットをキャンセルし、現在のブランチを一つ前のコミットに戻す
 fit revision uncommit
@@ -188,9 +190,9 @@ fit revision show main
 # mainブランチを現在のfeat-foo_barブランチにマージする
 fit revision merge main
 ```
-```bash
-# おっと間違えた！second.txt の変更が残ったままだった
-```
+
+おっと間違えた！second.txt の変更が残ったままだった
+
 ```bash
 # second.txt の変更を破棄する
 fit change delete hoge/second.txt
@@ -204,9 +206,9 @@ fit change list
 # mainブランチを現在のfeat-foo_barブランチにマージする
 fit revision merge main
 ```
-```bash
-# おっと間違えた！マージコンフリクトが発生したぞ
-```
+
+おっと間違えた！マージコンフリクトが発生したぞ
+
 ```bash
 # マージコンフリクトが発生しているファイルを確認する
 fit conflict list
