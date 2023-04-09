@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kazurego7/fit/fit/global"
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
@@ -16,21 +16,21 @@ var DeleteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
 		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:
-			if !existsUntrackedFiles(args...) && !existsWorktreeDiff(args...) && !existsIndexDiff(args...) {
+			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) && !git.ExistsIndexDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
 			deleteAll(args...)
 		case deleteFlag.worktree:
-			if !existsUntrackedFiles(args...) && !existsWorktreeDiff(args...) {
+			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			confirmBackup()
 			deleteWorktree(args...)
 		case deleteFlag.index:
-			if !existsIndexDiff(args...) {
+			if !git.ExistsIndexDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
@@ -51,40 +51,19 @@ func init() {
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
 
-func existsUntrackedFiles(filenameList ...string) bool {
-	if len(filenameList) == 0 {
-		return false
-	}
-	gitSubCmd := append([]string{"ls-files", "--others", "--"}, filenameList...)
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	list := util.SplitLn(string(out))
-
-	return len(list) != 0
-}
-
-func existsWorktreeDiff(args ...string) bool {
-	list := searchWorktreeList("", args[0])
-	return len(list) != 0
-}
-
-func existsIndexDiff(args ...string) bool {
-	list := searchIndexList("", args[0])
-	return len(list) != 0
-}
-
 func deleteWorktree(args ...string) {
-	unergedList := searchWorktreeList("U", args[0])
+	unergedList := git.SearchWorktreeList("U", args[0])
 	for i := range unergedList {
 		unergedList[i] = ":!" + unergedList[i]
 	}
-	restoreList := searchWorktreeList("", append(unergedList, args[0])...)
+	restoreList := git.SearchWorktreeList("", append(unergedList, args[0])...)
 	if len(restoreList) != 0 {
 		exitCode := restoreWorktree(restoreList...)
 		if exitCode != 0 {
 			return
 		}
 	}
-	addedList := searchWorktreeList("A", args[0])
+	addedList := git.SearchWorktreeList("A", args[0])
 	if len(addedList) != 0 {
 		exitCode := removeIndex(addedList...)
 		if exitCode != 0 {
@@ -95,11 +74,11 @@ func deleteWorktree(args ...string) {
 }
 
 func deleteIndex(args ...string) {
-	indexList := searchIndexList("", args[0])
-	worktreeList := searchWorktreeList("", args[0])
+	indexList := git.SearchIndexList("", args[0])
+	worktreeList := git.SearchWorktreeList("", args[0])
 	indexOnlyList := util.Difference(indexList, worktreeList)
-	restoreList := searchIndexList("a", indexOnlyList...)
-	cleanList := searchIndexList("A", indexOnlyList...)
+	restoreList := git.SearchIndexList("a", indexOnlyList...)
+	cleanList := git.SearchIndexList("A", indexOnlyList...)
 	if len(indexList) != 0 {
 		exitCode := restoreIndex(indexList...)
 		if exitCode != 0 {
@@ -121,21 +100,21 @@ func deleteIndex(args ...string) {
 }
 
 func deleteAll(args ...string) {
-	indexList := searchIndexList("", args[0])
+	indexList := git.SearchIndexList("", args[0])
 	if len(indexList) != 0 {
 		exitCode := restoreIndex(indexList...)
 		if exitCode != 0 {
 			return
 		}
 	}
-	addedList := searchWorktreeList("A", args[0])
+	addedList := git.SearchWorktreeList("A", args[0])
 	if len(addedList) != 0 {
 		exitCode := removeIndex(addedList...)
 		if exitCode != 0 {
 			return
 		}
 	}
-	restoreList := searchWorktreeList("a", args[0])
+	restoreList := git.SearchWorktreeList("a", args[0])
 	if len(restoreList) != 0 {
 		exitCode := restoreWorktree(restoreList...)
 		if exitCode != 0 {

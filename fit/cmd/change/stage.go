@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -23,8 +24,8 @@ var StageCmd = &cobra.Command{
 		}
 
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := searchIndexList("", args...)
-		overwriteList := searchWorktreeList("", indexList...)
+		indexList := git.SearchIndexList("", args...)
+		overwriteList := git.SearchWorktreeList("", indexList...)
 
 		// index への上書きがある場合は、バックアップを促す
 		if len(overwriteList) != 0 {
@@ -55,7 +56,7 @@ func checkConflictResolved(args ...string) error {
 		args...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	if string(out) != "" {
-		unmergedList := searchWorktreeList("U", args...)
+		unmergedList := git.SearchWorktreeList("U", args...)
 		errorMessage := "コンフリクトマーカーが残っています. コンフリクトマーカーを取り除いてください\n" + strings.Join(unmergedList, "\n")
 		return errors.New(errorMessage)
 	}

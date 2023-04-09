@@ -3,6 +3,7 @@ package change
 import (
 	"errors"
 
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -14,8 +15,8 @@ var UnstageCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := searchIndexList("", args[0])
-		overwriteList := searchWorktreeList("", indexList...)
+		indexList := git.SearchIndexList("", args[0])
+		overwriteList := git.SearchWorktreeList("", indexList...)
 
 		// worktree への上書きがある場合は、バックアップを促す
 		if len(overwriteList) != 0 {

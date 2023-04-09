@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/kazurego7/fit/fit/cmd/stash"
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -23,24 +24,6 @@ func init() {
 	ChangeCmd.AddCommand(ListCmd)
 	ChangeCmd.AddCommand(LogCmd)
 	ChangeCmd.AddCommand(RestoreCmd)
-}
-
-func searchIndexList(diffFilter string, filenameList ...string) []string {
-	if len(filenameList) == 0 {
-		return []string{}
-	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	return util.SplitLn(string(out))
-}
-
-func searchWorktreeList(diffFilter string, filenameList ...string) []string {
-	if len(filenameList) == 0 {
-		return []string{}
-	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	return util.SplitLn(string(out))
 }
 
 func removeIndex(filenameList ...string) int {
@@ -90,7 +73,7 @@ func existsFiles(n int) cobra.PositionalArgs {
 
 func existsWorktreeChanges() cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
-		overwriteList := searchWorktreeList("", args...)
+		overwriteList := git.SearchWorktreeList("", args...)
 		if len(overwriteList) != 0 {
 			return errors.New("復元するファイルに変更があります.変更を削除するか、ステージングを行ってください")
 		}
