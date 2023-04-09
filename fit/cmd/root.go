@@ -17,7 +17,7 @@ import (
 
 var RootCmd = &cobra.Command{
 	Use:   "fit",
-	Short: "単なるgitコマンドのファサード.",
+	Short: "ユーザーフレンドリーな git CLI.",
 }
 
 func Execute() {
