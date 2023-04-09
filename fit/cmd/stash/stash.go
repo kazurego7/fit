@@ -1,6 +1,7 @@
 package stash
 
 import (
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -33,7 +34,8 @@ func stashPush(stashMessage string) int {
 	if stashMessage == "" {
 		gitSubCmd = []string{"stash", "push", "--include-untracked"}
 	} else {
-		gitSubCmd = []string{"stash", "push", "--include-untracked", "--message", stashMessage}
+		commitId := git.GetHeadShortCommitId()
+		gitSubCmd = []string{"stash", "push", "--include-untracked", "--message", commitId + " " + stashMessage}
 	}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode

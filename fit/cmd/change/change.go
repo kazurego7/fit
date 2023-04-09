@@ -53,7 +53,7 @@ func confirmBackup() {
 		return
 	}
 	if answer {
-		stash.Snap("fit 自動バックアップ")
+		stash.Snap("fit auto backup")
 	}
 }
 

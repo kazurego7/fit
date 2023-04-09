@@ -51,3 +51,9 @@ func GetRepositoryPath() string {
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return strings.Trim(string(out), "\n")
 }
+
+func GetHeadShortCommitId() string {
+	gitSubCmd := []string{"rev-parse", "--short", "HEAD"}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
+	return strings.Trim(string(out), "\n")
+}
