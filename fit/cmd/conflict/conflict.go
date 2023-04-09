@@ -11,7 +11,6 @@ var ConflictCmd = &cobra.Command{
 
 func init() {
 	ConflictCmd.AddCommand(AbortCmd)
-	ConflictCmd.AddCommand(CompleteCmd)
 	ConflictCmd.AddCommand(ListCmd)
 	ConflictCmd.AddCommand(ResolveCmd)
 	ConflictCmd.AddCommand(RestoreCmd)
