@@ -15,8 +15,7 @@ var MergeCmd = &cobra.Command{
 	Short: "指定したブランチを現在のブランチにマージする.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		repositoryPath := git.GetRepositoryPath()
-		if git.ExistsUntrackedFiles(repositoryPath) || git.ExistsWorktreeDiff(repositoryPath) || git.ExistsIndexDiff(repositoryPath) {
+		if git.ExistsUntrackedFiles(":/") || git.ExistsWorktreeDiff(":/") || git.ExistsIndexDiff(":/") {
 			message := "インデックス・ワークツリーにファイルの変更があるため、マージを中止しました\n" +
 				"※ \"fit stash store\" でファイルの変更をスタッシュに保存するか、\"fit change delete\" でファイルの変更を破棄してください"
 			fmt.Fprintln(os.Stderr, message)

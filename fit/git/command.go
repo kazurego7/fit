@@ -46,12 +46,6 @@ func ExistsIndexDiff(args ...string) bool {
 	return len(list) != 0
 }
 
-func GetRepositoryPath() string {
-	gitSubCmd := []string{"rev-parse", "--show-toplevel"}
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	return strings.Trim(string(out), "\n")
-}
-
 func GetHeadShortCommitId() string {
 	gitSubCmd := []string{"rev-parse", "--short", "HEAD"}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
