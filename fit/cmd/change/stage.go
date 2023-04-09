@@ -24,7 +24,7 @@ var StageCmd = &cobra.Command{
 		}
 
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := git.SearchIndexList("", args...)
+		indexList := git.SearchIndexList("u", args...)
 		overwriteList := git.SearchWorktreeList("", indexList...)
 
 		// index への上書きがある場合は、バックアップを促す
