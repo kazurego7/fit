@@ -37,6 +37,7 @@ func init() {
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
 
-	RootCmd.PersistentFlags().BoolVar(&global.Flags.Dryrun, "dry-run", false, "実際にgitコマンドを実行しない.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "実際にgitコマンドを実行しない.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "実行するgitコマンドを出力する.")
 	RootCmd.CompletionOptions.DisableDefaultCmd = true
 }

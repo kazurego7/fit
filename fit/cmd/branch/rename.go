@@ -12,7 +12,6 @@ var RenameCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--move", args[0]}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }

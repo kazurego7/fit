@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
@@ -55,7 +56,7 @@ func existsUntrackedFiles(filenameList ...string) bool {
 		return false
 	}
 	gitSubCmd := append([]string{"ls-files", "--others", "--"}, filenameList...)
-	out, _, _ := util.GitQuery(gitSubCmd...)
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	list := util.SplitLn(string(out))
 
 	return len(list) != 0

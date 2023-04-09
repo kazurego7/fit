@@ -17,8 +17,7 @@ var ListCmd = &cobra.Command{
 		default:
 			gitSubCmd = []string{"status", "--short", "--untracked-files=all"}
 		}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
 

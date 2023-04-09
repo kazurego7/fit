@@ -21,18 +21,16 @@ var InitCmd = &cobra.Command{
 
 func existsHEADCommit() bool {
 	gitSubCmd := []string{"rev-parse", "HEAD"}
-	_, exitCode, _ := util.GitQuery(gitSubCmd...)
+	_, exitCode, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return exitCode == 0
 }
 
 func initGit() {
 	gitSubCmd := []string{"init"}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func firstCommit() {
 	gitSubCmd := []string{"commit", "--allow-empty", "-m", "first commit"}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	util.GitCommand(global.RootFlag, gitSubCmd...)
 }

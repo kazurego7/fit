@@ -3,6 +3,7 @@ package change
 import (
 	"errors"
 
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
@@ -31,7 +32,7 @@ var UnstageCmd = &cobra.Command{
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"diff", "--cached", "--name-only", "--relative"}
-		out, _, err := util.GitQuery(gitSubCmd...)
+		out, _, err := util.GitQuery(global.RootFlag, gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

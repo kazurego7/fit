@@ -15,14 +15,13 @@ var ResolveCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		checkCmd := []string{"-c", "core.whitespace=-trailing-space,-space-before-tab,-indent-with-non-tab,-tab-in-indent,-cr-at-eol", "diff", "--check", args[0]}
-		out, _, _ := util.GitQuery(checkCmd...)
+		out, _, _ := util.GitQuery(global.RootFlag, checkCmd...)
 		if string(out) != "" {
 			fmt.Fprintln(os.Stderr, "コンフリクトマーカーが残っています.コンフリクトマーカーを取り除いてください.")
 			return
 		} else {
 			gitSubCmd := []string{"add", args[0]}
-			util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-			util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+			util.GitCommand(global.RootFlag, gitSubCmd...)
 			return
 		}
 

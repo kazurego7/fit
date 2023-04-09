@@ -12,7 +12,6 @@ var ListCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"diff", "--name-only", "--diff-filter=U"}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }

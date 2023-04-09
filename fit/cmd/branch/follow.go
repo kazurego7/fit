@@ -38,14 +38,12 @@ func pullFor(branch string) int {
 	} else {
 		gitSubCmd = []string{"fetch", "origin", branch + ":" + branch, "--prune"}
 	}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
 }
 
 func setUpstreamTo(branch string) int {
 	gitSubCmd := []string{"branch", branch, "--set-upstream-to=origin/" + branch}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
 }

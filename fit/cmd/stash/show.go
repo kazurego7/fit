@@ -12,7 +12,6 @@ var ShowCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"stash", "show", "--stat", "--summary", "--patch", "--include-untracked", args[0]}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }

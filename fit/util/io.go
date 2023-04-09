@@ -5,13 +5,25 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/kazurego7/fit/fit/global"
 )
 
-func GitCommand(dryrun bool, args ...string) int {
-	if dryrun {
+func GitCommand(globalFlag global.GlobalFlag, args ...string) int {
+	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
+
+	if global.RootFlag.Debug {
+		if globalFlag.Dryrun {
+			fmt.Fprintln(os.Stderr, "dry-run: git "+strings.Join(extArgs, " "))
+		} else {
+			fmt.Fprintln(os.Stderr, "command: git "+strings.Join(extArgs, " "))
+		}
+	}
+
+	if globalFlag.Dryrun {
 		return 0
 	}
-	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
+
 	cmd := exec.Command("git", extArgs...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -20,21 +32,17 @@ func GitCommand(dryrun bool, args ...string) int {
 	return cmd.ProcessState.ExitCode()
 }
 
-func GitQuery(args ...string) ([]byte, int, error) {
+func GitQuery(globalFlag global.GlobalFlag, args ...string) ([]byte, int, error) {
 	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
+
+	if global.RootFlag.Debug {
+		fmt.Fprintln(os.Stderr, "query: git "+strings.Join(extArgs, " "))
+	}
+
 	cmd := exec.Command("git", extArgs...)
 	out, err := cmd.Output()
 	exitCode := cmd.ProcessState.ExitCode()
 	return out, exitCode, err
-}
-
-func PrintGitCommand(dryrun bool, args ...string) {
-	cmd := "git " + strings.Join(args, " ")
-	if dryrun {
-		fmt.Fprintln(os.Stderr, "dry-run: "+cmd)
-	} else {
-		fmt.Fprintln(os.Stderr, "command: "+cmd)
-	}
 }
 
 func InputYesOrNo(allwaysYes bool) (bool, error) {

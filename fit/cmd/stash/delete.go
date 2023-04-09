@@ -22,8 +22,7 @@ var DeleteCmd = &cobra.Command{
 			}
 			gitSubCmd = []string{"stash", "drop", args[0]}
 		}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 		return nil
 	},
 }

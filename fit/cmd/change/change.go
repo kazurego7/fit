@@ -30,7 +30,7 @@ func searchIndexList(diffFilter string, filenameList ...string) []string {
 		return []string{}
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
-	out, _, _ := util.GitQuery(gitSubCmd...)
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return util.SplitLn(string(out))
 }
 
@@ -39,32 +39,28 @@ func searchWorktreeList(diffFilter string, filenameList ...string) []string {
 		return []string{}
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
-	out, _, _ := util.GitQuery(gitSubCmd...)
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return util.SplitLn(string(out))
 }
 
 func removeIndex(filenameList ...string) int {
 	gitSubCmd := append([]string{"rm", "--cache", "--"}, filenameList...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func restoreWorktree(filenameList ...string) int {
 	gitSubCmd := append([]string{"restore", "--"}, filenameList...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func restoreIndex(filenameList ...string) int {
 	gitSubCmd := append([]string{"restore", "--staged", "--"}, filenameList...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func clean(filenameList ...string) int {
 	gitSubCmd := append([]string{"clean", "--force", "--"}, filenameList...)
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func confirmBackup() {

@@ -13,8 +13,7 @@ var UnsetCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()
 		gitSubCmd := []string{"config", scopeFlag, "--unset", args[0]}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 		return nil
 	},
 }

@@ -25,7 +25,6 @@ var UploadCmd = &cobra.Command{
 		} else {
 			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
 		}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }

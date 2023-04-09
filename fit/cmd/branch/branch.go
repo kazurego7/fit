@@ -3,6 +3,7 @@ package branch
 import (
 	"strings"
 
+	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
@@ -23,12 +24,12 @@ func init() {
 
 func existsUpstreamFor(branchName string) bool {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", branchName + `@{u}`}
-	_, exitCode, _ := util.GitQuery(gitSubCmd...)
+	_, exitCode, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return exitCode == 0
 }
 
 func getBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
-	out, _, _ := util.GitQuery(gitSubCmd...)
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	return strings.Trim(string(out), "\n")
 }

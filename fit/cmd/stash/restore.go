@@ -28,12 +28,10 @@ var RestoreCmd = &cobra.Command{
 
 func applyKeepIndex(stashRevision string) int {
 	gitSubCmd := []string{"stash", "apply", "--quiet", "--index", stashRevision}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
 func apply(stashRevision string) int {
 	gitSubCmd := []string{"stash", "apply", "--quiet", stashRevision}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	return util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }

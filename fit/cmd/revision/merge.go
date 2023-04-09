@@ -13,7 +13,6 @@ var MergeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", args[0]}
 		allArgs := append(gitSubCmd, args...)
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, allArgs...)
+		util.GitCommand(global.RootFlag, allArgs...)
 	},
 }

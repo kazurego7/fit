@@ -35,14 +35,12 @@ func stashPush(stashMessage string) int {
 	} else {
 		gitSubCmd = []string{"stash", "push", "--include-untracked", "--message", stashMessage}
 	}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
 }
 
 func stashApply() int {
 	gitSubCmd := []string{"stash", "apply", "--index", "--quiet"}
-	util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-	exitCode := util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
 }

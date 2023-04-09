@@ -23,8 +23,7 @@ var LogCmd = &cobra.Command{
 		if allFlag {
 			gitSubCmd = append(gitSubCmd, "--reflog")
 		}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
 

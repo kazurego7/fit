@@ -20,12 +20,11 @@ var StageCmd = &cobra.Command{
 			confirmBackup()
 		}
 		gitSubCmd := []string{"add", args[0]}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"ls-files", `--modified`, "--others"}
-		out, _, err := util.GitQuery(gitSubCmd...)
+		out, _, err := util.GitQuery(global.RootFlag, gitSubCmd...)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

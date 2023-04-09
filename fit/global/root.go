@@ -1,5 +1,8 @@
 package global
 
-var Flags struct {
+type GlobalFlag struct {
+	Debug  bool
 	Dryrun bool
 }
+
+var RootFlag GlobalFlag

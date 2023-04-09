@@ -35,8 +35,7 @@ var LogCmd = &cobra.Command{
 				args[0],
 			}
 		}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
 

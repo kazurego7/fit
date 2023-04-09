@@ -12,8 +12,7 @@ var RestoreCmd = &cobra.Command{
 	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"restore", "--source", RestoreFlag.revision, args[0]}
-		util.PrintGitCommand(global.Flags.Dryrun, gitSubCmd...)
-		util.GitCommand(global.Flags.Dryrun, gitSubCmd...)
+		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
 
