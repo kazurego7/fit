@@ -38,11 +38,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: fit
-        path: ./
+        path: fit/fit
     
     - name: Upload windows binary
       uses: actions/upload-artifact@v3
       with:
         name: fit.exe
-        path: ./
+        path: fit/fit.exe
       
