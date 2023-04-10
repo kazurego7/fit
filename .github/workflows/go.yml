@@ -26,7 +26,7 @@ jobs:
         cache-dependency-path: go.sum
     - name: Install dependencies
       run: |
-        go get
+        go get -v
     
     - name: Build For Linux
       run: GOOS=linux go build -v
@@ -38,11 +38,11 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: fit
-        path: fit
+        path: ./
     
     - name: Upload windows binary
       uses: actions/upload-artifact@v3
       with:
         name: fit.exe
-        path: fit.exe
+        path: ./
       
