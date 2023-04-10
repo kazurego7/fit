@@ -33,7 +33,40 @@ fit は、 git で最もよく使うコマンドのみを厳選し、予測し�
 
 ## インストール方法
 
-TODO:あとで書く
+[最新のリリース](https://github.com/kazurego7/fit/releases/latest)
+
+### Windows
+
+以下、Powershell での操作
+
+ログインユーザーのコマンドの保存先ディレクトリを作成し、そこへ最新のfitをダウンロードする
+```powershell
+mkdir ~/bin
+Invoke-WebRequest -Uri https://github.com/kazurego7/fit/releases/latest/download/fit.exe -OutFile ~/bin/fit.exe
+```
+
+保存先ディレクトリへのパスを通す
+```powershell
+$new_path = [Environment]::GetEnvironmentVariable("Path", "User")
+$new_path += ";$HOME/bin"
+[Environment]::SetEnvironmentVariable("Path", $new_path, "User")
+# powershell を再起動する
+```
+
+### Linux
+
+以下、Bash での操作
+
+ログインユーザーのコマンドの保存先ディレクトリを作成し、そこへ最新のfitをダウンロードする
+```bash
+mkdir ~/bin
+wget https://github.com/kazurego7/fit/releases/latest/download/fit -P ~/bin/
+```
+
+ログインユーザーがfitを利用できるように、パーミッションを修正する
+```bash
+chmod u+x ~/bin/fit
+```
 
 ## 利用方法
 
