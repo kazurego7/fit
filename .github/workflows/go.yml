@@ -26,7 +26,7 @@ jobs:
         cache-dependency-path: go.sum
     - name: Install dependencies
       run: |
-        go get .
+        go get ./...
     
     - name: Build For Linux
       run: GOOS=linux go build -v
