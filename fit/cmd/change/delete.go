@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -20,21 +21,21 @@ var DeleteCmd = &cobra.Command{
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			confirmBackup()
+			backupDelete()
 			deleteAll(args...)
 		case deleteFlag.worktree:
 			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			confirmBackup()
+			backupDelete()
 			deleteWorktree(args...)
 		case deleteFlag.index:
 			if !git.ExistsIndexDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			confirmBackup()
+			backupDelete()
 			deleteIndex(args...)
 		}
 	},
@@ -49,6 +50,12 @@ func init() {
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.worktree, "worktree", "w", false, "ワークツリーの変更を削除する.")
 	DeleteCmd.Flags().BoolVarP(&deleteFlag.index, "index", "i", false, "インデックスの変更を削除する.")
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
+}
+
+func backupDelete() {
+	stash.Snap(`"fit change delete" のバックアップ`)
+	fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
+		`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 }
 
 func deleteWorktree(args ...string) {

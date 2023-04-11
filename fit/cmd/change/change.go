@@ -2,10 +2,8 @@ package change
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
-	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
@@ -44,17 +42,6 @@ func restoreIndex(filenameList ...string) int {
 func clean(filenameList ...string) int {
 	gitSubCmd := append([]string{"clean", "--force", "--"}, filenameList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd...)
-}
-
-func confirmBackup() {
-	fmt.Print("ワークツリー・インデックスに対する上書き操作を含んでいます。\nファイルのバックアップをスタッシュに保存しますか？ [yes/no]: ")
-	answer, err := util.InputYesOrNo(false)
-	if err != nil {
-		return
-	}
-	if answer {
-		stash.Snap("fit auto backup")
-	}
 }
 
 func existsFiles(n int) cobra.PositionalArgs {

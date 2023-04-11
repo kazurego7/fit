@@ -2,7 +2,9 @@ package change
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
@@ -18,9 +20,11 @@ var UnstageCmd = &cobra.Command{
 		indexList := git.SearchIndexList("", args[0])
 		overwriteList := git.SearchWorktreeList("", indexList...)
 
-		// worktree への上書きがある場合は、バックアップを促す
+		// worktree への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			confirmBackup()
+			stash.Snap(`"fit change unstage" のバックアップ`)
+			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
+				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 			exitCode := restoreWorktree(overwriteList...)
 			if exitCode != 0 {
 				return errors.New("restore index failed")
