@@ -7,22 +7,32 @@ import (
 	"github.com/kazurego7/fit/fit/util"
 )
 
+func addRoot(pathList ...string) []string {
+
+	for i, path := range pathList {
+		pathList[i] = ":/" + path
+	}
+	return pathList
+}
+
 func SearchIndexList(diffFilter string, filenameList ...string) []string {
 	if len(filenameList) == 0 {
 		return []string{}
 	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	gitSubCmd := append([]string{"diff", "--name-only", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	return util.SplitLn(string(out))
+	list := util.SplitLn(string(out))
+	return addRoot(list...)
 }
 
 func SearchWorktreeList(diffFilter string, filenameList ...string) []string {
 	if len(filenameList) == 0 {
 		return []string{}
 	}
-	gitSubCmd := append([]string{"diff", "--name-only", "--relative", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
+	gitSubCmd := append([]string{"diff", "--name-only", "--no-renames", "--diff-filter=" + diffFilter, "--"}, filenameList...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	return util.SplitLn(string(out))
+	list := util.SplitLn(string(out))
+	return addRoot(list...)
 }
 
 func ExistsUntrackedFiles(filenameList ...string) bool {
@@ -32,7 +42,6 @@ func ExistsUntrackedFiles(filenameList ...string) bool {
 	gitSubCmd := append([]string{"ls-files", "--others", "--"}, filenameList...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
 	list := util.SplitLn(string(out))
-
 	return len(list) != 0
 }
 
