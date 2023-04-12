@@ -18,6 +18,19 @@ import (
 var RootCmd = &cobra.Command{
 	Use:   "fit",
 	Short: "ユーザーフレンドリーな git CLI.",
+	ValidArgsFunction: cobra.FixedCompletions(
+		[]string{
+			change.ChangeCmd.Name(),
+			revision.RevisionCmd.Name(),
+			conflict.ConflictCmd.Name(),
+			branch.BranchCmd.Name(),
+			stash.StashCmd.Name(),
+			tag.TagCmd.Name(),
+			repository.RepositoryCmd.Name(),
+			setting.SettingCmd.Name(),
+			"help",
+			"completion",
+		}, cobra.ShellCompDirectiveKeepOrder),
 }
 
 func Execute() {
@@ -28,16 +41,15 @@ func Execute() {
 }
 
 func init() {
-	RootCmd.AddCommand(branch.BranchCmd)
-	RootCmd.AddCommand(setting.SettingCmd)
-	RootCmd.AddCommand(revision.RevisionCmd)
 	RootCmd.AddCommand(change.ChangeCmd)
+	RootCmd.AddCommand(revision.RevisionCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)
-	RootCmd.AddCommand(repository.RepositoryCmd)
+	RootCmd.AddCommand(branch.BranchCmd)
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
+	RootCmd.AddCommand(repository.RepositoryCmd)
+	RootCmd.AddCommand(setting.SettingCmd)
 
 	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "実際にgitコマンドを実行しない.")
 	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "実行するgitコマンドを出力する.")
-	RootCmd.CompletionOptions.DisableDefaultCmd = true
 }
