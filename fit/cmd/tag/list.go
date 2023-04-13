@@ -11,7 +11,7 @@ var ListCmd = &cobra.Command{
 	Short: "タグを一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"tag", "--list", "--sort=version:refname"}
+		gitSubCmd := []string{"tag", "--list", "--sort=-version:refname"}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
