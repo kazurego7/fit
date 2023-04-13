@@ -50,6 +50,6 @@ func init() {
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(setting.SettingCmd)
 
-	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "実際にgitコマンドを実行しない.")
-	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "実行するgitコマンドを出力する.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "データの変更なしに実行する.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "fit内部で実行するgitコマンドを出力する.")
 }
