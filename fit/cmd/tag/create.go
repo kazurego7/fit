@@ -8,10 +8,18 @@ import (
 
 var CreateCmd = &cobra.Command{
 	Use:   "create <new tag name>",
-	Short: "現在のコミットにタグを付ける.",
+	Short: "指定したコミットにタグを付ける.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"tag", args[0]}
+		gitSubCmd := []string{"tag", args[0], createFlag.revision}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
+}
+
+var createFlag struct {
+	revision string
+}
+
+func init() {
+	CreateCmd.Flags().StringVarP(&createFlag.revision, "revision", "r", "HEAD", "タグをつけるコミットのリビジョン")
 }
