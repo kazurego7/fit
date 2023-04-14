@@ -14,7 +14,7 @@ import (
 )
 
 var StageCmd = &cobra.Command{
-	Use:   "stage",
+	Use:   "stage <pathspec>…",
 	Short: "ワークツリーのファイルの変更をインデックスにステージングする.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

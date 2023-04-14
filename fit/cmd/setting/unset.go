@@ -7,7 +7,7 @@ import (
 )
 
 var UnsetCmd = &cobra.Command{
-	Use:   "unset",
+	Use:   "unset <name>",
 	Short: "設定を削除する.",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {

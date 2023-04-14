@@ -9,7 +9,7 @@ import (
 )
 
 var DeleteCmd = &cobra.Command{
-	Use:   "delete",
+	Use:   "delete (<stash> | --all)",
 	Short: "保存されたスタッシュを削除する.",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {

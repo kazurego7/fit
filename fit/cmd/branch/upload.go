@@ -7,7 +7,7 @@ import (
 )
 
 var UploadCmd = &cobra.Command{
-	Use:   "upload",
+	Use:   "upload [branch name]",
 	Short: "ブランチとそのブランチの指すコミットをリモートリポジトリにアップロードする.",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

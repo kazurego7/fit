@@ -7,7 +7,7 @@ import (
 )
 
 var DeleteCmd = &cobra.Command{
-	Use:   "delete",
+	Use:   "delete <branch name>",
 	Short: "指定したブランチを削除する(ブランチの指すコミットは削除しない).",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

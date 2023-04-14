@@ -7,7 +7,7 @@ import (
 )
 
 var FollowCmd = &cobra.Command{
-	Use:   "follow",
+	Use:   "follow [<branch name>]",
 	Short: "ローカルブランチをリモートブランチの状態に追従させる.",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

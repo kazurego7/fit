@@ -7,7 +7,7 @@ import (
 )
 
 var RenameCmd = &cobra.Command{
-	Use:   "rename",
+	Use:   "rename <branch name>",
 	Short: "現在のブランチの名前を変更する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

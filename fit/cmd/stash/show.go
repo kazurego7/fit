@@ -7,7 +7,7 @@ import (
 )
 
 var ShowCmd = &cobra.Command{
-	Use:   "show",
+	Use:   "show <stash>",
 	Short: "指定したスタッシュに格納されているファイルの内容を表示する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

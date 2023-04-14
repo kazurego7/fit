@@ -7,7 +7,7 @@ import (
 )
 
 var UploadCmd = &cobra.Command{
-	Use:   "upload",
+	Use:   "upload <tag>",
 	Short: "リモートリポジトリにタグをアップロードする(警告：アップロードされたタグは削除できません).",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

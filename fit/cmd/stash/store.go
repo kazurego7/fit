@@ -7,7 +7,7 @@ import (
 )
 
 var StoreCmd = &cobra.Command{
-	Use:   "store",
+	Use:   "store [<message>]",
 	Short: "ワークツリー・インデックスの変更をスタッシュとして保存する.",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {

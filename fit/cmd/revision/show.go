@@ -7,7 +7,7 @@ import (
 )
 
 var ShowCmd = &cobra.Command{
-	Use:   "show",
+	Use:   "show <revision>",
 	Short: "指定したコミットに含まれるファイルを表示する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

@@ -7,7 +7,7 @@ import (
 )
 
 var LogCmd = &cobra.Command{
-	Use:   "log",
+	Use:   "log <pathspec>",
 	Short: "単一のファイルの履歴を表示する.",
 	Args:  existsFiles(1),
 	Run: func(cmd *cobra.Command, args []string) {

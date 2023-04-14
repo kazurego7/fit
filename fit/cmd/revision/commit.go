@@ -7,7 +7,7 @@ import (
 )
 
 var CommitCmd = &cobra.Command{
-	Use:   "commit",
+	Use:   "commit <message>",
 	Short: "インデックスから新しいコミットを作成し、現在のブランチをそのコミットに移動する.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

@@ -7,7 +7,7 @@ import (
 )
 
 var CreateCmd = &cobra.Command{
-	Use:   "create",
+	Use:   "create <new branch name>",
 	Short: "現在のコミットにブランチを作成し、そのブランチに移動する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

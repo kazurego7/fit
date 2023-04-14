@@ -7,7 +7,7 @@ import (
 )
 
 var RestoreCmd = &cobra.Command{
-	Use:   "restore",
+	Use:   "restore <pathspec>",
 	Short: "ファイルをマージコンフリクトの状態に戻す.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

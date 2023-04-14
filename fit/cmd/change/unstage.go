@@ -12,7 +12,7 @@ import (
 )
 
 var UnstageCmd = &cobra.Command{
-	Use:   "unstage",
+	Use:   "unstage <pathspec>…",
 	Short: "インデックスにステージングされているファイルの変更をワークツリーに戻す.",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {

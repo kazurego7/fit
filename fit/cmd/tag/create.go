@@ -7,7 +7,7 @@ import (
 )
 
 var CreateCmd = &cobra.Command{
-	Use:   "create",
+	Use:   "create <new tag name>",
 	Short: "現在のコミットにタグを付ける.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

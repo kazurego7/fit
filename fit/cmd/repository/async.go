@@ -7,7 +7,7 @@ import (
 )
 
 var AsyncCmd = &cobra.Command{
-	Use:   "async",
+	Use:   "async <remote url>",
 	Short: "リモートリポジトリとの非同期接続を設定する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

@@ -7,7 +7,7 @@ import (
 )
 
 var SetCmd = &cobra.Command{
-	Use:   "set",
+	Use:   "set <name> <value>",
 	Short: "設定を追加する.",
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {

@@ -7,7 +7,7 @@ import (
 )
 
 var SwitchCmd = &cobra.Command{
-	Use:   "switch",
+	Use:   "switch <branch>",
 	Short: "指定したブランチに移動する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
