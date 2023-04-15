@@ -37,15 +37,7 @@ var StageCmd = &cobra.Command{
 		gitSubCmd := append([]string{"add"}, args...)
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
-	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		gitSubCmd := []string{"ls-files", `--modified`, "--others"}
-		out, _, err := util.GitQuery(global.RootFlag, gitSubCmd...)
-		if err != nil {
-			return nil, cobra.ShellCompDirectiveNoFileComp
-		}
-		expect := util.SplitLn(string(out))
-		return expect, cobra.ShellCompDirectiveNoFileComp
-	},
+	ValidArgs: append(git.SearchUntrackedFiles(":/"), git.SearchWorktreeList("u", ":/")...),
 }
 
 func checkConflictResolved(args ...string) error {

@@ -15,6 +15,16 @@ func addRoot(pathList ...string) []string {
 	return pathList
 }
 
+func SearchUntrackedFiles(filenameList ...string) []string {
+	if len(filenameList) == 0 {
+		return []string{}
+	}
+	gitSubCmd := append([]string{"ls-files", "--others", "--exclude-standard", "--full-name", "--"}, filenameList...)
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
+	list := util.SplitLn(string(out))
+	return addRoot(list...)
+}
+
 func SearchIndexList(diffFilter string, filenameList ...string) []string {
 	if len(filenameList) == 0 {
 		return []string{}
@@ -35,13 +45,8 @@ func SearchWorktreeList(diffFilter string, filenameList ...string) []string {
 	return addRoot(list...)
 }
 
-func ExistsUntrackedFiles(filenameList ...string) bool {
-	if len(filenameList) == 0 {
-		return false
-	}
-	gitSubCmd := append([]string{"ls-files", "--others", "--"}, filenameList...)
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
-	list := util.SplitLn(string(out))
+func ExistsUntrackedFiles(args ...string) bool {
+	list := SearchUntrackedFiles(args...)
 	return len(list) != 0
 }
 
