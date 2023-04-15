@@ -14,12 +14,12 @@ var BranchCmd = &cobra.Command{
 }
 
 func init() {
+	BranchCmd.AddCommand(ListCmd)
 	BranchCmd.AddCommand(CreateCmd)
 	BranchCmd.AddCommand(DeleteCmd)
-	BranchCmd.AddCommand(ListCmd)
+	BranchCmd.AddCommand(RenameCmd)
 	BranchCmd.AddCommand(FollowCmd)
 	BranchCmd.AddCommand(UploadCmd)
-	BranchCmd.AddCommand(RenameCmd)
 }
 
 func existsUpstreamFor(branchName string) bool {

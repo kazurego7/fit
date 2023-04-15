@@ -13,11 +13,12 @@ var SettingCmd = &cobra.Command{
 }
 
 func init() {
-	SettingCmd.AddCommand(CompletionCmd)
 	SettingCmd.AddCommand(ListCmd)
 	SettingCmd.AddCommand(SetCmd)
 	SettingCmd.AddCommand(UnsetCmd)
 	SettingCmd.AddCommand(EditCmd)
+	SettingCmd.AddCommand(CompletionCmd)
+
 	SettingCmd.PersistentFlags().BoolVar(&settingFlag.local, "local", false, "config scope local")
 	SettingCmd.PersistentFlags().BoolVar(&settingFlag.user, "user", true, "config scope user")
 	SettingCmd.PersistentFlags().BoolVar(&settingFlag.system, "system", false, "config scope system")

@@ -10,8 +10,8 @@ var TagCmd = &cobra.Command{
 }
 
 func init() {
+	TagCmd.AddCommand(ListCmd)
 	TagCmd.AddCommand(CreateCmd)
 	TagCmd.AddCommand(DeleteCmd)
-	TagCmd.AddCommand(ListCmd)
 	TagCmd.AddCommand(UploadCmd)
 }

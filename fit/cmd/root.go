@@ -18,18 +18,6 @@ import (
 var RootCmd = &cobra.Command{
 	Use:   "fit",
 	Short: "ユーザーフレンドリーな git CLI.",
-	ValidArgsFunction: cobra.FixedCompletions(
-		[]string{
-			change.ChangeCmd.Name(),
-			revision.RevisionCmd.Name(),
-			conflict.ConflictCmd.Name(),
-			branch.BranchCmd.Name(),
-			stash.StashCmd.Name(),
-			tag.TagCmd.Name(),
-			repository.RepositoryCmd.Name(),
-			setting.SettingCmd.Name(),
-			"help",
-		}, cobra.ShellCompDirectiveKeepOrder),
 }
 
 func Execute() {

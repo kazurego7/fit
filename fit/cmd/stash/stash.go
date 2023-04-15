@@ -13,12 +13,11 @@ var StashCmd = &cobra.Command{
 }
 
 func init() {
-
-	StashCmd.AddCommand(DeleteCmd)
 	StashCmd.AddCommand(ListCmd)
-	StashCmd.AddCommand(RestoreCmd)
-	StashCmd.AddCommand(ShowCmd)
 	StashCmd.AddCommand(StoreCmd)
+	StashCmd.AddCommand(RestoreCmd)
+	StashCmd.AddCommand(DeleteCmd)
+	StashCmd.AddCommand(ShowCmd)
 }
 
 func Snap(stashMessage string) int {
