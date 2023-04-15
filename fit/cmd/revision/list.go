@@ -6,12 +6,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var LogCmd = &cobra.Command{
-	Use:   "log",
-	Short: "コミットの改定履歴を表示する.",
+var ListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "コミットの改定履歴を一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{
+			"-c",
+			"core.pager=less -FRXS",
 			"log",
 			"--branches",
 			"--tags",
@@ -22,22 +24,22 @@ var LogCmd = &cobra.Command{
 			"--date=format: %Y-%m-%d %H:%I:%S",
 			"--format=format: %C(03)%>|(26)%h%C(reset)   %C(bold 1)%d%C(reset) %C(bold 0)%s%C(reset) %>|(140)%C(reset)  %C(04)%ad%C(reset)  %C(green)%<(16,trunc)%an%C(reset)",
 		}
-		if logFlag.orphan {
+		if listFlag.orphan {
 			gitSubCmd = append(gitSubCmd, "--reflog")
 		}
-		if logFlag.stash {
+		if listFlag.stash {
 			gitSubCmd = append(gitSubCmd, "--all")
 		}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
 
-var logFlag struct {
+var listFlag struct {
 	orphan bool
 	stash  bool
 }
 
 func init() {
-	LogCmd.Flags().BoolVarP(&logFlag.orphan, "orphan", "o", false, "ブランチ・タグの付いていない孤独なコミットもログに表示する(スタッシュも表示される).")
-	LogCmd.Flags().BoolVarP(&logFlag.stash, "stash", "s", false, "スタッシュもログに表示する.")
+	ListCmd.Flags().BoolVarP(&listFlag.orphan, "orphan", "o", false, "ブランチ・タグの付いていない孤独なコミットもログに表示する(スタッシュも表示される).")
+	ListCmd.Flags().BoolVarP(&listFlag.stash, "stash", "s", false, "スタッシュもログに表示する.")
 }

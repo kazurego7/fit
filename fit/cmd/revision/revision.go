@@ -10,12 +10,11 @@ var RevisionCmd = &cobra.Command{
 }
 
 func init() {
-	RevisionCmd.AddCommand(LogCmd)
+	RevisionCmd.AddCommand(ListCmd)
 	RevisionCmd.AddCommand(CommitCmd)
 	RevisionCmd.AddCommand(UncommitCmd)
 	RevisionCmd.AddCommand(SwitchCmd)
 	RevisionCmd.AddCommand(DownloadCmd)
 	RevisionCmd.AddCommand(MergeCmd)
 	RevisionCmd.AddCommand(ShowCmd)
-
 }
