@@ -9,8 +9,13 @@
   - [3.2. ファイルの変更をステージングする](#32-ファイルの変更をステージングする)
   - [3.3. コミットの作成](#33-コミットの作成)
   - [3.4. mainブランチの変更を現在のブランチに反映](#34-mainブランチの変更を現在のブランチに反映)
-  - [3.5. ブランチをリモートリポジトリへアップロード](#35-ブランチをリモートリポジトリへアップロード)
+  - [3.5. マージコンフリクトの解消](#35-マージコンフリクトの解消)
+  - [3.6. ブランチをリモートリポジトリへアップロード](#36-ブランチをリモートリポジトリへアップロード)
 - [4. その他の利用方法](#4-その他の利用方法)
+  - [4.1. ブランチ名を間違って作成した ⇒ ブランチ名の変更](#41-ブランチ名を間違って作成した--ブランチ名の変更)
+  - [4.2. 違うファイルをステージングした ⇒ ステージングの解除](#42-違うファイルをステージングした--ステージングの解除)
+  - [4.3. ファイルの変更を破棄したい](#43-ファイルの変更を破棄したい)
+  - [4.4. 現在のコミットを修正したい ⇒ コミットのキャンセル](#44-現在のコミットを修正したい--コミットのキャンセル)
 
 
 ## 1. 注意事項
@@ -33,7 +38,7 @@ fit の利用の前に、ローカルに git リポジトリを作成し、githu
 
 ### 2.1. github リモートリポジトリの作成
 
-TODO: 後で書く
+[リポジトリを作成する - GitHub Docs](https://docs.github.com/ja/get-started/quickstart/create-a-repo)
 
 ### 2.2. git ローカルリポジトリの初期化
 
@@ -61,13 +66,14 @@ fit repository remote
 
 ## 3. fit のワークフロー
 
-GitLab Flow に従って git を利用する例を挙げる
+GitLab Flow に従って git を利用する例
 
 1. featureブランチの作成
 2. ファイルの変更をステージングする
 3. コミットの作成
 4. mainブランチの変更を現在のブランチに反映
-5. ブランチをリモートリポジトリへアップロード
+5. マージコンフリクトの解消
+6. ブランチをリモートリポジトリへアップロード
 
 ### 3.1. featureブランチの作成
 
@@ -84,17 +90,6 @@ fit branch create feat-hoge
 fit branch list
 ```
 
-おっと間違えた！feat-foo_bar ブランチを作るんだった
-
-```bash
-# 現在のブランチ名を変更
-fit branch rename feat-foo_bar
-```
-```bash
-# 現在のブランチ名が feat-foo_bar に変更されたことを確認
-fit branch list
-```
-
 ### 3.2. ファイルの変更をステージングする
 
 ```bash
@@ -104,26 +99,15 @@ echo "1st text contets dayo" > ./hoge/first.txt
 echo "2nd text contets dayo" > ./hoge/second.txt
 ```
 ```bash
-# 変更があったファイルの一覧を確認
+# 変更のあるファイルの一覧を確認
 fit change list
 ```
 ```bash
-# hogeディレクトリ配下のファイルの変更をステージングする
-fit change stage hoge
+# ./hoge 配下のファイルの変更をステージングする
+fit change stage ./hoge
 ```
 ```bash
-# 2つのファイルがステージングされたことを確認
-fit change list
-```
-
-おっと間違えた！second.txt をステージングしなくて良かったんだった
-
-```bash
-# second.txt ファイルのステージングをやめる
-fit change unstage hoge/second.txt
-```
-```bash
-# second.txt の変更がワークツリーに戻っていることを確認
+# first.txt と second.txt がステージングされたことを確認
 fit change list
 ```
 
@@ -131,31 +115,18 @@ fit change list
 
 ```bash
 # 現在のブランチとコミットの履歴を確認
-fit revision log
+fit revision list
 ```
 ```bash
 # インデックスの変更からコミットを作成
-fit revision commit "最初のコミッ……"
+fit revision commit "最初のコミットだよー"
 ```
 ```bash
 # 新しいコミットが作られたことを確認
-fit revision log
+fit revision list
 ```
 
-おっと間違えた！コミットメッセージを修正しなきゃ
 
-```bash
-# コミットをキャンセルし、現在のブランチを一つ前のコミットに戻す
-fit revision uncommit
-```
-```bash
-# 現在のブランチが一つ前のコミットに戻っていることを確認
-fit revision log
-```
-```bash
-# コミットを再作成
-fit revision commit "最初のコミットだよー"
-```
 
 ### 3.4. mainブランチの変更を現在のブランチに反映
 
@@ -166,43 +137,28 @@ mainブランチを現在のブランチにマージすることで変更を取�
 ```bash
 # mainブランチに hoge/first.txt の追加をコミットする
 fit branch switch main
+mkdir hoge
 echo "Other's chages dayo" > ./hoge/first.txt
 fit change stage ./hoge/first.txt
 fit revision commit "他の人のコミットだよー"
-fit branch switch feat-foo_bar
+fit branch switch feat-hoge
 ```
 
 mainブランチを現在のブランチにマージする
 ```bash
 # main ブランチの状態を確認する
-fit revision log
+fit revision list
 ```
 ```bash
 # main ブランチの指すコミットに含まれるファイルを表示する
 fit revision show main
 ```
 ```bash
-# mainブランチを現在のfeat-foo_barブランチにマージする
+# mainブランチを現在のhogeブランチにマージする
 fit revision merge main
 ```
 
-おっと間違えた！second.txt の変更が残ったままだった
-
-```bash
-# second.txt の変更を破棄する
-fit change delete hoge/second.txt
-# コマンド実行後、バックアップの確認プロンプトが出るため "yes" を入力し Enter
-```
-```bash
-# second.txt の変更が破棄されたことを確認する
-fit change list
-```
-```bash
-# mainブランチを現在のfeat-foo_barブランチにマージする
-fit revision merge main
-```
-
-おっと間違えた！マージコンフリクトが発生したぞ
+### 3.5. マージコンフリクトの解消
 
 ```bash
 # マージコンフリクトが発生しているファイルを確認する
@@ -219,13 +175,14 @@ fit change stage hoge/first.txt
 ```bash
 # マージコンフリクトを解消し、マージコミットを作成する
 fit conflict resolve
+# マージコミットのメッセージ編集エディタが開くため、メッセージを編集しエディタを閉じる
 ```
 ```bash
 # マージコミットが作成されたことを確認する
-fit revision log
+fit revision list
 ```
 
-### 3.5. ブランチをリモートリポジトリへアップロード
+### 3.6. ブランチをリモートリポジトリへアップロード
 ```bash
 # リモートリポジトリからブランチ・タグ・コミットをダウンロードし、ローカルリポジトリの状態を最新にする
 fit revision download
@@ -236,4 +193,47 @@ fit branch upload
 
 ## 4. その他の利用方法
 
-TODO: 後で書く
+### 4.1. ブランチ名を間違って作成した ⇒ ブランチ名の変更
+
+```bash
+# 現在のブランチ名を変更
+fit branch rename feat-foo_bar
+```
+```bash
+# 現在のブランチ名が feat-foo_bar に変更されたことを確認
+fit branch list
+```
+
+### 4.2. 違うファイルをステージングした ⇒ ステージングの解除
+
+```bash
+# second.txt ファイルのステージングをやめる
+fit change unstage hoge/second.txt
+```
+```bash
+# second.txt の変更がワークツリーに戻っていることを確認
+fit change list
+```
+
+### 4.3. ファイルの変更を破棄したい
+
+```bash
+# second.txt の変更を破棄する
+fit change delete hoge/second.txt
+```
+```bash
+# second.txt の変更が破棄されたことを確認する
+fit change list
+```
+
+### 4.4. 現在のコミットを修正したい ⇒ コミットのキャンセル
+
+```bash
+# コミットをキャンセルし、現在のブランチを一つ前のコミットに戻す
+fit revision uncommit
+```
+```bash
+# 現在のブランチが一つ前のコミットに戻っていることを確認
+fit revision log
+```
+
