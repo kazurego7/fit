@@ -25,7 +25,7 @@
 [Git Koans - The Hobgoblin](https://stevelosh.com/blog/2013/04/git-koans/#s4-the-hobgoblin)
 
 git のコマンドは初心者殺しです。  
-fit は git で最もよく使うコマンドのみを厳選し、コマンド体系に一貫性を持たせた git CLI です。
+fit は git のコマンドから利用頻度の高いものを厳選し、コマンド体系に一貫性を持たせた git CLI です。
 
 ## 必須要件
 
