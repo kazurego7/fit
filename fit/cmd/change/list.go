@@ -13,9 +13,9 @@ var ListCmd = &cobra.Command{
 		var gitSubCmd []string
 		switch {
 		case listFlag.details:
-			gitSubCmd = []string{"-p", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
+			gitSubCmd = []string{"--paginate", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
 		default:
-			gitSubCmd = []string{"status", "--short", "--untracked-files=all"}
+			gitSubCmd = []string{"--paginate", "status", "--short", "--untracked-files=all"}
 		}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
