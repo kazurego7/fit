@@ -21,20 +21,37 @@ func init() {
 }
 
 func Snap(stashMessage string) int {
-	exitCode := stashPush(stashMessage)
+	exitCode := stashPushAll(stashMessage)
 	if exitCode != 0 {
 		return exitCode
 	}
 	return stashApply()
 }
 
-func stashPush(stashMessage string) int {
-	var gitSubCmd []string
-	if stashMessage == "" {
-		gitSubCmd = []string{"stash", "push", "--include-untracked"}
-	} else {
+func stashPushAll(stashMessage string) int {
+	gitSubCmd := []string{"stash", "push", "--include-untracked"}
+	if stashMessage != "" {
 		commitId := git.GetHeadShortCommitId()
-		gitSubCmd = []string{"stash", "push", "--include-untracked", "--message", commitId + " " + stashMessage}
+		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
+	}
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
+	return exitCode
+}
+func stashPushOnlyWorktree(stashMessage string) int {
+	gitSubCmd := []string{"stash", "push", "--include-untracked", "--keep-index"}
+	if stashMessage != "" {
+		commitId := git.GetHeadShortCommitId()
+		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
+	}
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
+	return exitCode
+}
+
+func stashPushOnlyIndex(stashMessage string) int {
+	gitSubCmd := []string{"stash", "push", "--staged"}
+	if stashMessage != "" {
+		commitId := git.GetHeadShortCommitId()
+		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
 	}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode

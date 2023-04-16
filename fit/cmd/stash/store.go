@@ -1,8 +1,6 @@
 package stash
 
 import (
-	"github.com/kazurego7/fit/fit/global"
-	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
 )
 
@@ -10,29 +8,25 @@ var StoreCmd = &cobra.Command{
 	Use:   "store [<message>]",
 	Short: "ワークツリー・インデックスの変更をスタッシュとして保存する.",
 	Args:  cobra.MaximumNArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		var gitSubCmd []string
+	Run: func(cmd *cobra.Command, args []string) {
+		var message string
+		if len(args) > 0 {
+			message = args[0]
+		}
 		switch {
 		case storeFlags.worktree && storeFlags.index || !storeFlags.worktree && !storeFlags.index:
-			gitSubCmd = []string{"stash", "push", "--include-untracked"}
+			stashPushAll(message)
 		case storeFlags.index:
-			gitSubCmd = []string{"stash", "push", "--staged"}
+			stashPushOnlyWorktree(message)
 		case storeFlags.worktree:
-			gitSubCmd = []string{"stash", "push", "--include-untracked", "--keep-index"}
+			stashPushOnlyIndex(message)
 		}
-		// メッセージがあれば追加
-		if len(args) != 0 {
-			gitSubCmd = append(gitSubCmd, args[0])
-		}
-		util.GitCommand(global.RootFlag, gitSubCmd...)
-		return nil
 	},
 }
 
 var storeFlags struct {
 	worktree bool
 	index    bool
-	all      bool
 }
 
 func init() {
