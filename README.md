@@ -46,8 +46,8 @@ go install github.com/kazurego7/fit/fit@latest
 
 PowerShell:
 ```powershell
-PS> fit setting completion --powershell > fit_completion.ps1
-PS> echo '. "fit_completion.ps1"' >> $PROFILE
+fit setting completion --powershell > "$(Split-Path -Path $PROFILE)/fit_completion.ps1"
+echo '. "$(Split-Path -Path $PROFILE)/fit_completion.ps1"' >> $PROFILE
 # この機能を有効にするためには、シェルを再起動する必要があります。
 ```
 
@@ -72,6 +72,16 @@ fish:
 fit setting completion --fish > ~/.config/fish/completions/fit_completion.fish
 ```
 
+### コマンド補完機能の動作確認
+
+- 操作： "fit b"まで入力後、TABキーを1回押す
+- 確認： "fit branch"と補完されることを確認する
+```bash
+fit b
+↓
+fit branch
+```
+
 ### gitステータスバー表示ツールのインストール
 利用するシェルに合わせて、以下のインストール方法から選択してください。
 
@@ -81,7 +91,6 @@ PowerShell:
 ```powershell
 Install-Module posh-git -Scope CurrentUser -Force
 Add-PoshGitToProfile
-# この機能を有効にするためには、シェルを再起動する必要があります。
 ```
 
 Bash:  
@@ -94,6 +103,13 @@ export PROMPT_COMMAND='__posh_git_ps1 "\\[\[\e[0;32m\]\u@\h \[\e[0;33m\]\w" " \[
 EOF
 # この機能を有効にするためには、シェルを再起動する必要があります。
 ```
+
+### gitステータスバー表示ツールの動作確認
+
+- 操作： 適当なローカルリポジトリをカレントディレクトリとする
+- 確認： gitステータスバーが表示されていることを確認する
+![gitステータスバーの表示画像](./doc/image/readme/git-prompt.png)
+
 
 ## 利用方法
 
