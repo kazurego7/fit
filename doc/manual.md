@@ -165,11 +165,11 @@ mainブランチを現在のブランチにマージすることで変更を取�
 他の人が main ブランチにコミットした状態を再現する
 ```bash
 # mainブランチに hoge/first.txt の追加をコミットする
-fit revision switch main
+fit branch switch main
 echo "Other's chages dayo" > ./hoge/first.txt
 fit change stage ./hoge/first.txt
 fit revision commit "他の人のコミットだよー"
-fit revision switch feat-foo_bar
+fit branch switch feat-foo_bar
 ```
 
 mainブランチを現在のブランチにマージする

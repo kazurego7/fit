@@ -13,7 +13,6 @@ func init() {
 	RevisionCmd.AddCommand(ListCmd)
 	RevisionCmd.AddCommand(CommitCmd)
 	RevisionCmd.AddCommand(UncommitCmd)
-	RevisionCmd.AddCommand(SwitchCmd)
 	RevisionCmd.AddCommand(DownloadCmd)
 	RevisionCmd.AddCommand(MergeCmd)
 	RevisionCmd.AddCommand(ShowCmd)

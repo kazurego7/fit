@@ -1,4 +1,4 @@
-package revision
+package branch
 
 import (
 	"github.com/kazurego7/fit/fit/global"

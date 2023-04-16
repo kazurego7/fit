@@ -15,6 +15,7 @@ var BranchCmd = &cobra.Command{
 
 func init() {
 	BranchCmd.AddCommand(ListCmd)
+	BranchCmd.AddCommand(SwitchCmd)
 	BranchCmd.AddCommand(CreateCmd)
 	BranchCmd.AddCommand(DeleteCmd)
 	BranchCmd.AddCommand(RenameCmd)
