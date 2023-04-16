@@ -1,6 +1,6 @@
 # fit
 
-![fit のヘルプ画像](./doc/image/readme/fit-title.png)
+![fit のヘルプ画像](./doc/image/readme/fit.gif)
 
 ユーザーフレンドリーな git CLI
 
