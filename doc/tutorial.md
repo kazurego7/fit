@@ -8,7 +8,7 @@
   - [3.1. featureブランチの作成](#31-featureブランチの作成)
   - [3.2. ファイルの変更をステージングする](#32-ファイルの変更をステージングする)
   - [3.3. コミットの作成](#33-コミットの作成)
-  - [3.4. mainブランチの変更を現在のブランチに反映](#34-mainブランチの変更を現在のブランチに反映)
+  - [3.4. mainブランチの変更をfeatureブランチに反映](#34-mainブランチの変更をfeatureブランチに反映)
   - [3.5. マージコンフリクトの解消](#35-マージコンフリクトの解消)
   - [3.6. ブランチをリモートリポジトリへアップロード](#36-ブランチをリモートリポジトリへアップロード)
 - [4. その他の利用方法](#4-その他の利用方法)
@@ -128,12 +128,9 @@ fit revision list
 
 
 
-### 3.4. mainブランチの変更を現在のブランチに反映
+### 3.4. mainブランチの変更をfeatureブランチに反映
 
-他の人がリポジトリを更新しmainブランチが進んだ状態になった時、mainブランチの変更を現在のブランチに取り込みたいことがある  
-mainブランチを現在のブランチにマージすることで変更を取り込む
-
-他の人が main ブランチにコミットした状態を再現する
+準備として、他の人が main ブランチにコミットした状態を再現する
 ```bash
 # mainブランチに hoge/first.txt の追加をコミットする
 fit branch switch main
@@ -141,12 +138,13 @@ mkdir hoge
 echo "Other's chages dayo" > ./hoge/first.txt
 fit change stage ./hoge/first.txt
 fit revision commit "他の人のコミットだよー"
+# featureブランチに移動する
 fit branch switch feat-hoge
 ```
 
 mainブランチを現在のブランチにマージする
 ```bash
-# main ブランチの状態を確認する
+# main ブランチにコミットが追加されていることを確認する
 fit revision list
 ```
 ```bash
@@ -154,7 +152,7 @@ fit revision list
 fit revision show main
 ```
 ```bash
-# mainブランチを現在のhogeブランチにマージする
+# main ブランチを現在の feat-hoge ブランチにマージする
 fit revision merge main
 ```
 
