@@ -8,7 +8,7 @@ import (
 
 var DownloadCmd = &cobra.Command{
 	Use:   "download",
-	Short: "リモートリポジトリからブランチ・タグ・コミットをダウンロードする.",
+	Short: "リモートリポジトリからブランチ・タグ・リビジョンをダウンロードする.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"fetch", "origin", "--prune"}

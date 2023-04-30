@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var CommitCmd = &cobra.Command{
-	Use:   "commit <message>",
-	Short: "インデックスから新しいコミットを作成し、現在のブランチをそのコミットに移動する.",
+var CreateCmd = &cobra.Command{
+	Use:   "create <message>",
+	Short: "インデックスから新しいリビジョンを作成し、現在のブランチをそのリビジョンに移動する.",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := append([]string{"commit", "--message"}, args...)

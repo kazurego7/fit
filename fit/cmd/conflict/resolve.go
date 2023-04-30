@@ -8,7 +8,7 @@ import (
 
 var ResolveCmd = &cobra.Command{
 	Use:   "resolve",
-	Short: "マージコンフリクトを解消し、マージコミットを作成する.",
+	Short: "マージコンフリクトを解消し、マージリビジョンを作成する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", "--continue"}

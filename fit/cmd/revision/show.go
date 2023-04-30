@@ -8,7 +8,7 @@ import (
 
 var ShowCmd = &cobra.Command{
 	Use:   "show <revision>",
-	Short: "指定したコミットに含まれるファイルを表示する.",
+	Short: "指定したリビジョンに含まれるファイルを表示する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"show", "--stat", "--summary", "--patch", args[0]}

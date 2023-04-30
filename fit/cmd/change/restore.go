@@ -8,7 +8,7 @@ import (
 
 var RestoreCmd = &cobra.Command{
 	Use:   "restore <revision>",
-	Short: "コミットに含まれるファイルをワークツリーに復元する.",
+	Short: "リビジョンに含まれるファイルをワークツリーに復元する.",
 	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"restore", "--source", RestoreFlag.revision, args[0]}
