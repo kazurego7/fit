@@ -21,7 +21,7 @@ var MergeCmd = &cobra.Command{
 			fmt.Fprintln(os.Stderr, message)
 			return
 		}
-		gitSubCmd := []string{"merge", args[0]}
+		gitSubCmd := []string{"merge", "--no-ff", args[0]}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
