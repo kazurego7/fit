@@ -1,4 +1,4 @@
-package setting
+package config
 
 import (
 	"github.com/kazurego7/fit/fit/global"
@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var EditCmd = &cobra.Command{
-	Use:   "edit",
-	Short: "設定ファイルをエディターで開く.",
-	Args:  cobra.NoArgs,
+var SetCmd = &cobra.Command{
+	Use:   "set <name> <value>",
+	Short: "設定を追加する.",
+	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()
-		gitSubCmd := []string{"config", scopeFlag, "--edit"}
+		gitSubCmd := []string{"config", scopeFlag, args[0], args[1]}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 		return nil
 	},

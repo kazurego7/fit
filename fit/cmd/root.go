@@ -5,10 +5,10 @@ import (
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
 	"github.com/kazurego7/fit/fit/cmd/change"
+	"github.com/kazurego7/fit/fit/cmd/config"
 	"github.com/kazurego7/fit/fit/cmd/conflict"
 	"github.com/kazurego7/fit/fit/cmd/repository"
 	"github.com/kazurego7/fit/fit/cmd/revision"
-	"github.com/kazurego7/fit/fit/cmd/setting"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
 	"github.com/kazurego7/fit/fit/global"
@@ -35,7 +35,7 @@ func init() {
 	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
-	RootCmd.AddCommand(setting.SettingCmd)
+	RootCmd.AddCommand(config.ConfigCmd)
 
 	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "データの変更なしに実行する.")
 	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "fit内部で実行するgitコマンドを出力する.")

@@ -1,4 +1,4 @@
-package setting
+package config
 
 import (
 	"github.com/kazurego7/fit/fit/global"
