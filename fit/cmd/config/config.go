@@ -17,9 +17,9 @@ func init() {
 	ConfigCmd.AddCommand(EditCmd)
 	ConfigCmd.AddCommand(CompletionCmd)
 
-	ConfigCmd.PersistentFlags().BoolVar(&configFlag.local, "local", false, "ローカルリポジトリのコンフィグ設定")
-	ConfigCmd.PersistentFlags().BoolVar(&configFlag.user, "user", true, "ユーザー指定のコンフィグ設定")
-	ConfigCmd.PersistentFlags().BoolVar(&configFlag.system, "system", false, "システム全体のコンフィグ設定")
+	ConfigCmd.PersistentFlags().BoolVar(&configFlag.local, "local", false, "ローカルリポジトリの設定")
+	ConfigCmd.PersistentFlags().BoolVar(&configFlag.user, "user", true, "ユーザー指定の設定")
+	ConfigCmd.PersistentFlags().BoolVar(&configFlag.system, "system", false, "システム全体の設定")
 	ConfigCmd.MarkFlagsMutuallyExclusive("local", "user", "system")
 }
 
