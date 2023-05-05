@@ -27,6 +27,11 @@
 git のコマンドは初心者殺しです。  
 fit は git で最もよく使うコマンドのみを厳選し、コマンド体系に一貫性を持たせた git CLI です。
 
+## git is 何？
+
+git とは何か、簡単な紹介と説明が [git の紹介](./doc/introduction.md) にあります。
+git についてまったく知らないという方は、ぜひ読んでみてください。
+
 ## 必須要件
 
 - git version 2.25.1 以降 [インストール手順](https://git-scm.com/downloads)
