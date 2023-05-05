@@ -29,7 +29,7 @@ var StageCmd = &cobra.Command{
 
 		// index への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			git.Snap(`"fit change stage" のバックアップ`)
+			git.Snap(`"fit change stage" のバックアップ`, args...)
 			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 		}

@@ -14,12 +14,12 @@ var UnstageCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := git.SearchIndexList("", args[0])
+		indexList := git.SearchIndexList("", args...)
 		overwriteList := git.SearchWorktreeList("", indexList...)
 
 		// worktree への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			git.Snap(`"fit change unstage" のバックアップ`)
+			git.Snap(`"fit change unstage" のバックアップ`, args...)
 			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 			exitCode := restoreWorktree(overwriteList...)

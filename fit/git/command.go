@@ -66,25 +66,16 @@ func GetHeadShortCommitId() string {
 	return strings.Trim(string(out), "\n")
 }
 
-func Snap(stashMessage string) int {
-	exitCode := StashPushAll(stashMessage)
+func Snap(stashMessage string, files ...string) int {
+	exitCode := StashPushAll(stashMessage, files)
 	if exitCode != 0 {
 		return exitCode
 	}
 	return StashApply()
 }
 
-func StashPushAll(stashMessage string) int {
-	gitSubCmd := []string{"stash", "push", "--include-untracked"}
-	if stashMessage != "" {
-		commitId := GetHeadShortCommitId()
-		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
-	}
-	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
-	return exitCode
-}
-func StashPushOnlyWorktree(stashMessage string) int {
-	gitSubCmd := []string{"stash", "push", "--include-untracked", "--keep-index"}
+func StashPushAll(stashMessage string, files []string) int {
+	gitSubCmd := append([]string{"stash", "push", "--include-untracked", "--"}, files...)
 	if stashMessage != "" {
 		commitId := GetHeadShortCommitId()
 		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
@@ -93,8 +84,8 @@ func StashPushOnlyWorktree(stashMessage string) int {
 	return exitCode
 }
 
-func StashPushOnlyIndex(stashMessage string) int {
-	gitSubCmd := []string{"stash", "push", "--staged"}
+func StashPushOnlyWorktree(stashMessage string) int {
+	gitSubCmd := []string{"stash", "push", "--include-untracked", "--keep-index"}
 	if stashMessage != "" {
 		commitId := GetHeadShortCommitId()
 		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)

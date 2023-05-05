@@ -20,21 +20,21 @@ var DeleteCmd = &cobra.Command{
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			backupDelete()
+			backupDelete(args...)
 			deleteAll(args...)
 		case deleteFlag.worktree:
 			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			backupDelete()
+			backupDelete(args...)
 			deleteWorktree(args...)
 		case deleteFlag.index:
 			if !git.ExistsIndexDiff(args...) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
-			backupDelete()
+			backupDelete(args...)
 			deleteIndex(args...)
 		}
 	},
@@ -51,8 +51,8 @@ func init() {
 	DeleteCmd.MarkFlagsMutuallyExclusive("worktree", "index")
 }
 
-func backupDelete() {
-	git.Snap(`"fit change delete" のバックアップ`)
+func backupDelete(files ...string) {
+	git.Snap(`"fit change delete" のバックアップ`, files...)
 	fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 		`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 }
