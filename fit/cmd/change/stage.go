@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
@@ -30,7 +29,7 @@ var StageCmd = &cobra.Command{
 
 		// index への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			stash.Snap(`"fit change stage" のバックアップ`)
+			git.Snap(`"fit change stage" のバックアップ`)
 			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 		}

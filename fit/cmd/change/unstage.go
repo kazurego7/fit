@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/spf13/cobra"
 )
@@ -20,7 +19,7 @@ var UnstageCmd = &cobra.Command{
 
 		// worktree への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			stash.Snap(`"fit change unstage" のバックアップ`)
+			git.Snap(`"fit change unstage" のバックアップ`)
 			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 			exitCode := restoreWorktree(overwriteList...)

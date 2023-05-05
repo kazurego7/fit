@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -53,7 +52,7 @@ func init() {
 }
 
 func backupDelete() {
-	stash.Snap(`"fit change delete" のバックアップ`)
+	git.Snap(`"fit change delete" のバックアップ`)
 	fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 		`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 }

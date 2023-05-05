@@ -1,6 +1,7 @@
 package stash
 
 import (
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/spf13/cobra"
 )
 
@@ -15,11 +16,11 @@ var StoreCmd = &cobra.Command{
 		}
 		switch {
 		case storeFlags.worktree && storeFlags.index || !storeFlags.worktree && !storeFlags.index:
-			stashPushAll(message)
+			git.StashPushAll(message)
 		case storeFlags.index:
-			stashPushOnlyWorktree(message)
+			git.StashPushOnlyWorktree(message)
 		case storeFlags.worktree:
-			stashPushOnlyIndex(message)
+			git.StashPushOnlyIndex(message)
 		}
 	},
 }
