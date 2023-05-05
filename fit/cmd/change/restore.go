@@ -7,7 +7,7 @@ import (
 )
 
 var RestoreCmd = &cobra.Command{
-	Use:   "restore <revision>",
+	Use:   "restore <pathspec>",
 	Short: "コミットに含まれるファイルをワークツリーに復元する.",
 	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges()),
 	Run: func(cmd *cobra.Command, args []string) {

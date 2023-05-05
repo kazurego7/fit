@@ -12,26 +12,26 @@ var RestoreCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		var stashRevision string
+		var stashcommit string
 		if len(args) == 0 {
-			stashRevision = `stash@{0}`
+			stashcommit = `stash@{0}`
 		} else {
-			stashRevision = args[0]
+			stashcommit = args[0]
 		}
 
-		exitCode := applyKeepIndex(stashRevision)
+		exitCode := applyKeepIndex(stashcommit)
 		if exitCode != 0 {
-			apply(stashRevision)
+			apply(stashcommit)
 		}
 	},
 }
 
-func applyKeepIndex(stashRevision string) int {
-	gitSubCmd := []string{"stash", "apply", "--quiet", "--index", stashRevision}
+func applyKeepIndex(stashcommit string) int {
+	gitSubCmd := []string{"stash", "apply", "--quiet", "--index", stashcommit}
 	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }
 
-func apply(stashRevision string) int {
-	gitSubCmd := []string{"stash", "apply", "--quiet", stashRevision}
+func apply(stashcommit string) int {
+	gitSubCmd := []string{"stash", "apply", "--quiet", stashcommit}
 	return util.GitCommand(global.RootFlag, gitSubCmd...)
 }

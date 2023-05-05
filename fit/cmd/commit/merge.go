@@ -11,7 +11,7 @@ import (
 )
 
 var MergeCmd = &cobra.Command{
-	Use:   "merge <revision>",
+	Use:   "merge <commit>",
 	Short: "指定したブランチを現在のブランチにマージする.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
