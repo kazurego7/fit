@@ -1,4 +1,4 @@
-package revision
+package commit
 
 import (
 	"github.com/kazurego7/fit/fit/global"
@@ -8,7 +8,7 @@ import (
 
 var BackCmd = &cobra.Command{
 	Use:   "back",
-	Short: "現在のブランチを1つ前のリビジョンに移動する.",
+	Short: "現在のブランチを1つ前のコミットに移動する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--soft", "HEAD^"}

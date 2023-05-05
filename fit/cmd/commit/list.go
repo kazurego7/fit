@@ -1,4 +1,4 @@
-package revision
+package commit
 
 import (
 	"github.com/kazurego7/fit/fit/global"
@@ -8,7 +8,7 @@ import (
 
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "リビジョンを一覧表示する.",
+	Short: "コミットを一覧表示する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{
@@ -40,6 +40,6 @@ var listFlag struct {
 }
 
 func init() {
-	ListCmd.Flags().BoolVarP(&listFlag.orphan, "orphan", "o", false, "ブランチ・タグの付いていない孤独なリビジョンもログに表示する(スタッシュも表示される).")
+	ListCmd.Flags().BoolVarP(&listFlag.orphan, "orphan", "o", false, "ブランチ・タグの付いていない孤独なコミットもログに表示する(スタッシュも表示される).")
 	ListCmd.Flags().BoolVarP(&listFlag.stash, "stash", "s", false, "スタッシュもログに表示する.")
 }

@@ -5,10 +5,10 @@ import (
 
 	"github.com/kazurego7/fit/fit/cmd/branch"
 	"github.com/kazurego7/fit/fit/cmd/change"
+	"github.com/kazurego7/fit/fit/cmd/commit"
 	"github.com/kazurego7/fit/fit/cmd/config"
 	"github.com/kazurego7/fit/fit/cmd/conflict"
 	"github.com/kazurego7/fit/fit/cmd/repository"
-	"github.com/kazurego7/fit/fit/cmd/revision"
 	"github.com/kazurego7/fit/fit/cmd/stash"
 	"github.com/kazurego7/fit/fit/cmd/tag"
 	"github.com/kazurego7/fit/fit/global"
@@ -29,7 +29,7 @@ func Execute() {
 
 func init() {
 	RootCmd.AddCommand(change.ChangeCmd)
-	RootCmd.AddCommand(revision.RevisionCmd)
+	RootCmd.AddCommand(commit.CommitCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)
 	RootCmd.AddCommand(branch.BranchCmd)
 	RootCmd.AddCommand(stash.StashCmd)

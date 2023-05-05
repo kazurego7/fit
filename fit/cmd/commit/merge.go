@@ -1,4 +1,4 @@
-package revision
+package commit
 
 import (
 	"fmt"
