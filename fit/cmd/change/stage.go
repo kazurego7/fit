@@ -15,7 +15,7 @@ import (
 var StageCmd = &cobra.Command{
 	Use:   "stage <pathspec>…",
 	Short: "ワークツリーのファイルの変更をインデックスにステージングする.",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		// コンフリクト解消していないファイルがあればステージングしない
 		if err := checkConflictResolved(args...); err != nil {

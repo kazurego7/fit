@@ -13,7 +13,7 @@ import (
 var MergeCmd = &cobra.Command{
 	Use:   "merge <commit>",
 	Short: "指定したブランチを現在のブランチにマージする.",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.MatchAll(cobra.ExactArgs(1), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		if git.ExistsUntrackedFiles(":/") || git.ExistsWorktreeDiff(":/") || git.ExistsIndexDiff(":/") {
 			message := "インデックス・ワークツリーにファイルの変更があるため、マージを中止しました\n" +

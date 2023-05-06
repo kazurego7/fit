@@ -8,7 +8,7 @@ import (
 var StoreCmd = &cobra.Command{
 	Use:   "store [<message>]",
 	Short: "ワークツリーの変更をスタッシュとして保存する.",
-	Args:  cobra.MaximumNArgs(1),
+	Args:  cobra.MatchAll(cobra.MaximumNArgs(1), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		var message string
 		if len(args) > 0 {

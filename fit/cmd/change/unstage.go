@@ -11,7 +11,7 @@ import (
 var UnstageCmd = &cobra.Command{
 	Use:   "unstage <pathspec>…",
 	Short: "インデックスにステージングされているファイルの変更をワークツリーに戻す.",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), git.CurrentIsNotReadonly()),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// index にも worktree にもあるファイルは上書き対象となる
 		indexList := git.SearchIndexList("", args...)

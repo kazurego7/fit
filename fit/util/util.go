@@ -1,6 +1,8 @@
 package util
 
-import "strings"
+import (
+	"strings"
+)
 
 func SplitLn(str string) []string {
 	res := strings.Split(strings.Trim(strings.ReplaceAll(string(str), `"`, ""), "\n"), "\n")

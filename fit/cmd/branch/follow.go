@@ -1,6 +1,9 @@
 package branch
 
 import (
+	"errors"
+
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -10,7 +13,12 @@ var FollowCmd = &cobra.Command{
 	Use:   "follow [<branch name>]",
 	Short: "ローカルブランチをリモートブランチの状態に追従させる.",
 	Args:  cobra.MaximumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(args) == 0 && git.ShowCurrentBranch() == "" {
+			return errors.New("現在のブランチが選択されていません.\n" +
+				"※ ブランチを指定するか、\"fit branch switch\" でブランチの切り替えをしてください")
+		}
+
 		var branchName string
 		if len(args) == 0 {
 			branchName = "HEAD"
@@ -21,11 +29,12 @@ var FollowCmd = &cobra.Command{
 		flagBranch := getBranchName(branchName)
 		exitCode := pullFor(flagBranch)
 		if exitCode != 0 {
-			return
+			return errors.New("ブランチの取得に失敗しました")
 		}
 		if !existsUpstreamFor(flagBranch) {
 			setUpstreamTo(flagBranch)
 		}
+		return nil
 	},
 }
 

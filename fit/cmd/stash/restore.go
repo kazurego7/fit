@@ -1,6 +1,7 @@
 package stash
 
 import (
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -9,7 +10,7 @@ import (
 var RestoreCmd = &cobra.Command{
 	Use:   "restore [<stash number> | <stash id>]",
 	Short: "保存されたスタッシュをワークツリー・インデックスに復元する.",
-	Args:  cobra.MaximumNArgs(1),
+	Args:  cobra.MatchAll(cobra.MaximumNArgs(1), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		var stashcommit string

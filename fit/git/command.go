@@ -1,10 +1,12 @@
 package git
 
 import (
+	"errors"
 	"strings"
 
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
+	"github.com/spf13/cobra"
 )
 
 func addRoot(pathList ...string) []string {
@@ -98,4 +100,20 @@ func StashApply() int {
 	gitSubCmd := []string{"stash", "apply", "--index", "--quiet"}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
+}
+
+func ShowCurrentBranch() string {
+	gitSubCmd := []string{"branch", "--show-current"}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd...)
+	return strings.Trim(string(out), "\n")
+}
+
+func CurrentIsNotReadonly() cobra.PositionalArgs {
+	return func(cmd *cobra.Command, args []string) error {
+		if ShowCurrentBranch() == "" {
+			return errors.New("現在、読み込み専用の状態です\n" +
+				"※ \"fit branch switch\" で特定のブランチに切り替えるか、\"fit branch create\" で新しいブランチに切り替えてください")
+		}
+		return nil
+	}
 }

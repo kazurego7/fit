@@ -12,7 +12,7 @@ import (
 var DeleteCmd = &cobra.Command{
 	Use:   "delete <pathspec>…",
 	Short: "ワークツリー・インデックスの変更を削除する.",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
 		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:

@@ -1,6 +1,7 @@
 package change
 
 import (
+	"github.com/kazurego7/fit/fit/git"
 	"github.com/kazurego7/fit/fit/global"
 	"github.com/kazurego7/fit/fit/util"
 	"github.com/spf13/cobra"
@@ -9,7 +10,7 @@ import (
 var RestoreCmd = &cobra.Command{
 	Use:   "restore <pathspec>",
 	Short: "コミットに含まれるファイルをワークツリーに復元する.",
-	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges()),
+	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges(), git.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"restore", "--source", RestoreFlag.commit, args[0]}
 		util.GitCommand(global.RootFlag, gitSubCmd...)

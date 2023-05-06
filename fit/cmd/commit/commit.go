@@ -16,4 +16,5 @@ func init() {
 	CommitCmd.AddCommand(DownloadCmd)
 	CommitCmd.AddCommand(MergeCmd)
 	CommitCmd.AddCommand(ShowCmd)
+	CommitCmd.AddCommand(SwitchCmd)
 }
