@@ -62,7 +62,8 @@ func existsWorktreeChanges() cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
 		overwriteList := git.SearchWorktreeList("", args...)
 		if len(overwriteList) != 0 {
-			return errors.New("復元するファイルに変更があります.変更を削除するか、ステージングを行ってください")
+			return errors.New("復元するファイルに変更があります.\n" +
+				"\"fit change delete\" で変更を削除するか、\"fit change stage\" でステージングを行ってください")
 		}
 		return nil
 	}
