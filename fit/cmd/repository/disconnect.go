@@ -1,4 +1,4 @@
-package commit
+package repository
 
 import (
 	"github.com/kazurego7/fit/fit/global"
@@ -6,12 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var DownloadCmd = &cobra.Command{
-	Use:   "download",
-	Short: "リモートリポジトリからブランチ・タグ・コミットをダウンロードする.",
+var DisconnectCmd = &cobra.Command{
+	Use:   "disconnect",
+	Short: "リモートリポジトリとの非同期接続をやめる.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"fetch", "origin", "--prune"}
+		gitSubCmd := []string{"remote", "remove", "origin"}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }

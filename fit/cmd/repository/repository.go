@@ -10,9 +10,10 @@ var RepositoryCmd = &cobra.Command{
 }
 
 func init() {
+	RepositoryCmd.AddCommand(FetchCmd)
 	RepositoryCmd.AddCommand(InitCmd)
 	RepositoryCmd.AddCommand(CloneCmd)
 	RepositoryCmd.AddCommand(RemoteCmd)
-	RepositoryCmd.AddCommand(AsyncCmd)
-	RepositoryCmd.AddCommand(UnsyncCmd)
+	RepositoryCmd.AddCommand(ConnectCmd)
+	RepositoryCmd.AddCommand(DisconnectCmd)
 }

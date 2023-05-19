@@ -6,12 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var AsyncCmd = &cobra.Command{
-	Use:   "async <remote url>",
-	Short: "リモートリポジトリとの非同期接続を設定する.",
-	Args:  cobra.ExactArgs(1),
+var FetchCmd = &cobra.Command{
+	Use:   "fetch",
+	Short: "リモートリポジトリからブランチ・タグ・コミットを取得する.",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"remote", "add", "origin", args[0]}
+		gitSubCmd := []string{"fetch", "origin", "--prune"}
 		util.GitCommand(global.RootFlag, gitSubCmd...)
 	},
 }
