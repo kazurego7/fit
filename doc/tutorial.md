@@ -151,7 +151,7 @@ fit commit list
 ```
 ```bash
 # main ブランチの指すコミットに含まれるファイルを表示する
-fit commit show main
+fit commit list --details main
 ```
 ```bash
 # main ブランチを現在の feat-hoge ブランチにマージする
