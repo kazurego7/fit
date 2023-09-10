@@ -27,13 +27,17 @@ var FollowCmd = &cobra.Command{
 		}
 
 		flagBranch := getBranchName(branchName)
-		exitCode := pullFor(flagBranch)
-		if exitCode != 0 {
+		pullForExitCode := pullFor(flagBranch)
+		if pullForExitCode != 0 {
 			return errors.New("ブランチの取得に失敗しました")
 		}
 		if !existsUpstreamFor(flagBranch) {
-			setUpstreamTo(flagBranch)
+			setUpstreamExitCode := setUpstream(flagBranch)
+			if setUpstreamExitCode != 0 {
+				return errors.New("リモートリポジトリのブランチの設定に失敗しました")
+			}
 		}
+		switchBranch(branchName)
 		return nil
 	},
 }
@@ -51,8 +55,14 @@ func pullFor(branch string) int {
 	return exitCode
 }
 
-func setUpstreamTo(branch string) int {
+func setUpstream(branch string) int {
 	gitSubCmd := []string{"branch", branch, "--set-upstream-to=origin/" + branch}
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
+	return exitCode
+}
+
+func switchBranch(branch string) int {
+	gitSubCmd := []string{"switch", branch}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd...)
 	return exitCode
 }
