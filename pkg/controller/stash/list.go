@@ -14,10 +14,10 @@ var ListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if listFlag.details == "" {
 			gitSubCmd := []string{"reflog", "show", "--format=%C(03)%h%C(reset) %C(bold 1)%gD%C(reset) %C(bold 0)%s%C(reset)", "stash"}
-			util.GitCommand(usecase.RootFlag, gitSubCmd...)
+			util.GitCommand(usecase.RootFlag, gitSubCmd)
 		} else {
 			gitSubCmd := []string{"stash", "show", "--stat", "--summary", "--patch", "--include-untracked", listFlag.details}
-			util.GitCommand(usecase.RootFlag, gitSubCmd...)
+			util.GitCommand(usecase.RootFlag, gitSubCmd)
 		}
 	},
 }

@@ -14,6 +14,6 @@ var CreateCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := append([]string{"commit", "--message"}, args...)
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }

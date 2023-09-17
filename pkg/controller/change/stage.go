@@ -24,8 +24,8 @@ var StageCmd = &cobra.Command{
 		}
 
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := git.SearchIndexList("u", args...)
-		overwriteList := git.SearchWorktreeList("", indexList...)
+		indexList := git.SearchIndexList("u", args)
+		overwriteList := git.SearchWorktreeList("", indexList)
 
 		// index への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
@@ -34,7 +34,7 @@ var StageCmd = &cobra.Command{
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 		}
 		gitSubCmd := append([]string{"add"}, args...)
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
-	ValidArgs: append(git.SearchUntrackedFiles(":/"), git.SearchWorktreeList("u", ":/")...),
+	ValidArgs: append(git.SearchUntrackedFiles([]string{":/"}), git.SearchWorktreeList("u", []string{":/"})...),
 }

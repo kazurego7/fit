@@ -13,6 +13,6 @@ var AbortCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"merge", "--abort"}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }

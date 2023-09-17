@@ -13,6 +13,6 @@ var FetchCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"fetch", "origin", "--prune"}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }

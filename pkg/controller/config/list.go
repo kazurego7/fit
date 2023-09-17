@@ -14,7 +14,7 @@ var ListCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()
 		gitSubCmd := []string{"config", "--list", scopeFlag}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 		return nil
 	},
 }

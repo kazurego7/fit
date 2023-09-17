@@ -27,6 +27,6 @@ var UploadCmd = &cobra.Command{
 		} else {
 			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }

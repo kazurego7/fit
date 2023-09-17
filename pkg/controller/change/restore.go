@@ -14,7 +14,7 @@ var RestoreCmd = &cobra.Command{
 	Args:  cobra.MatchAll(service.ExistsFiles(1), service.ExistsWorktreeChanges(), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"restore", "--source", RestoreFlag.commit, args[0]}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }
 

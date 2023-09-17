@@ -13,11 +13,11 @@ var SwitchCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", args[0]}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		gitSubCmd := []string{"for-each-ref", `--format="%(refname:short)"`, "refs/remotes", "refs/heads"}
-		out, _, err := util.GitQuery(usecase.RootFlag, gitSubCmd...)
+		out, _, err := util.GitQuery(usecase.RootFlag, gitSubCmd)
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}

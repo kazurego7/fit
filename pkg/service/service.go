@@ -45,7 +45,7 @@ func ExistsFiles(n int) cobra.PositionalArgs {
 
 func ExistsWorktreeChanges() cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
-		overwriteList := git.SearchWorktreeList("", args...)
+		overwriteList := git.SearchWorktreeList("", args)
 		if len(overwriteList) != 0 {
 			return errors.New("復元するファイルに変更があります.\n" +
 				"\"fit change delete\" で変更を削除するか、\"fit change stage\" でステージングを行ってください")
@@ -61,47 +61,47 @@ func BackupDelete(pathspecs []string) {
 }
 
 func DeleteWorktree(pathspecs []string) {
-	unergedList := git.SearchWorktreeList("U", pathspecs[0])
+	unergedList := git.SearchWorktreeList("U", pathspecs)
 	for i := range unergedList {
 		unergedList[i] = ":!" + unergedList[i]
 	}
-	restoreList := git.SearchWorktreeList("", append(unergedList, pathspecs[0])...)
+	restoreList := git.SearchWorktreeList("", append(unergedList, pathspecs...))
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList...)
+		exitCode := git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	addedList := git.SearchWorktreeList("A", pathspecs[0])
+	addedList := git.SearchWorktreeList("A", pathspecs)
 	if len(addedList) != 0 {
-		exitCode := git.RemoveIndex(addedList...)
+		exitCode := git.RemoveIndex(addedList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	git.Clean(pathspecs[0])
+	git.Clean(pathspecs)
 }
 
 func DeleteIndex(pathspecs []string) {
-	indexList := git.SearchIndexList("", pathspecs[0])
-	worktreeList := git.SearchWorktreeList("", pathspecs[0])
+	indexList := git.SearchIndexList("", pathspecs)
+	worktreeList := git.SearchWorktreeList("", pathspecs)
 	indexOnlyList := util.Difference(indexList, worktreeList)
-	restoreList := git.SearchIndexList("a", indexOnlyList...)
-	cleanList := git.SearchIndexList("A", indexOnlyList...)
+	restoreList := git.SearchIndexList("a", indexOnlyList)
+	cleanList := git.SearchIndexList("A", indexOnlyList)
 	if len(indexList) != 0 {
-		exitCode := git.RestoreIndex(indexList...)
+		exitCode := git.RestoreIndex(indexList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList...)
+		exitCode := git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	if len(cleanList) != 0 {
-		exitCode := git.Clean(cleanList...)
+		exitCode := git.Clean(cleanList)
 		if exitCode != 0 {
 			return
 		}
@@ -109,29 +109,29 @@ func DeleteIndex(pathspecs []string) {
 }
 
 func DeleteAll(pathspecs []string) {
-	indexList := git.SearchIndexList("", pathspecs[0])
+	indexList := git.SearchIndexList("", pathspecs)
 	if len(indexList) != 0 {
-		exitCode := git.RestoreIndex(indexList...)
+		exitCode := git.RestoreIndex(indexList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	addedList :=
-		git.SearchWorktreeList("A", pathspecs[0])
+		git.SearchWorktreeList("A", pathspecs)
 	if len(addedList) != 0 {
-		exitCode := git.RemoveIndex(addedList...)
+		exitCode := git.RemoveIndex(addedList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	restoreList := git.SearchWorktreeList("a", pathspecs[0])
+	restoreList := git.SearchWorktreeList("a", pathspecs)
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList...)
+		exitCode := git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	exitCode := git.Clean(pathspecs[0])
+	exitCode := git.Clean(pathspecs)
 	if exitCode != 0 {
 		return
 	}
@@ -140,7 +140,7 @@ func DeleteAll(pathspecs []string) {
 func CheckConflictResolved(pathspecs []string) error {
 	isConflictResolved := git.IsConflictResolved(pathspecs)
 	if isConflictResolved {
-		unmergedList := git.SearchWorktreeList("U", pathspecs...)
+		unmergedList := git.SearchWorktreeList("U", pathspecs)
 		errorMessage := "コンフリクトマーカーが残っています. コンフリクトマーカーを取り除いてください\n" + strings.Join(unmergedList, "\n")
 		return errors.New(errorMessage)
 	}

@@ -17,21 +17,21 @@ var DeleteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		switch {
 		case deleteFlag.worktree && deleteFlag.index || !deleteFlag.worktree && !deleteFlag.index:
-			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) && !git.ExistsIndexDiff(args...) {
+			if !git.ExistsUntrackedFiles(args) && !git.ExistsWorktreeDiff(args) && !git.ExistsIndexDiff(args) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			service.BackupDelete(args)
 			service.DeleteAll(args)
 		case deleteFlag.worktree:
-			if !git.ExistsUntrackedFiles(args...) && !git.ExistsWorktreeDiff(args...) {
+			if !git.ExistsUntrackedFiles(args) && !git.ExistsWorktreeDiff(args) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}
 			service.BackupDelete(args)
 			service.DeleteWorktree(args)
 		case deleteFlag.index:
-			if !git.ExistsIndexDiff(args...) {
+			if !git.ExistsIndexDiff(args) {
 				fmt.Fprintln(os.Stderr, "削除するファイルがありません")
 				return
 			}

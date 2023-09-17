@@ -9,7 +9,7 @@ import (
 	"fit/pkg/usecase"
 )
 
-func GitCommand(globalFlag usecase.GlobalFlag, args ...string) int {
+func GitCommand(globalFlag usecase.GlobalFlag, args []string) int {
 	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
 
 	if usecase.RootFlag.Debug {
@@ -32,7 +32,7 @@ func GitCommand(globalFlag usecase.GlobalFlag, args ...string) int {
 	return cmd.ProcessState.ExitCode()
 }
 
-func GitQuery(globalFlag usecase.GlobalFlag, args ...string) ([]byte, int, error) {
+func GitQuery(globalFlag usecase.GlobalFlag, args []string) ([]byte, int, error) {
 	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
 
 	if usecase.RootFlag.Debug {

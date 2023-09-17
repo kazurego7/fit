@@ -37,7 +37,7 @@ var LogCmd = &cobra.Command{
 				args[0],
 			}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }
 

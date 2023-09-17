@@ -23,7 +23,7 @@ var DeleteCmd = &cobra.Command{
 			}
 			gitSubCmd = []string{"stash", "drop", args[0]}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 		return nil
 	},
 }

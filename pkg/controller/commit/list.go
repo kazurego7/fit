@@ -32,10 +32,10 @@ var ListCmd = &cobra.Command{
 			if listFlag.stash {
 				gitSubCmd = append(gitSubCmd, "--all")
 			}
-			util.GitCommand(usecase.RootFlag, gitSubCmd...)
+			util.GitCommand(usecase.RootFlag, gitSubCmd)
 		} else {
 			gitSubCmd := []string{"show", "--stat", "--summary", "--patch", listFlag.details}
-			util.GitCommand(usecase.RootFlag, gitSubCmd...)
+			util.GitCommand(usecase.RootFlag, gitSubCmd)
 		}
 	},
 }

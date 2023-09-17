@@ -14,6 +14,6 @@ var BackCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--soft", "HEAD^"}
-		util.GitCommand(usecase.RootFlag, gitSubCmd...)
+		util.GitCommand(usecase.RootFlag, gitSubCmd)
 	},
 }
