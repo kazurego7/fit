@@ -1,7 +1,7 @@
 package change
 
 import (
-	"fit/pkg/infra"
+	"fit/pkg/service"
 	"fit/pkg/usecase"
 	"fit/pkg/util"
 
@@ -11,7 +11,7 @@ import (
 var RestoreCmd = &cobra.Command{
 	Use:   "restore <pathspec>",
 	Short: "コミットに含まれるファイルをワークツリーに復元する.",
-	Args:  cobra.MatchAll(existsFiles(1), existsWorktreeChanges(), infra.CurrentIsNotReadonly()),
+	Args:  cobra.MatchAll(service.ExistsFiles(1), service.ExistsWorktreeChanges(), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"restore", "--source", RestoreFlag.commit, args[0]}
 		util.GitCommand(usecase.RootFlag, gitSubCmd...)

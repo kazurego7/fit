@@ -1,6 +1,7 @@
 package change
 
 import (
+	"fit/pkg/service"
 	"fit/pkg/usecase"
 	"fit/pkg/util"
 
@@ -10,7 +11,7 @@ import (
 var LogCmd = &cobra.Command{
 	Use:   "log <pathspec>",
 	Short: "単一のファイルの履歴を表示する.",
-	Args:  existsFiles(1),
+	Args:  service.ExistsFiles(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var gitSubCmd []string
 		if logFlag.details {

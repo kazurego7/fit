@@ -1,7 +1,7 @@
 package commit
 
 import (
-	"fit/pkg/infra"
+	"fit/pkg/service"
 	"fit/pkg/usecase"
 	"fit/pkg/util"
 
@@ -11,7 +11,7 @@ import (
 var BackCmd = &cobra.Command{
 	Use:   "back",
 	Short: "現在のブランチを1つ前のコミットに移動する.",
-	Args:  cobra.MatchAll(cobra.NoArgs, infra.CurrentIsNotReadonly()),
+	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--soft", "HEAD^"}
 		util.GitCommand(usecase.RootFlag, gitSubCmd...)

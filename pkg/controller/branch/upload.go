@@ -1,6 +1,7 @@
 package branch
 
 import (
+	"fit/pkg/infra/git"
 	"fit/pkg/usecase"
 	"fit/pkg/util"
 
@@ -20,7 +21,7 @@ var UploadCmd = &cobra.Command{
 			branchName = "heads/" + args[0]
 		}
 		var gitSubCmd []string
-		if !existsUpstreamFor(branchName) {
+		if !git.ExistsUpstreamFor(branchName) {
 			// すでに upstream が設定されている場合は、upstream を設定しない
 			gitSubCmd = []string{"push", "origin", branchName, "--prune", "--set-upstream"}
 		} else {
