@@ -11,7 +11,7 @@ import (
 	"fit/pkg/controller/repository"
 	"fit/pkg/controller/stash"
 	"fit/pkg/controller/tag"
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 
 	"github.com/spf13/cobra"
 )
@@ -38,8 +38,8 @@ func init() {
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(config.ConfigCmd)
 
-	RootCmd.PersistentFlags().BoolVar(&usecase.RootFlag.Dryrun, "dry-run", false, "データの変更なしに実行する.")
-	RootCmd.PersistentFlags().BoolVar(&usecase.RootFlag.Debug, "debug", false, "fit内部で実行するgitコマンドを出力する.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Dryrun, "dry-run", false, "データの変更なしに実行する.")
+	RootCmd.PersistentFlags().BoolVar(&global.RootFlag.Debug, "debug", false, "fit内部で実行するgitコマンドを出力する.")
 
 	cobra.EnableCommandSorting = false
 	RootCmd.CompletionOptions.DisableDefaultCmd = true

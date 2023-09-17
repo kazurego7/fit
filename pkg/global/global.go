@@ -1,4 +1,4 @@
-package usecase
+package global
 
 type GlobalFlag struct {
 	Debug  bool

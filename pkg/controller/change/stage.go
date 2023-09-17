@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"fit/pkg/global"
 	"fit/pkg/infra/git"
 	"fit/pkg/service"
-	"fit/pkg/usecase"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -34,7 +34,7 @@ var StageCmd = &cobra.Command{
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 		}
 		gitSubCmd := append([]string{"add"}, args...)
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 	ValidArgs: append(git.SearchUntrackedFiles([]string{":/"}), git.SearchWorktreeList("u", []string{":/"})...),
 }

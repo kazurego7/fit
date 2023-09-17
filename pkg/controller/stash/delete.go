@@ -3,7 +3,7 @@ package stash
 import (
 	"errors"
 
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -23,7 +23,7 @@ var DeleteCmd = &cobra.Command{
 			}
 			gitSubCmd = []string{"stash", "drop", args[0]}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 		return nil
 	},
 }

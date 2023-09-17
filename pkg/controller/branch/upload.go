@@ -1,8 +1,8 @@
 package branch
 
 import (
+	"fit/pkg/global"
 	"fit/pkg/infra/git"
-	"fit/pkg/usecase"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -27,6 +27,6 @@ var UploadCmd = &cobra.Command{
 		} else {
 			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }

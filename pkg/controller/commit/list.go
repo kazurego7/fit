@@ -1,7 +1,7 @@
 package commit
 
 import (
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -32,10 +32,10 @@ var ListCmd = &cobra.Command{
 			if listFlag.stash {
 				gitSubCmd = append(gitSubCmd, "--all")
 			}
-			util.GitCommand(usecase.RootFlag, gitSubCmd)
+			util.GitCommand(global.RootFlag, gitSubCmd)
 		} else {
 			gitSubCmd := []string{"show", "--stat", "--summary", "--patch", listFlag.details}
-			util.GitCommand(usecase.RootFlag, gitSubCmd)
+			util.GitCommand(global.RootFlag, gitSubCmd)
 		}
 	},
 }

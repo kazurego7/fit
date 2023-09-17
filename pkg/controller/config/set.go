@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -14,7 +14,7 @@ var SetCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		scopeFlag := getScopeFlag()
 		gitSubCmd := []string{"config", scopeFlag, args[0], args[1]}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 		return nil
 	},
 }

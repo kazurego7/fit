@@ -1,7 +1,7 @@
 package change
 
 import (
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -18,7 +18,7 @@ var ListCmd = &cobra.Command{
 		default:
 			gitSubCmd = []string{"--paginate", "status", "--short", "--untracked-files=all"}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }
 

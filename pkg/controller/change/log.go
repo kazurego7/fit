@@ -1,8 +1,8 @@
 package change
 
 import (
+	"fit/pkg/global"
 	"fit/pkg/service"
-	"fit/pkg/usecase"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -37,7 +37,7 @@ var LogCmd = &cobra.Command{
 				args[0],
 			}
 		}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }
 

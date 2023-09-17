@@ -6,13 +6,13 @@ import (
 	"os/exec"
 	"strings"
 
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 )
 
-func GitCommand(globalFlag usecase.GlobalFlag, args []string) int {
+func GitCommand(globalFlag global.GlobalFlag, args []string) int {
 	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
 
-	if usecase.RootFlag.Debug {
+	if global.RootFlag.Debug {
 		if globalFlag.Dryrun {
 			fmt.Fprintln(os.Stderr, "dry-run: git "+strings.Join(extArgs, " "))
 		} else {
@@ -32,10 +32,10 @@ func GitCommand(globalFlag usecase.GlobalFlag, args []string) int {
 	return cmd.ProcessState.ExitCode()
 }
 
-func GitQuery(globalFlag usecase.GlobalFlag, args []string) ([]byte, int, error) {
+func GitQuery(globalFlag global.GlobalFlag, args []string) ([]byte, int, error) {
 	extArgs := append([]string{"-c", "core.quotepath=false"}, args...)
 
-	if usecase.RootFlag.Debug {
+	if global.RootFlag.Debug {
 		fmt.Fprintln(os.Stderr, "query: git "+strings.Join(extArgs, " "))
 	}
 

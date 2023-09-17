@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"fit/pkg/usecase"
+	"fit/pkg/global"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -13,6 +13,6 @@ var FetchCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"fetch", "origin", "--prune"}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }

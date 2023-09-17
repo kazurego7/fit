@@ -1,8 +1,8 @@
 package branch
 
 import (
+	"fit/pkg/global"
 	"fit/pkg/service"
-	"fit/pkg/usecase"
 	"fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -14,6 +14,6 @@ var RenameCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.ExactArgs(1), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"branch", "--move", args[0]}
-		util.GitCommand(usecase.RootFlag, gitSubCmd)
+		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }
