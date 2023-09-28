@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"fit/pkg/infra/git"
+	"fit/pkg/service"
 
 	"github.com/spf13/cobra"
 )
@@ -37,6 +38,8 @@ var FollowCmd = &cobra.Command{
 			}
 		}
 		git.SwitchBranch(branchName)
+		git.FetchPrune()
+		service.PruneBranchOfGone()
 		return nil
 	},
 }

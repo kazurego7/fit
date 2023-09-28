@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fit/pkg/global"
 	"fit/pkg/infra/git"
 	"fit/pkg/util"
 	"fmt"
@@ -145,4 +146,29 @@ func CheckConflictResolved(pathspecs []string) error {
 		return errors.New(errorMessage)
 	}
 	return nil
+}
+
+func PruneBranchOfGone() {
+	// リモートに存在しない上流を持つローカルブランチを取得する
+	gitSubCmdGetRefStatus := []string{"for-each-ref", "--format", "%(refname:lstrip=-1):%(upstream:track)"}
+	refStatusByte, _, err := util.GitQuery(global.RootFlag, gitSubCmdGetRefStatus)
+	currentBranch := git.ShowCurrentBranch()
+	noRemoteBranchList := []string{}
+	for _, line := range strings.Split(string(refStatusByte), "\n") {
+		if len(line) == 0 {
+			continue
+		}
+		items := strings.Split(line, ":")
+		// リモートに存在しておらず、かつ現在のブランチでないブランチを選択する
+		if items[1] == "[gone]" && items[0] != currentBranch {
+			noRemoteBranchList = append(noRemoteBranchList, items[0])
+		}
+	}
+	// ブランチの取得に失敗した場合、またはブランチの取得数が0件の場合、終了する
+	if err != nil || len(noRemoteBranchList) == 0 {
+		return
+	}
+	// リモートに存在しない上流を持つローカルブランチを削除する
+	gitSubCmdDeleteLocal := append([]string{"branch", "--delete"}, noRemoteBranchList...)
+	util.GitCommand(global.RootFlag, gitSubCmdDeleteLocal)
 }

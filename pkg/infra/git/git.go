@@ -192,3 +192,8 @@ func Apply(stashcommit string) int {
 	gitSubCmd := []string{"stash", "apply", "--quiet", stashcommit}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func FetchPrune() {
+	gitSubCmd := []string{"fetch", "origin", "--prune"}
+	util.GitCommand(global.RootFlag, gitSubCmd)
+}
