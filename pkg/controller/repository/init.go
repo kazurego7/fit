@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"fit/pkg/infra/git"
+	"github.com/kazurego7/fit/pkg/infra/git"
 
 	"github.com/spf13/cobra"
 )

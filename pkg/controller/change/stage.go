@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"fit/pkg/global"
-	"fit/pkg/infra/git"
-	"fit/pkg/service"
-	"fit/pkg/util"
+	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/infra/git"
+	"github.com/kazurego7/fit/pkg/service"
+	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
 )

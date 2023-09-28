@@ -1,4 +1,4 @@
-module fit
+module github.com/kazurego7/fit
 
 go 1.20
 

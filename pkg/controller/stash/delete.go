@@ -3,8 +3,8 @@ package stash
 import (
 	"errors"
 
-	"fit/pkg/global"
-	"fit/pkg/util"
+	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
 )

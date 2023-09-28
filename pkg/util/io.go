@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/global"
 )
 
 func GitCommand(globalFlag global.GlobalFlag, args []string) int {

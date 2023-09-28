@@ -3,8 +3,8 @@ package branch
 import (
 	"errors"
 
-	"fit/pkg/infra/git"
-	"fit/pkg/service"
+	"github.com/kazurego7/fit/pkg/infra/git"
+	"github.com/kazurego7/fit/pkg/service"
 
 	"github.com/spf13/cobra"
 )

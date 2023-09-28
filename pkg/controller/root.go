@@ -3,15 +3,15 @@ package controller
 import (
 	"os"
 
-	"fit/pkg/controller/branch"
-	"fit/pkg/controller/change"
-	"fit/pkg/controller/commit"
-	"fit/pkg/controller/config"
-	"fit/pkg/controller/conflict"
-	"fit/pkg/controller/repository"
-	"fit/pkg/controller/stash"
-	"fit/pkg/controller/tag"
-	"fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/controller/branch"
+	"github.com/kazurego7/fit/pkg/controller/change"
+	"github.com/kazurego7/fit/pkg/controller/commit"
+	"github.com/kazurego7/fit/pkg/controller/config"
+	"github.com/kazurego7/fit/pkg/controller/conflict"
+	"github.com/kazurego7/fit/pkg/controller/repository"
+	"github.com/kazurego7/fit/pkg/controller/stash"
+	"github.com/kazurego7/fit/pkg/controller/tag"
+	"github.com/kazurego7/fit/pkg/global"
 
 	"github.com/spf13/cobra"
 )

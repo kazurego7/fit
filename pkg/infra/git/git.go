@@ -1,9 +1,10 @@
 package git
 
 import (
-	"fit/pkg/global"
-	"fit/pkg/util"
 	"strings"
+
+	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/util"
 )
 
 func addRoot(pathList ...string) []string {
