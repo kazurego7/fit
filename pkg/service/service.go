@@ -173,3 +173,18 @@ func PruneBranchOfGone() {
 	gitSubCmdDeleteLocal := append([]string{"branch", "--delete"}, noRemoteBranchList...)
 	util.GitCommand(global.RootFlag, gitSubCmdDeleteLocal)
 }
+
+func StageChange(pathspecList []string) {
+	// index にも worktree にもあるファイルは上書き対象となる
+	indexList := git.SearchIndexList("u", pathspecList)
+	overwriteList := git.SearchWorktreeList("", indexList)
+
+	// index への上書きがある場合は、バックアップを行う
+	if len(overwriteList) != 0 {
+		Snap(`"fit change stage" のバックアップ`, pathspecList...)
+		fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
+			`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
+	}
+	gitSubCmd := append([]string{"add"}, pathspecList...)
+	util.GitCommand(global.RootFlag, gitSubCmd)
+}

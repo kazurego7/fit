@@ -1,9 +1,8 @@
 package commit
 
 import (
-	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/infra/git"
 	"github.com/kazurego7/fit/pkg/service"
-	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
 )
@@ -13,7 +12,17 @@ var CreateCmd = &cobra.Command{
 	Short: "インデックスから新しいコミットを作成し、現在のブランチをそのコミットに移動する.",
 	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := append([]string{"commit", "--message"}, args...)
-		util.GitCommand(global.RootFlag, gitSubCmd)
+		if createFlag.all {
+			service.StageChange([]string{":/"})
+		}
+		git.Commit(args[0])
 	},
+}
+
+var createFlag struct {
+	all bool
+}
+
+func init() {
+	CreateCmd.Flags().BoolVarP(&createFlag.all, "all", "a", false, "ワークツリー・インデックスの両方から新しいコミットを作成する.")
 }

@@ -207,3 +207,9 @@ func GetBranchNameListInUpdateOrder() ([]string, error) {
 	}
 	return util.SplitLn(string(out)), err
 }
+
+func Commit(message string) int {
+	// コミット
+	gitSubCmd := []string{"commit", "--message", message}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
