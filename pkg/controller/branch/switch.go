@@ -10,7 +10,7 @@ import (
 
 var SwitchCmd = &cobra.Command{
 	Use:   "switch <branch>",
-	Short: "指定したブランチに移動する.",
+	Short: "指定したブランチに移動し、ワークツリー・インデックスを復元する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"switch", args[0]}

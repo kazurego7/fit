@@ -9,7 +9,7 @@ import (
 
 var SwitchCmd = &cobra.Command{
 	Use:   "switch <commit>",
-	Short: "指定したコミットに読み取り専用で切り替える.",
+	Short: "指定したコミットに読み取り専用で移動し、ワークツリー・インデックスを復元する.",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := append([]string{"switch", "--detach"}, args[0])

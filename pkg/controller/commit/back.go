@@ -10,7 +10,7 @@ import (
 
 var BackCmd = &cobra.Command{
 	Use:   "back",
-	Short: "現在のブランチを1つ前のコミットに移動する.",
+	Short: "ワークツリー・インデックスを復元せずに、1つ前のコミットに移動する.",
 	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		gitSubCmd := []string{"reset", "--soft", "HEAD^"}
