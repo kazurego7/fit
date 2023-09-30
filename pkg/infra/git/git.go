@@ -198,3 +198,12 @@ func FetchPrune() {
 	gitSubCmd := []string{"fetch", "origin", "--prune"}
 	util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func GetBranchNameListInUpdateOrder() ([]string, error) {
+	gitSubCmd := []string{"for-each-ref", "--sort=committerdate", `--format="%(refname:lstrip=-1)"`, "refs/remotes", "refs/heads"}
+	out, _, err := util.GitQuery(global.RootFlag, gitSubCmd)
+	if err != nil {
+		return nil, err
+	}
+	return util.SplitLn(string(out)), err
+}

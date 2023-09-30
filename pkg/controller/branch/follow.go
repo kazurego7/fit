@@ -42,4 +42,11 @@ var FollowCmd = &cobra.Command{
 		service.PruneBranchOfGone()
 		return nil
 	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		branchNameList, err := git.GetBranchNameListInUpdateOrder()
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		return branchNameList, cobra.ShellCompDirectiveNoFileComp
+	},
 }

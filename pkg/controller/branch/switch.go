@@ -2,6 +2,7 @@ package branch
 
 import (
 	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/infra/git"
 	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -16,12 +17,10 @@ var SwitchCmd = &cobra.Command{
 		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		gitSubCmd := []string{"for-each-ref", `--format="%(refname:short)"`, "refs/remotes", "refs/heads"}
-		out, _, err := util.GitQuery(global.RootFlag, gitSubCmd)
+		branchNameList, err := git.GetBranchNameListInUpdateOrder()
 		if err != nil {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		expect := util.SplitLn(string(out))
-		return expect, cobra.ShellCompDirectiveNoFileComp
+		return branchNameList, cobra.ShellCompDirectiveNoFileComp
 	},
 }
