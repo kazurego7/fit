@@ -2,6 +2,7 @@ package commit
 
 import (
 	"github.com/kazurego7/fit/pkg/global"
+	"github.com/kazurego7/fit/pkg/infra/git"
 	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
@@ -13,6 +14,8 @@ var ListCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		if listFlag.details == "" {
+			git.FetchPrune()
+
 			gitSubCmd := []string{
 				"-c",
 				"core.pager=less -FRXS",
