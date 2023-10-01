@@ -213,3 +213,13 @@ func Commit(message string) int {
 	gitSubCmd := []string{"commit", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func DiffIndex(pathspecList []string) int {
+	gitSubCmd := append([]string{"diff", "--staged", "--"}, pathspecList...)
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func DiffWorktree(pathspecList []string) int {
+	gitSubCmd := append([]string{"diff", "--"}, pathspecList...)
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
