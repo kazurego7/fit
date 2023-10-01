@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/kazurego7/fit/pkg/global"
@@ -187,4 +188,32 @@ func StageChange(pathspecList []string) {
 	}
 	gitSubCmd := append([]string{"add"}, pathspecList...)
 	util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func GetUnstagingFileNameList() []string {
+	pathList := append(git.SearchUntrackedFiles([]string{":/"}), git.SearchWorktreeList("u", []string{":/"})...)
+	filenameList := []string{}
+	for _, path := range pathList {
+		filename := filepath.Base(path)
+		filenameList = append(filenameList, filename)
+	}
+	return filenameList
+}
+
+func GetStagingFileNameList() []string {
+	pathList := git.SearchIndexList("", []string{":/"})
+	filenameList := []string{}
+	for _, path := range pathList {
+		filename := filepath.Base(path)
+		filenameList = append(filenameList, filename)
+	}
+	return filenameList
+}
+
+func AddFuzzyParentPath(pathList []string) []string {
+	fuzzyPathList := []string{}
+	for _, path := range pathList {
+		fuzzyPathList = append(fuzzyPathList, filepath.Join("*/", path))
+	}
+	return fuzzyPathList
 }

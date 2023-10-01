@@ -11,28 +11,29 @@ import (
 )
 
 var UnstageCmd = &cobra.Command{
-	Use:   "unstage <pathspec>…",
+	Use:   "unstage <filename>…",
 	Short: "インデックスにステージングされているファイルの変更をワークツリーに戻す.",
 	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), service.CurrentIsNotReadonly()),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		// ファイル名からあいまい検索のパスを作成
+		pathList := service.AddFuzzyParentPath(args)
+
 		// index にも worktree にもあるファイルは上書き対象となる
-		indexList := git.SearchIndexList("", args)
+		indexList := git.SearchIndexList("", pathList)
 		overwriteList := git.SearchWorktreeList("", indexList)
 
 		// worktree への上書きがある場合は、バックアップを行う
 		if len(overwriteList) != 0 {
-			service.Snap(`"fit change unstage" のバックアップ`, args...)
+			service.Snap(`"fit change unstage" のバックアップ`, pathList...)
 			fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 				`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 			exitCode := git.RestoreWorktree(overwriteList)
 			if exitCode != 0 {
 				return errors.New("restore index failed")
 			}
-			git.RestoreIndex(args)
-		} else {
-			git.RestoreIndex(args)
 		}
+		git.RestoreIndex(pathList)
 		return nil
 	},
-	ValidArgs: git.SearchIndexList("", []string{":/"}),
+	ValidArgs: service.GetStagingFileNameList(),
 }
