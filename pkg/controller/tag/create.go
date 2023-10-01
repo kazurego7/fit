@@ -15,6 +15,14 @@ var CreateCmd = &cobra.Command{
 		gitSubCmd := []string{"tag", args[0], createFlag.commit}
 		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		gitSubCmd := []string{"tag", "--list", "--sort=-refname"}
+		output, _, err := util.GitQuery(global.RootFlag, gitSubCmd)
+		if err != nil {
+			return nil, cobra.ShellCompDirectiveNoFileComp
+		}
+		return util.SplitLn(string(output)), cobra.ShellCompDirectiveNoFileComp
+	},
 }
 
 var createFlag struct {
