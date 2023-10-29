@@ -9,7 +9,6 @@ import (
 	"github.com/kazurego7/fit/pkg/controller/config"
 	"github.com/kazurego7/fit/pkg/controller/conflict"
 	"github.com/kazurego7/fit/pkg/controller/repository"
-	"github.com/kazurego7/fit/pkg/controller/stash"
 	"github.com/kazurego7/fit/pkg/controller/tag"
 	"github.com/kazurego7/fit/pkg/global"
 
@@ -33,7 +32,6 @@ func init() {
 	RootCmd.AddCommand(commit.CommitCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)
 	RootCmd.AddCommand(branch.BranchCmd)
-	RootCmd.AddCommand(stash.StashCmd)
 	RootCmd.AddCommand(tag.TagCmd)
 	RootCmd.AddCommand(repository.RepositoryCmd)
 	RootCmd.AddCommand(config.ConfigCmd)
