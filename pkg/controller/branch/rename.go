@@ -13,7 +13,17 @@ var RenameCmd = &cobra.Command{
 	Short: "現在のブランチの名前を変更する.",
 	Args:  cobra.MatchAll(cobra.ExactArgs(1), service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
-		gitSubCmd := []string{"branch", "--move", args[0]}
-		util.GitCommand(global.RootFlag, gitSubCmd)
+		{
+			gitSubCmd := []string{"branch", "--move", args[0]}
+			exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
+			if exitCode != 0 {
+				return
+			}
+		}
+		{
+			gitSubCmd := []string{"branch", "--unset-upstream"}
+			util.GitCommand(global.RootFlag, gitSubCmd)
+		}
+
 	},
 }
