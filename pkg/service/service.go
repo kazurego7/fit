@@ -217,3 +217,24 @@ func AddFuzzyParentPath(pathList []string) []string {
 	}
 	return fuzzyPathList
 }
+
+func SwitchBranchAfterWIP(branch string) {
+
+	const WIP_MESSAGE = "[WIP]"
+
+	existsChanges := git.ExistsIndexDiff([]string{":/"}) || git.ExistsUntrackedFiles([]string{":/"}) || git.ExistsWorktreeDiff([]string{":/"})
+	if existsChanges {
+		git.Commit(WIP_MESSAGE + " Index")
+		git.AddStageing([]string{":/"})
+		git.Commit(WIP_MESSAGE + " Worktree")
+	}
+
+	git.SwitchBranch(branch)
+
+	if strings.HasPrefix(git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
+		git.ResetHeadWithoutWorktree()
+	}
+	if strings.HasPrefix(git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
+		git.ResetHeadWithoutWorktreeAndIndex()
+	}
+}
