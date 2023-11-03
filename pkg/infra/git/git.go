@@ -223,3 +223,24 @@ func DiffWorktree(pathspecList []string) int {
 	gitSubCmd := append([]string{"diff", "--"}, pathspecList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func GetCommitMessage(gitrevision string) string {
+	gitSubCmd := []string{"log", "--format=%B -n 1", gitrevision}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	return string(out)
+}
+
+func AddStageing(pathspecs []string) int {
+	gitSubCmd := []string{"add", ":/"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func ResetHeadWithoutWorktree() int {
+	gitSubCmd := []string{"reset", "--mixed", "HEAD^"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func ResetHeadWithoutWorktreeAndIndex() int {
+	gitSubCmd := []string{"reset", "--soft", "HEAD^"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
