@@ -210,7 +210,7 @@ func GetBranchNameListInUpdateOrder() ([]string, error) {
 
 func Commit(message string) int {
 	// コミット
-	gitSubCmd := []string{"commit", "--message", message}
+	gitSubCmd := []string{"commit", "--allow-empty", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 

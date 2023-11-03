@@ -16,10 +16,9 @@ var SwitchCmd = &cobra.Command{
 
 		const WIP_MESSAGE = "[WIP]"
 
-		if git.ExistsIndexDiff([]string{":/"}) {
+		existsChanges := git.ExistsIndexDiff([]string{":/"}) || git.ExistsUntrackedFiles([]string{":/"}) || git.ExistsWorktreeDiff([]string{":/"})
+		if existsChanges {
 			git.Commit(WIP_MESSAGE + " Index")
-		}
-		if git.ExistsUntrackedFiles([]string{":/"}) || git.ExistsWorktreeDiff([]string{":/"}) {
 			git.AddStageing([]string{":/"})
 			git.Commit(WIP_MESSAGE + " Worktree")
 		}
