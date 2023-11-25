@@ -15,7 +15,7 @@ var CreateCmd = &cobra.Command{
 		if createFlag.all {
 			service.StageChange([]string{":/"})
 		}
-		git.Commit(args[0])
+		git.CommitWithNoAllowEmpty(args[0])
 		git.ShowStatus()
 	},
 }
