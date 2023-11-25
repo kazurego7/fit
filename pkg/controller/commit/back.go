@@ -13,5 +13,6 @@ var BackCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
 		git.ResetHeadWithoutWorktreeAndIndex()
+		git.ShowStatus()
 	},
 }

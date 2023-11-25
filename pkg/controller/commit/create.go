@@ -16,6 +16,7 @@ var CreateCmd = &cobra.Command{
 			service.StageChange([]string{":/"})
 		}
 		git.Commit(args[0])
+		git.ShowStatus()
 	},
 }
 
