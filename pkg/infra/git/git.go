@@ -244,3 +244,13 @@ func ResetHeadWithoutWorktreeAndIndex() int {
 	gitSubCmd := []string{"reset", "--soft", "HEAD^"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func ShowStatus() int {
+	gitSubCmd := []string{"--paginate", "status", "--short", "--untracked-files=all"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func ShowChangeDetails() int {
+	gitSubCmd := []string{"--paginate", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}

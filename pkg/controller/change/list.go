@@ -1,8 +1,7 @@
 package change
 
 import (
-	"github.com/kazurego7/fit/pkg/global"
-	"github.com/kazurego7/fit/pkg/util"
+	"github.com/kazurego7/fit/pkg/infra/git"
 
 	"github.com/spf13/cobra"
 )
@@ -11,14 +10,12 @@ var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "ワークツリー・インデックスの変更があるファイルを一覧表示する.",
 	Run: func(cmd *cobra.Command, args []string) {
-		var gitSubCmd []string
 		switch {
 		case listFlag.details:
-			gitSubCmd = []string{"--paginate", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
+			git.ShowChangeDetails()
 		default:
-			gitSubCmd = []string{"--paginate", "status", "--short", "--untracked-files=all"}
+			git.ShowStatus()
 		}
-		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }
 
