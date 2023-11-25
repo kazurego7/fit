@@ -36,6 +36,7 @@ var UnstageCmd = &cobra.Command{
 				}
 			}
 			git.RestoreIndex(pathList)
+			git.ShowStatus()
 			return nil
 		}
 	},

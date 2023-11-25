@@ -26,6 +26,7 @@ var StageCmd = &cobra.Command{
 				return
 			}
 			service.StageChange(pathList)
+			git.ShowStatus()
 		}
 	},
 	ValidArgs: service.GetUnstagingFileNameList(),
