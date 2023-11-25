@@ -213,7 +213,13 @@ func GetStagingFileNameList() []string {
 func AddFuzzyParentPath(pathList []string) []string {
 	fuzzyPathList := []string{}
 	for _, path := range pathList {
-		fuzzyPathList = append(fuzzyPathList, filepath.Join("*/", path))
+		newPath := ""
+		if strings.HasPrefix(path, "./") || strings.HasPrefix(path, "../") || strings.HasPrefix(path, ":/") {
+			newPath = path
+		} else {
+			newPath = "*" + path
+		}
+		fuzzyPathList = append(fuzzyPathList, newPath)
 	}
 	return fuzzyPathList
 }
