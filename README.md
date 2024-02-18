@@ -45,7 +45,12 @@ fit --help
 
 「[チュートリアル](./doc/tutorial.md)」も併せてご確認ください。
 
+
 ## ライセンス
 
 fit は MIT ライセンスです。
 [LICENSE](LICENSE)を確認してください。
+
+
+## fit を作るに至るまでの過程
+https://scrapbox.io/facadeOfGit-fit/
