@@ -58,7 +58,7 @@ fit repository init
 ```
 ```bash
 # github のリモートリポジトリとの非同期接続を設定する
-fit repository async [githubのリポジトリのURL]
+fit repository connect [githubのリポジトリのURL]
 ```
 ```bash
 # リモートリポジトリの設定が完了したことを確認する
@@ -182,7 +182,7 @@ fit commit list
 ### 3.7. ブランチをリモートリポジトリへアップロードする
 ```bash
 # リモートリポジトリからブランチ・タグ・コミットをダウンロードし、ローカルリポジトリの状態を最新にする
-fit commit download
+fit branch follow
 
 # ブランチをリモートリポジトリへアップロード
 fit branch upload
@@ -231,6 +231,6 @@ fit commit back
 ```
 ```bash
 # 現在のブランチが一つ前のコミットに戻っていることを確認
-fit commit log
+fit commit list
 ```
 
