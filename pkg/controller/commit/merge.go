@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	service "github.com/kazurego7/fit/pkg/domain"
 	"github.com/kazurego7/fit/pkg/global"
 	"github.com/kazurego7/fit/pkg/infra/git"
-	"github.com/kazurego7/fit/pkg/service"
 	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"

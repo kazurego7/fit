@@ -1,8 +1,8 @@
 package branch
 
 import (
+	service "github.com/kazurego7/fit/pkg/domain"
 	"github.com/kazurego7/fit/pkg/global"
-	"github.com/kazurego7/fit/pkg/service"
 	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
