@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"github.com/kazurego7/fit/pkg/infra/git"
-
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +9,8 @@ var InitCmd = &cobra.Command{
 	Short: "ローカルリポジトリを初期化する.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		git.InitGit()
+		git.InitRepository()
+		git.SetConfigDefaultMainline()
 		if git.ExistsHEADCommit() {
 			return
 		}

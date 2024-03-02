@@ -3,9 +3,6 @@ package branch
 import (
 	"errors"
 
-	service "github.com/kazurego7/fit/pkg/domain"
-	"github.com/kazurego7/fit/pkg/infra/git"
-
 	"github.com/spf13/cobra"
 )
 

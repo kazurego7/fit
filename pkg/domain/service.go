@@ -8,23 +8,32 @@ import (
 	"strings"
 
 	"github.com/kazurego7/fit/pkg/global"
-	"github.com/kazurego7/fit/pkg/infra/git"
 	"github.com/kazurego7/fit/pkg/util"
 
 	"github.com/spf13/cobra"
 )
 
-func Snap(stashMessage string, files ...string) int {
-	exitCode := git.StashPushAll(stashMessage, files)
+type Service struct {
+	git Git
+}
+
+func NewService(git Git) Service {
+	return Service{
+		git: git,
+	}
+}
+
+func (s Service) Snap(stashMessage string, files ...string) int {
+	exitCode := s.git.StashPushAll(stashMessage, files)
 	if exitCode != 0 {
 		return exitCode
 	}
-	return git.StashApply()
+	return s.git.StashApply()
 }
 
-func CurrentIsNotReadonly() cobra.PositionalArgs {
+func (s Service) CurrentIsNotReadonly() cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
-		if git.ShowCurrentBranch() == "" {
+		if s.git.ShowCurrentBranch() == "" {
 			return errors.New("現在、読み込み専用の状態です\n" +
 				"※ \"fit branch switch\" で特定のブランチに切り替えるか、\"fit branch create\" で新しいブランチに切り替えてください")
 		}
@@ -32,7 +41,7 @@ func CurrentIsNotReadonly() cobra.PositionalArgs {
 	}
 }
 
-func ExistsFiles(n int) cobra.PositionalArgs {
+func (s Service) ExistsFiles(n int) cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
 		if err := cobra.ExactArgs(n)(cmd, args); err != nil {
 			return err
@@ -46,9 +55,9 @@ func ExistsFiles(n int) cobra.PositionalArgs {
 	}
 }
 
-func ExistsWorktreeChanges() cobra.PositionalArgs {
+func (s Service) ExistsWorktreeChanges() cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
-		overwriteList := git.SearchWorktreeList("", args)
+		overwriteList := s.git.SearchWorktreeList("", args)
 		if len(overwriteList) != 0 {
 			return errors.New("復元するファイルに変更があります.\n" +
 				"\"fit change delete\" で変更を削除するか、\"fit change stage\" でステージングを行ってください")
@@ -57,104 +66,104 @@ func ExistsWorktreeChanges() cobra.PositionalArgs {
 	}
 }
 
-func BackupDelete(pathspecs []string) {
-	Snap(`"fit change delete" のバックアップ`, pathspecs...)
+func (s Service) BackupDelete(pathspecs []string) {
+	s.Snap(`"fit change delete" のバックアップ`, pathspecs...)
 	fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 		`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 }
 
-func DeleteWorktree(pathspecs []string) {
-	unergedList := git.SearchWorktreeList("U", pathspecs)
+func (s Service) DeleteWorktree(pathspecs []string) {
+	unergedList := s.git.SearchWorktreeList("U", pathspecs)
 	for i := range unergedList {
 		unergedList[i] = ":!" + unergedList[i]
 	}
-	restoreList := git.SearchWorktreeList("", append(unergedList, pathspecs...))
+	restoreList := s.git.SearchWorktreeList("", append(unergedList, pathspecs...))
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList)
+		exitCode := s.git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	addedList := git.SearchWorktreeList("A", pathspecs)
+	addedList := s.git.SearchWorktreeList("A", pathspecs)
 	if len(addedList) != 0 {
-		exitCode := git.RemoveIndex(addedList)
+		exitCode := s.git.RemoveIndex(addedList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	git.Clean(pathspecs)
+	s.git.Clean(pathspecs)
 }
 
-func DeleteIndex(pathspecs []string) {
-	indexList := git.SearchIndexList("", pathspecs)
-	worktreeList := git.SearchWorktreeList("", pathspecs)
+func (s Service) DeleteIndex(pathspecs []string) {
+	indexList := s.git.SearchIndexList("", pathspecs)
+	worktreeList := s.git.SearchWorktreeList("", pathspecs)
 	indexOnlyList := util.Difference(indexList, worktreeList)
-	restoreList := git.SearchIndexList("a", indexOnlyList)
-	cleanList := git.SearchIndexList("A", indexOnlyList)
+	restoreList := s.git.SearchIndexList("a", indexOnlyList)
+	cleanList := s.git.SearchIndexList("A", indexOnlyList)
 	if len(indexList) != 0 {
-		exitCode := git.RestoreIndex(indexList)
+		exitCode := s.git.RestoreIndex(indexList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList)
+		exitCode := s.git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	if len(cleanList) != 0 {
-		exitCode := git.Clean(cleanList)
+		exitCode := s.git.Clean(cleanList)
 		if exitCode != 0 {
 			return
 		}
 	}
 }
 
-func DeleteAll(pathspecs []string) {
-	indexList := git.SearchIndexList("", pathspecs)
+func (s Service) DeleteAll(pathspecs []string) {
+	indexList := s.git.SearchIndexList("", pathspecs)
 	if len(indexList) != 0 {
-		exitCode := git.RestoreIndex(indexList)
+		exitCode := s.git.RestoreIndex(indexList)
 		if exitCode != 0 {
 			return
 		}
 	}
 	addedList :=
-		git.SearchWorktreeList("A", pathspecs)
+		s.git.SearchWorktreeList("A", pathspecs)
 	if len(addedList) != 0 {
-		exitCode := git.RemoveIndex(addedList)
+		exitCode := s.git.RemoveIndex(addedList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	restoreList := git.SearchWorktreeList("a", pathspecs)
+	restoreList := s.git.SearchWorktreeList("a", pathspecs)
 	if len(restoreList) != 0 {
-		exitCode := git.RestoreWorktree(restoreList)
+		exitCode := s.git.RestoreWorktree(restoreList)
 		if exitCode != 0 {
 			return
 		}
 	}
-	exitCode := git.Clean(pathspecs)
+	exitCode := s.git.Clean(pathspecs)
 	if exitCode != 0 {
 		return
 	}
 }
 
-func CheckConflictResolved(pathspecs []string) error {
-	isConflictResolved := git.IsConflictResolved(pathspecs)
+func (s Service) CheckConflictResolved(pathspecs []string) error {
+	isConflictResolved := s.git.IsConflictResolved(pathspecs)
 	if isConflictResolved {
-		unmergedList := git.SearchWorktreeList("U", pathspecs)
+		unmergedList := s.git.SearchWorktreeList("U", pathspecs)
 		errorMessage := "コンフリクトマーカーが残っています. コンフリクトマーカーを取り除いてください\n" + strings.Join(unmergedList, "\n")
 		return errors.New(errorMessage)
 	}
 	return nil
 }
 
-func PruneBranchOfGone() {
+func (s Service) PruneBranchOfGone() {
 	// リモートに存在しない上流を持つローカルブランチを取得する
 	gitSubCmdGetRefStatus := []string{"for-each-ref", "--format", "%(refname:lstrip=-1):%(upstream:track)"}
 	refStatusByte, _, err := util.GitQuery(global.RootFlag, gitSubCmdGetRefStatus)
-	currentBranch := git.ShowCurrentBranch()
+	currentBranch := s.git.ShowCurrentBranch()
 	noRemoteBranchList := []string{}
 	for _, line := range strings.Split(string(refStatusByte), "\n") {
 		if len(line) == 0 {
@@ -175,14 +184,14 @@ func PruneBranchOfGone() {
 	util.GitCommand(global.RootFlag, gitSubCmdDeleteLocal)
 }
 
-func StageChange(pathspecList []string) {
+func (s Service) StageChange(pathspecList []string) {
 	// index にも worktree にもあるファイルは上書き対象となる
-	indexList := git.SearchIndexList("u", pathspecList)
-	overwriteList := git.SearchWorktreeList("", indexList)
+	indexList := s.git.SearchIndexList("u", pathspecList)
+	overwriteList := s.git.SearchWorktreeList("", indexList)
 
 	// index への上書きがある場合は、バックアップを行う
 	if len(overwriteList) != 0 {
-		Snap(`"fit change stage" のバックアップ`, pathspecList...)
+		s.Snap(`"fit change stage" のバックアップ`, pathspecList...)
 		fmt.Println("現在のファイルの変更をスタッシュにバックアップしました.\n" +
 			`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 	}
@@ -190,8 +199,8 @@ func StageChange(pathspecList []string) {
 	util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func GetUnstagingFileNameList() []string {
-	pathList := append(git.SearchUntrackedFiles([]string{":/"}), git.SearchWorktreeList("u", []string{":/"})...)
+func (s Service) GetUnstagingFileNameList() []string {
+	pathList := append(s.git.SearchUntrackedFiles([]string{":/"}), s.git.SearchWorktreeList("u", []string{":/"})...)
 	filenameList := []string{}
 	for _, path := range pathList {
 		filename := filepath.Base(path)
@@ -200,8 +209,8 @@ func GetUnstagingFileNameList() []string {
 	return filenameList
 }
 
-func GetStagingFileNameList() []string {
-	pathList := git.SearchIndexList("", []string{":/"})
+func (s Service) GetStagingFileNameList() []string {
+	pathList := s.git.SearchIndexList("", []string{":/"})
 	filenameList := []string{}
 	for _, path := range pathList {
 		filename := filepath.Base(path)
@@ -210,7 +219,7 @@ func GetStagingFileNameList() []string {
 	return filenameList
 }
 
-func AddFuzzyParentPath(pathList []string) []string {
+func (s Service) AddFuzzyParentPath(pathList []string) []string {
 	fuzzyPathList := []string{}
 	for _, path := range pathList {
 		newPath := ""
@@ -224,23 +233,23 @@ func AddFuzzyParentPath(pathList []string) []string {
 	return fuzzyPathList
 }
 
-func SwitchBranchAfterWIP(branch string) {
+func (s Service) SwitchBranchAfterWIP(branch string) {
 
 	const WIP_MESSAGE = "[WIP]"
 
-	existsChanges := git.ExistsIndexDiff([]string{":/"}) || git.ExistsUntrackedFiles([]string{":/"}) || git.ExistsWorktreeDiff([]string{":/"})
+	existsChanges := s.git.ExistsIndexDiff([]string{":/"}) || s.git.ExistsUntrackedFiles([]string{":/"}) || s.git.ExistsWorktreeDiff([]string{":/"})
 	if existsChanges {
-		git.CommitWithAllowEmpty(WIP_MESSAGE + " Index")
-		git.AddStageing([]string{":/"})
-		git.CommitWithAllowEmpty(WIP_MESSAGE + " Worktree")
+		s.git.CommitWithAllowEmpty(WIP_MESSAGE + " Index")
+		s.git.AddStageing([]string{":/"})
+		s.git.CommitWithAllowEmpty(WIP_MESSAGE + " Worktree")
 	}
 
-	git.SwitchBranch(branch)
+	s.git.SwitchBranch(branch)
 
-	if strings.HasPrefix(git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
-		git.ResetHeadWithoutWorktree()
+	if strings.HasPrefix(s.git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
+		s.git.ResetHeadWithoutWorktree()
 	}
-	if strings.HasPrefix(git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
-		git.ResetHeadWithoutWorktreeAndIndex()
+	if strings.HasPrefix(s.git.GetCommitMessage("HEAD"), WIP_MESSAGE) {
+		s.git.ResetHeadWithoutWorktreeAndIndex()
 	}
 }

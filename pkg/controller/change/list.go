@@ -1,8 +1,6 @@
 package change
 
 import (
-	"github.com/kazurego7/fit/pkg/infra/git"
-
 	"github.com/spf13/cobra"
 )
 

@@ -1,13 +1,17 @@
-package git
+package gitImpl
 
 import (
 	"strings"
 
+	"github.com/kazurego7/fit/pkg/domain"
 	"github.com/kazurego7/fit/pkg/global"
 	"github.com/kazurego7/fit/pkg/util"
 )
 
-func addRoot(pathList ...string) []string {
+type Git struct {
+}
+
+func (g Git) addRoot(pathList ...string) []string {
 
 	for i, path := range pathList {
 		pathList[i] = ":/" + path
@@ -15,104 +19,104 @@ func addRoot(pathList ...string) []string {
 	return pathList
 }
 
-func SearchUntrackedFiles(pathspecs []string) []string {
+func (g Git) SearchUntrackedFiles(pathspecs []string) []string {
 	if len(pathspecs) == 0 {
 		return []string{}
 	}
 	gitSubCmd := append([]string{"ls-files", "--others", "--exclude-standard", "--full-name", "--"}, pathspecs...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	list := util.SplitLn(string(out))
-	return addRoot(list...)
+	return g.addRoot(list...)
 }
 
-func SearchIndexList(diffFilter string, pathspecs []string) []string {
+func (g Git) SearchIndexList(diffFilter string, pathspecs []string) []string {
 	if len(pathspecs) == 0 {
 		return []string{}
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--staged", "--no-renames", "--diff-filter=" + diffFilter, "--"}, pathspecs...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	list := util.SplitLn(string(out))
-	return addRoot(list...)
+	return g.addRoot(list...)
 }
 
-func SearchWorktreeList(diffFilter string, pathspecs []string) []string {
+func (g Git) SearchWorktreeList(diffFilter string, pathspecs []string) []string {
 	if len(pathspecs) == 0 {
 		return []string{}
 	}
 	gitSubCmd := append([]string{"diff", "--name-only", "--no-renames", "--diff-filter=" + diffFilter, "--"}, pathspecs...)
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	list := util.SplitLn(string(out))
-	return addRoot(list...)
+	return g.addRoot(list...)
 }
 
-func ExistsUntrackedFiles(pathspecs []string) bool {
-	list := SearchUntrackedFiles(pathspecs)
+func (g Git) ExistsUntrackedFiles(pathspecs []string) bool {
+	list := g.SearchUntrackedFiles(pathspecs)
 	return len(list) != 0
 }
 
-func ExistsWorktreeDiff(pathspecs []string) bool {
-	list := SearchWorktreeList("", pathspecs)
+func (g Git) ExistsWorktreeDiff(pathspecs []string) bool {
+	list := g.SearchWorktreeList("", pathspecs)
 	return len(list) != 0
 }
 
-func ExistsIndexDiff(pathspecs []string) bool {
-	list := SearchIndexList("", pathspecs)
+func (g Git) ExistsIndexDiff(pathspecs []string) bool {
+	list := g.SearchIndexList("", pathspecs)
 	return len(list) != 0
 }
 
-func GetHeadShortCommitId() string {
+func (g Git) GetHeadShortCommitId() string {
 	gitSubCmd := []string{"rev-parse", "--short", "HEAD"}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return strings.Trim(string(out), "\n")
 }
 
-func StashPushAll(stashMessage string, files []string) int {
+func (g Git) StashPushAll(stashMessage string, files []string) int {
 	gitSubCmd := append([]string{"stash", "push", "--include-untracked", "--"}, files...)
 	if stashMessage != "" {
-		commitId := GetHeadShortCommitId()
+		commitId := g.GetHeadShortCommitId()
 		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
 	}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
 }
 
-func StashPushOnlyWorktree(stashMessage string) int {
+func (g Git) StashPushOnlyWorktree(stashMessage string) int {
 	gitSubCmd := []string{"stash", "push", "--include-untracked", "--keep-index"}
 	if stashMessage != "" {
-		commitId := GetHeadShortCommitId()
+		commitId := g.GetHeadShortCommitId()
 		gitSubCmd = append(gitSubCmd, "--message", commitId+" "+stashMessage)
 	}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
 }
 
-func StashApply() int {
+func (g Git) StashApply() int {
 	gitSubCmd := []string{"stash", "apply", "--index", "--quiet"}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
 }
 
-func ShowCurrentBranch() string {
+func (g Git) ShowCurrentBranch() string {
 	gitSubCmd := []string{"branch", "--show-current"}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return strings.Trim(string(out), "\n")
 }
 
-func ExistsUpstreamFor(branchName string) bool {
+func (g Git) ExistsUpstreamFor(branchName string) bool {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", branchName + `@{u}`}
 	_, exitCode, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return exitCode == 0
 }
 
-func GetBranchName(refspec string) string {
+func (g Git) GetBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return strings.Trim(string(out), "\n")
 }
 
-func PullFor(branch string) int {
+func (g Git) PullFor(branch string) int {
 	// pull したいブランチにチェックアウトしているか、そうでないかで処理を分岐
-	currentBranch := GetBranchName("HEAD")
+	currentBranch := g.GetBranchName("HEAD")
 	var gitSubCmd []string
 	if currentBranch == branch {
 		gitSubCmd = []string{"pull", "origin", currentBranch + ":" + currentBranch, "--ff-only", "--prune"}
@@ -123,39 +127,39 @@ func PullFor(branch string) int {
 	return exitCode
 }
 
-func SetUpstream(branch string) int {
+func (g Git) SetUpstream(branch string) int {
 	gitSubCmd := []string{"branch", branch, "--set-upstream-to=origin/" + branch}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
 }
 
-func SwitchBranch(branch string) int {
+func (g Git) SwitchBranch(branch string) int {
 	gitSubCmd := []string{"switch", branch}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
 }
 
-func RemoveIndex(filenameList []string) int {
+func (g Git) RemoveIndex(filenameList []string) int {
 	gitSubCmd := append([]string{"rm", "--cache", "--"}, filenameList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func RestoreWorktree(filenameList []string) int {
+func (g Git) RestoreWorktree(filenameList []string) int {
 	gitSubCmd := append([]string{"restore", "--"}, filenameList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func RestoreIndex(filenameList []string) int {
+func (g Git) RestoreIndex(filenameList []string) int {
 	gitSubCmd := append([]string{"restore", "--staged", "--"}, filenameList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func Clean(filenameList []string) int {
+func (g Git) Clean(filenameList []string) int {
 	gitSubCmd := append([]string{"clean", "--force", "--"}, filenameList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func IsConflictResolved(pathspecs []string) bool {
+func (g Git) IsConflictResolved(pathspecs []string) bool {
 	gitSubCmd := append(
 		[]string{
 			"-c",
@@ -168,38 +172,38 @@ func IsConflictResolved(pathspecs []string) bool {
 	return string(out) != ""
 }
 
-func ExistsHEADCommit() bool {
+func (g Git) ExistsHEADCommit() bool {
 	gitSubCmd := []string{"rev-parse", "HEAD"}
 	_, exitCode, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return exitCode == 0
 }
 
-func InitGit() {
+func (g Git) InitRepository() {
 	gitSubCmd := []string{"init"}
 	util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func FirstCommit() {
+func (g Git) FirstCommit() {
 	gitSubCmd := []string{"commit", "--allow-empty", "-m", "first commit"}
 	util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func ApplyKeepIndex(stashcommit string) int {
+func (g Git) ApplyKeepIndex(stashcommit string) int {
 	gitSubCmd := []string{"stash", "apply", "--quiet", "--index", stashcommit}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func Apply(stashcommit string) int {
+func (g Git) Apply(stashcommit string) int {
 	gitSubCmd := []string{"stash", "apply", "--quiet", stashcommit}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func FetchPrune() {
+func (g Git) FetchPrune() {
 	gitSubCmd := []string{"fetch", "origin", "--prune"}
 	util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func GetBranchNameListInUpdateOrder() ([]string, error) {
+func (g Git) GetBranchNameListInUpdateOrder() ([]string, error) {
 	gitSubCmd := []string{"for-each-ref", "--sort=committerdate", `--format="%(refname:lstrip=-1)"`, "refs/remotes", "refs/heads"}
 	out, _, err := util.GitQuery(global.RootFlag, gitSubCmd)
 	if err != nil {
@@ -208,59 +212,81 @@ func GetBranchNameListInUpdateOrder() ([]string, error) {
 	return util.SplitLn(string(out)), err
 }
 
-func CommitWithAllowEmpty(message string) int {
+func (g Git) CommitWithAllowEmpty(message string) int {
 	// コミット
 	gitSubCmd := []string{"commit", "--allow-empty", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func CommitWithMessage(message string) int {
+func (g Git) CommitWithMessage(message string) int {
 	gitSubCmd := []string{"commit", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func CommitWithOpenEditor() int {
+func (g Git) CommitWithOpenEditor() int {
 	gitSubCmd := []string{"commit", "--edit"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func DiffIndex(pathspecList []string) int {
+func (g Git) DiffIndex(pathspecList []string) int {
 	gitSubCmd := append([]string{"diff", "--staged", "--"}, pathspecList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func DiffWorktree(pathspecList []string) int {
+func (g Git) DiffWorktree(pathspecList []string) int {
 	gitSubCmd := append([]string{"diff", "--"}, pathspecList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func GetCommitMessage(gitrevision string) string {
+func (g Git) GetCommitMessage(gitrevision string) string {
 	gitSubCmd := []string{"log", "--format=%B -n 1", gitrevision}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return string(out)
 }
 
-func AddStageing(pathspecs []string) int {
+func (g Git) AddStageing(pathspecs []string) int {
 	gitSubCmd := []string{"add", ":/"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func ResetHeadWithoutWorktree() int {
+func (g Git) ResetHeadWithoutWorktree() int {
 	gitSubCmd := []string{"reset", "--mixed", "HEAD^"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func ResetHeadWithoutWorktreeAndIndex() int {
+func (g Git) ResetHeadWithoutWorktreeAndIndex() int {
 	gitSubCmd := []string{"reset", "--soft", "HEAD^"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func ShowStatus() int {
+func (g Git) ShowStatus() int {
 	gitSubCmd := []string{"--paginate", "status", "--short", "--untracked-files=all"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func ShowChangeDetails() int {
+func (g Git) ShowChangeDetails() int {
 	gitSubCmd := []string{"--paginate", "-c", "status.relativePaths=false", "status", "--verbose", "--verbose", "--untracked-files=all"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func (g Git) SetConfigDefaultMainline() int {
+	gitSubCmd := []string{"config", "fit.mainline", "main"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
+func (g Git) GetFitConfigValue(key string) string {
+	gitSubCmd := []string{"config", "--get", key}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	return string(out)
+}
+
+func (g Git) GetFitConfig(config domain.FitConfig) string {
+	gitSubCmd := []string{"config", "--get", config.GetName()}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	return string(out)
+}
+
+func (g Git) SetFitConfig(config domain.FitConfig) int {
+	gitSubCmd := []string{"config", config.GetName(), config.GetValue()}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
