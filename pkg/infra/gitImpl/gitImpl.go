@@ -284,3 +284,8 @@ func (g Git) SetFitConfig(config domain.FitConfig) int {
 	gitSubCmd := []string{"config", config.GetName(), config.GetValue()}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
+
+func (g Git) RebaseToMainline(branch string) int {
+	gitSubCmd := []string{"rebase", branch}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}

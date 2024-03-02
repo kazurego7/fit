@@ -32,6 +32,7 @@ type Git interface {
 	CommitWithAllowEmpty(message string) int
 	CommitWithMessage(message string) int
 	CommitWithOpenEditor() int
+	RebaseToMainline(branch string) int
 	DiffIndex(pathspecList []string) int
 	DiffWorktree(pathspecList []string) int
 	GetCommitMessage(gitrevision string) string

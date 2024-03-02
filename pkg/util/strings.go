@@ -27,3 +27,7 @@ func Difference(a, b []string) (diff []string) {
 	}
 	return
 }
+
+func TrimEOL(str string) string {
+	return strings.Trim(str, "\n")
+}
