@@ -41,7 +41,6 @@ type Git interface {
 	ShowStatus() int
 	ShowChangeDetails() int
 	SetConfigDefaultMainline() int
-	GetFitConfigValue(key string) string
-	GetFitConfig(config FitConfig) string
+	GetFitConfig(name string) string
 	SetFitConfig(config FitConfig) int
 }

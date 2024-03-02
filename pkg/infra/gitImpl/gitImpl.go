@@ -274,16 +274,10 @@ func (g Git) SetConfigDefaultMainline() int {
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func (g Git) GetFitConfigValue(key string) string {
-	gitSubCmd := []string{"config", "--get", key}
+func (g Git) GetFitConfig(name string) string {
+	gitSubCmd := []string{"config", "--get", name}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
-	return string(out)
-}
-
-func (g Git) GetFitConfig(config domain.FitConfig) string {
-	gitSubCmd := []string{"config", "--get", config.GetName()}
-	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
-	return string(out)
+	return util.TrimEOL(string(out))
 }
 
 func (g Git) SetFitConfig(config domain.FitConfig) int {
