@@ -10,12 +10,17 @@ import (
 var CreateCmd = &cobra.Command{
 	Use:   "create <message>",
 	Short: "インデックスから新しいコミットを作成し、現在のブランチをそのコミットに移動する.",
-	Args:  cobra.MatchAll(cobra.MinimumNArgs(1), service.CurrentIsNotReadonly()),
+	Args:  service.CurrentIsNotReadonly(),
 	Run: func(cmd *cobra.Command, args []string) {
 		if createFlag.all {
 			service.StageChange([]string{":/"})
 		}
-		git.CommitWithNoAllowEmpty(args[0])
+
+		if len(args) == 0 {
+			git.CommitWithOpenEditor()
+		} else {
+			git.CommitWithNoAllowEmpty(args[0])
+		}
 		git.ShowStatus()
 	},
 }

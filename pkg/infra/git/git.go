@@ -219,6 +219,11 @@ func CommitWithNoAllowEmpty(message string) int {
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
+func CommitWithOpenEditor() int {
+	gitSubCmd := []string{"commit", "--edit"}
+	return util.GitCommand(global.RootFlag, gitSubCmd)
+}
+
 func DiffIndex(pathspecList []string) int {
 	gitSubCmd := append([]string{"diff", "--staged", "--"}, pathspecList...)
 	return util.GitCommand(global.RootFlag, gitSubCmd)
