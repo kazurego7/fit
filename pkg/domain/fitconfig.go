@@ -1,19 +1,30 @@
 package domain
 
-// 公開されたコンフィグ設定
-var (
-	FitConfigConstant = fitConfigConstant{mainlineType: "fit.mainline", mainleieDefaultValue: "main"}
+import (
+	"errors"
+	"slices"
 )
 
-type fitConfigConstant struct {
-	mainlineType         string
-	mainleieDefaultValue string
+type FitConfig struct {
+	name  string
+	value string
 }
 
-func (config fitConfigConstant) MainlineType() string {
-	return config.mainlineType
+func (config FitConfig) GetName() string {
+	return config.name
 }
 
-func (config fitConfigConstant) MainlineDefaultValue() string {
-	return config.mainlineType
+func (config FitConfig) GetValue() string {
+	return config.value
+}
+
+func New(name string, value string) (*FitConfig, error) {
+	constNames := []string{
+		FitConfigConstant.mainlineType,
+	}
+
+	if !slices.Contains(constNames, name) {
+		return nil, errors.New("invalid param")
+	}
+	return &FitConfig{name: name, value: value}, nil
 }
