@@ -230,9 +230,9 @@ func SwitchBranchAfterWIP(branch string) {
 
 	existsChanges := git.ExistsIndexDiff([]string{":/"}) || git.ExistsUntrackedFiles([]string{":/"}) || git.ExistsWorktreeDiff([]string{":/"})
 	if existsChanges {
-		git.Commit(WIP_MESSAGE + " Index")
+		git.CommitWithAllowEmpty(WIP_MESSAGE + " Index")
 		git.AddStageing([]string{":/"})
-		git.Commit(WIP_MESSAGE + " Worktree")
+		git.CommitWithAllowEmpty(WIP_MESSAGE + " Worktree")
 	}
 
 	git.SwitchBranch(branch)

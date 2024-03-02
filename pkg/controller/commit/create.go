@@ -19,7 +19,7 @@ var CreateCmd = &cobra.Command{
 		if len(args) == 0 {
 			git.CommitWithOpenEditor()
 		} else {
-			git.CommitWithNoAllowEmpty(args[0])
+			git.CommitWithMessage(args[0])
 		}
 		git.ShowStatus()
 	},

@@ -208,13 +208,13 @@ func GetBranchNameListInUpdateOrder() ([]string, error) {
 	return util.SplitLn(string(out)), err
 }
 
-func Commit(message string) int {
+func CommitWithAllowEmpty(message string) int {
 	// コミット
 	gitSubCmd := []string{"commit", "--allow-empty", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func CommitWithNoAllowEmpty(message string) int {
+func CommitWithMessage(message string) int {
 	gitSubCmd := []string{"commit", "--message", message}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
