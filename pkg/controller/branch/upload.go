@@ -1,9 +1,6 @@
 package branch
 
 import (
-	"github.com/kazurego7/fit/pkg/global"
-	"github.com/kazurego7/fit/pkg/util"
-
 	"github.com/spf13/cobra"
 )
 
@@ -19,13 +16,12 @@ var UploadCmd = &cobra.Command{
 		} else {
 			branchName = "heads/" + args[0]
 		}
-		var gitSubCmd []string
+		// upstream が設定されていない場合は、upstream を設定
 		if !git.ExistsUpstreamFor(branchName) {
-			// すでに upstream が設定されている場合は、upstream を設定しない
-			gitSubCmd = []string{"push", "origin", branchName, "--prune", "--set-upstream"}
+			git.SetUpstream(branchName)
+			git.PushFor(branchName)
 		} else {
-			gitSubCmd = []string{"push", "origin", branchName, "--prune"}
+			git.PushFor(branchName)
 		}
-		util.GitCommand(global.RootFlag, gitSubCmd)
 	},
 }

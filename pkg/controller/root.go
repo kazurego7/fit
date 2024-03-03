@@ -8,6 +8,7 @@ import (
 	"github.com/kazurego7/fit/pkg/controller/commit"
 	"github.com/kazurego7/fit/pkg/controller/config"
 	"github.com/kazurego7/fit/pkg/controller/conflict"
+	"github.com/kazurego7/fit/pkg/controller/flow"
 	"github.com/kazurego7/fit/pkg/controller/repository"
 	"github.com/kazurego7/fit/pkg/controller/stash"
 	"github.com/kazurego7/fit/pkg/controller/tag"
@@ -29,6 +30,7 @@ func Execute() {
 }
 
 func init() {
+	RootCmd.AddCommand(flow.FlowCmd)
 	RootCmd.AddCommand(change.ChangeCmd)
 	RootCmd.AddCommand(commit.CommitCmd)
 	RootCmd.AddCommand(conflict.ConflictCmd)

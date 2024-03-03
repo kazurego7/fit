@@ -7,16 +7,22 @@ type Git interface {
 	ExistsUntrackedFiles(pathspecs []string) bool
 	ExistsWorktreeDiff(pathspecs []string) bool
 	ExistsIndexDiff(pathspecs []string) bool
+	ExistsChanges(pathspecs []string) bool
+	GetShortCommitId(gitrevision string) string
 	GetHeadShortCommitId() string
 	StashPushAll(stashMessage string, files []string) int
 	StashPushOnlyWorktree(stashMessage string) int
 	StashApply() int
+	CreateBranch(branch string) int
 	ShowCurrentBranch() string
+	GetUpstreamBranch(localBranch string) string
 	ExistsUpstreamFor(branchName string) bool
 	GetBranchName(refspec string) string
+	PushFor(branch string) int
 	PullFor(branch string) int
 	SetUpstream(branch string) int
 	SwitchBranch(branch string) int
+	HasContainsCommitOnBranch(branch string, commit string) bool
 	RemoveIndex(filenameList []string) int
 	RestoreWorktree(filenameList []string) int
 	RestoreIndex(filenameList []string) int
@@ -27,7 +33,7 @@ type Git interface {
 	FirstCommit()
 	ApplyKeepIndex(stashcommit string) int
 	Apply(stashcommit string) int
-	FetchPrune()
+	FetchPrune() int
 	GetBranchNameListInUpdateOrder() ([]string, error)
 	CommitWithAllowEmpty(message string) int
 	CommitWithMessage(message string) int
@@ -36,7 +42,7 @@ type Git interface {
 	DiffIndex(pathspecList []string) int
 	DiffWorktree(pathspecList []string) int
 	GetCommitMessage(gitrevision string) string
-	AddStageing(pathspecs []string) int
+	StageAll() int
 	ResetHeadWithoutWorktree() int
 	ResetHeadWithoutWorktreeAndIndex() int
 	ShowStatus() int

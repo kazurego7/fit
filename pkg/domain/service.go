@@ -159,6 +159,10 @@ func (s Service) CheckConflictResolved(pathspecs []string) error {
 	return nil
 }
 
+func (s Service) IsBranchOfGone(branch string) bool {
+	return s.git.GetUpstreamBranch(branch) == "[gone]"
+}
+
 func (s Service) PruneBranchOfGone() {
 	// リモートに存在しない上流を持つローカルブランチを取得する
 	gitSubCmdGetRefStatus := []string{"for-each-ref", "--format", "%(refname:lstrip=-1):%(upstream:track)"}
@@ -184,7 +188,7 @@ func (s Service) PruneBranchOfGone() {
 	util.GitCommand(global.RootFlag, gitSubCmdDeleteLocal)
 }
 
-func (s Service) StageChange(pathspecList []string) {
+func (s Service) StageChange(pathspecList []string) int {
 	// index にも worktree にもあるファイルは上書き対象となる
 	indexList := s.git.SearchIndexList("u", pathspecList)
 	overwriteList := s.git.SearchWorktreeList("", indexList)
@@ -196,7 +200,7 @@ func (s Service) StageChange(pathspecList []string) {
 			`ファイルを復元したい場合は "fit stash restore" を利用してください.`)
 	}
 	gitSubCmd := append([]string{"add"}, pathspecList...)
-	util.GitCommand(global.RootFlag, gitSubCmd)
+	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
 func (s Service) GetUnstagingFileNameList() []string {
@@ -240,7 +244,7 @@ func (s Service) SwitchBranchAfterWIP(branch string) {
 	existsChanges := s.git.ExistsIndexDiff([]string{":/"}) || s.git.ExistsUntrackedFiles([]string{":/"}) || s.git.ExistsWorktreeDiff([]string{":/"})
 	if existsChanges {
 		s.git.CommitWithAllowEmpty(WIP_MESSAGE + " Index")
-		s.git.AddStageing([]string{":/"})
+		s.git.StageAll()
 		s.git.CommitWithAllowEmpty(WIP_MESSAGE + " Worktree")
 	}
 
