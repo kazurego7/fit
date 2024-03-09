@@ -5,8 +5,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var RebaseCmd = &cobra.Command{
-	Use:   "rebase",
+var CachupCmd = &cobra.Command{
+	Use:   "catchup",
 	Short: "現在のブランチのコミットをメインラインに移動する.",
 	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {

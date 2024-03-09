@@ -20,5 +20,5 @@ func init() {
 	CommitCmd.AddCommand(BackCmd)
 	CommitCmd.AddCommand(MergeCmd)
 	CommitCmd.AddCommand(SwitchCmd)
-	CommitCmd.AddCommand(RebaseCmd)
+	CommitCmd.AddCommand(CachupCmd)
 }
