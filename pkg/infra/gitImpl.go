@@ -1,4 +1,4 @@
-package gitImpl
+package infra
 
 import (
 	"strings"
@@ -6,7 +6,10 @@ import (
 	"github.com/kazurego7/fit/pkg/domain"
 	"github.com/kazurego7/fit/pkg/global"
 	"github.com/kazurego7/fit/pkg/util"
+	"github.com/samber/lo"
 )
+
+var git = Git{}
 
 type Git struct {
 }
@@ -64,6 +67,16 @@ func (g Git) ExistsIndexDiff(pathspecs []string) bool {
 	return len(list) != 0
 }
 
+func (g Git) ExistsChanges(pathspecs []string) bool {
+	return g.ExistsUntrackedFiles(pathspecs) || g.ExistsWorktreeDiff(pathspecs) || g.ExistsIndexDiff(pathspecs)
+}
+
+func (g Git) GetShortCommitId(gitrevision string) string {
+	gitSubCmd := []string{"rev-parse", "--short", gitrevision}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	return strings.Trim(string(out), "\n")
+}
+
 func (g Git) GetHeadShortCommitId() string {
 	gitSubCmd := []string{"rev-parse", "--short", "HEAD"}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
@@ -96,14 +109,26 @@ func (g Git) StashApply() int {
 	return exitCode
 }
 
+func (g Git) CreateBranch(branch string) int {
+	gitSubCmd := []string{"checkout", "-b", branch}
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
+	return exitCode
+}
+
 func (g Git) ShowCurrentBranch() string {
 	gitSubCmd := []string{"branch", "--show-current"}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return strings.Trim(string(out), "\n")
 }
 
+func (g Git) GetUpstreamBranch(localBranch string) string {
+	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", "origin/" + localBranch}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	return strings.Trim(string(out), "\n")
+}
+
 func (g Git) ExistsUpstreamFor(branchName string) bool {
-	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", branchName + `@{u}`}
+	gitSubCmd := []string{"rev-parse", "--abbrev-ref", "--symbolic-full-name", "origin/" + branchName}
 	_, exitCode, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return exitCode == 0
 }
@@ -112,6 +137,12 @@ func (g Git) GetBranchName(refspec string) string {
 	gitSubCmd := []string{"rev-parse", "--abbrev-ref", refspec}
 	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
 	return strings.Trim(string(out), "\n")
+}
+
+func (g Git) PushFor(branch string) int {
+	gitSubCmd := []string{"push", "origin", branch, "--prune"}
+	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
+	return exitCode
 }
 
 func (g Git) PullFor(branch string) int {
@@ -137,6 +168,13 @@ func (g Git) SwitchBranch(branch string) int {
 	gitSubCmd := []string{"switch", branch}
 	exitCode := util.GitCommand(global.RootFlag, gitSubCmd)
 	return exitCode
+}
+
+func (g Git) HasContainsCommitOnBranch(branch string, commit string) bool {
+	gitSubCmd := []string{"branch", `--format="%(refname:short)`, "--contains", commit}
+	out, _, _ := util.GitQuery(global.RootFlag, gitSubCmd)
+	list := util.SplitLn(string(out))
+	return lo.SomeBy(list, func(s string) bool { return s == branch })
 }
 
 func (g Git) RemoveIndex(filenameList []string) int {
@@ -198,9 +236,9 @@ func (g Git) Apply(stashcommit string) int {
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
-func (g Git) FetchPrune() {
+func (g Git) FetchPrune() int {
 	gitSubCmd := []string{"fetch", "origin", "--prune"}
-	util.GitCommand(global.RootFlag, gitSubCmd)
+	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 
 func (g Git) GetBranchNameListInUpdateOrder() ([]string, error) {
@@ -244,7 +282,7 @@ func (g Git) GetCommitMessage(gitrevision string) string {
 	return string(out)
 }
 
-func (g Git) AddStageing(pathspecs []string) int {
+func (g Git) StageAll() int {
 	gitSubCmd := []string{"add", ":/"}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }

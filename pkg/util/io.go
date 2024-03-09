@@ -45,13 +45,21 @@ func GitQuery(globalFlag global.GlobalFlag, args []string) ([]byte, int, error) 
 	return out, exitCode, err
 }
 
+func InputTextLn() (string, error) {
+	var ans string
+	_, err := fmt.Scanf("%s\n", &ans)
+	if err != nil {
+		return "", err
+	}
+	return ans, nil
+}
+
 func InputYesOrNo(allwaysYes bool) (bool, error) {
 	if allwaysYes {
 		return true, nil
 	}
 	for {
-		var ans string
-		_, err := fmt.Scanf("%s\n", &ans)
+		ans, err := InputTextLn()
 		if err != nil {
 			return false, err
 		}
@@ -61,7 +69,7 @@ func InputYesOrNo(allwaysYes bool) (bool, error) {
 		case "No", "N", "no", "n":
 			return false, nil
 		default:
-			fmt.Print(`put "yes" or "no" : `)
+			fmt.Println(`"yes" か "no" で入力してください`)
 			continue
 		}
 	}

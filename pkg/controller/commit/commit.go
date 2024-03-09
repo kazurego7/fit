@@ -2,7 +2,7 @@ package commit
 
 import (
 	"github.com/kazurego7/fit/pkg/domain"
-	"github.com/kazurego7/fit/pkg/infra/gitImpl"
+	"github.com/kazurego7/fit/pkg/infra"
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +11,7 @@ var CommitCmd = &cobra.Command{
 	Short: "コミットに関する操作.",
 }
 
-var git = gitImpl.Git{}
+var git = infra.Git{}
 var service = domain.NewService(git)
 
 func init() {
