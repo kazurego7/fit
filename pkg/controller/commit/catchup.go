@@ -10,7 +10,7 @@ var CachupCmd = &cobra.Command{
 	Short: "現在のブランチのコミットをメインラインに移動する.",
 	Args:  cobra.MatchAll(cobra.NoArgs, service.CurrentIsNotReadonly()),
 	Run: func(cmd *cobra.Command, args []string) {
-		mainline := git.GetFitConfig(domain.FitConfigConstant.MainlineType())
+		mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
 		git.RebaseToMainline(mainline)
 	},
 }

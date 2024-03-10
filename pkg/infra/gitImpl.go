@@ -318,8 +318,8 @@ func (g Git) GetFitConfig(name string) string {
 	return util.TrimEOL(string(out))
 }
 
-func (g Git) SetFitConfig(config domain.FitConfig) int {
-	gitSubCmd := []string{"config", config.GetName(), config.GetValue()}
+func (g Git) SetFitConfig(config domain.Config) int {
+	gitSubCmd := []string{"config", config.Name(), config.Value()}
 	return util.GitCommand(global.RootFlag, gitSubCmd)
 }
 

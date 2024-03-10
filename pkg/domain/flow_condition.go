@@ -45,7 +45,7 @@ func (f *flowJobCondition) CanUpdateMainline() bool {
 func (s Service) NewFlowJobCondition() FlowJobCondition {
 	currentBranch := s.git.ShowCurrentBranch()
 	currentCommitId := s.git.GetHeadShortCommitId()
-	mainlineName := s.git.GetFitConfig(FitConfigConstant.MainlineType())
+	mainlineName := s.git.GetFitConfig(FitSetting.MainlineType())
 	currentIsOnMainline := s.git.HasContainsCommitOnBranch(currentBranch, mainlineName)
 	remoteIsGone := s.IsBranchOfGone(currentBranch)
 	currentUpstreamBranch := s.git.GetUpstreamBranch(currentBranch)
