@@ -8,7 +8,7 @@ import (
 )
 
 type Workflow interface {
-	FilterExecutable(condition FlowJobCondition) Workflow
+	FilterExecutable() Workflow
 	ToFlowJobList() []FlowJob
 	ExistsFlowJobByNo(no int) bool
 	FlowJobByNo(no int) (FlowJob, error)
@@ -22,11 +22,8 @@ func NewWorkflow(flowJobList []FlowJob) Workflow {
 	return workflow{flowJobListToMap(flowJobList)}
 }
 
-func (w workflow) FilterExecutable(condition FlowJobCondition) Workflow {
+func (w workflow) FilterExecutable() Workflow {
 	flowJobList := w.ToFlowJobList()
-	lo.ForEach(flowJobList, func(flowJob FlowJob, _ int) {
-		flowJob.SetFlowJobCondition(condition)
-	})
 	filiterdFlowJobList := lo.
 		Filter(flowJobList, func(flowJob FlowJob, _ int) bool {
 			return flowJob.CanShow()

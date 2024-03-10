@@ -15,8 +15,7 @@ var NextCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// ワークフローの提案を取得
-		flowCondition := service.NewFlowJobCondition()
-		workflow := infra.NewBuiltinGitlabFlow().FilterExecutable(flowCondition)
+		workflow := infra.NewBuiltinGitlabFlow().FilterExecutable()
 		// 引数のバリデーション
 		jobNo := 1
 		if len(args) != 0 {
@@ -73,8 +72,7 @@ var NextCmd = &cobra.Command{
 		fmt.Print("**************************************************\n\n\n")
 
 		// ワークフローの提案を再取得
-		flowCondition = service.NewFlowJobCondition()
-		workflow = infra.NewBuiltinGitlabFlow().FilterExecutable(flowCondition)
+		workflow = infra.NewBuiltinGitlabFlow().FilterExecutable()
 		showExecutableFlowjob(workflow, false, 1)
 	},
 }

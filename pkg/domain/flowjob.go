@@ -4,7 +4,6 @@ import "errors"
 
 type FlowJob interface {
 	SetNo(int)
-	SetFlowJobCondition(FlowJobCondition)
 	Key() string
 	No() int
 	Description() string
@@ -17,12 +16,11 @@ type flowJob struct {
 	key              string
 	no               int
 	description      string
-	flowJobCondition FlowJobCondition
-	canShowPredicate func(FlowJobCondition) bool
+	canShowPredicate func() bool
 	taskSequence     []FlowTask
 }
 
-func NewFlowJob(key string, description string, canShowPredicate func(flowJobCondition FlowJobCondition) bool, taskSequence []FlowTask) FlowJob {
+func NewFlowJob(key string, description string, canShowPredicate func() bool, taskSequence []FlowTask) FlowJob {
 	return &flowJob{
 		key:              key,
 		description:      description,
@@ -33,10 +31,6 @@ func NewFlowJob(key string, description string, canShowPredicate func(flowJobCon
 
 func (item *flowJob) SetNo(no int) {
 	item.no = no
-}
-
-func (item *flowJob) SetFlowJobCondition(flowJobCondition FlowJobCondition) {
-	item.flowJobCondition = flowJobCondition
 }
 
 func (item flowJob) Key() string {
@@ -55,7 +49,7 @@ func (item flowJob) CanShow() bool {
 	if item.canShowPredicate == nil {
 		return true
 	}
-	return item.canShowPredicate(item.flowJobCondition)
+	return item.canShowPredicate()
 }
 
 func (item flowJob) TaskSequence() []FlowTask {

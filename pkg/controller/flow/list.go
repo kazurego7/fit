@@ -13,8 +13,7 @@ var ListCmd = &cobra.Command{
 	Short: "現在のフローで実行可能なジョブを一覧表示.",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		flowCondition := service.NewFlowJobCondition()
-		workflow := infra.NewBuiltinGitlabFlow().FilterExecutable(flowCondition)
+		workflow := infra.NewBuiltinGitlabFlow().FilterExecutable()
 		showExecutableFlowjob(workflow, listFlag.all, listFlag.details)
 	},
 }
