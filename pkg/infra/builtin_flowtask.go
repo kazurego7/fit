@@ -21,12 +21,12 @@ func NewFlowTaskCreateFeatureBranch() domain.FlowTask {
 			fmt.Println("ブランチ名を入力してください")
 			branchName, err := util.InputTextLn()
 			if err != nil {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
 			if (git.CreateBranch(branchName)) != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -44,9 +44,9 @@ func NewFlowTaskStageingAllChanges() domain.FlowTask {
 		},
 		func() domain.FlowTaskResult {
 			if git.StageAll() != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -61,9 +61,9 @@ func NewFlowTaskCreateCommit() domain.FlowTask {
 		nil,
 		func() domain.FlowTaskResult {
 			if git.CommitWithOpenEditor() != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -80,9 +80,9 @@ func NewFlowTaskRebaseToMainline() domain.FlowTask {
 		func() domain.FlowTaskResult {
 			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
 			if git.RebaseToMainline(mainline) != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -97,9 +97,9 @@ func NewFlowTaskUploadRemote() domain.FlowTask {
 		nil,
 		func() domain.FlowTaskResult {
 			if git.PushFor(git.ShowCurrentBranch()) != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -116,9 +116,9 @@ func NewFlowTaskSwitchMainline() domain.FlowTask {
 		func() domain.FlowTaskResult {
 			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
 			if git.SwitchBranch(mainline) != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)
@@ -135,12 +135,12 @@ func NewFlowTaskUpdateMainline() domain.FlowTask {
 		func() domain.FlowTaskResult {
 			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
 			if git.PullFor(mainline) != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
 			if git.FetchPrune() != 0 {
-				return domain.NewFlowTaskResultFailed()
+				return domain.FlowTaskResultStatus.Failed()
 			}
-			return domain.NewFlowTaskResultCompleted()
+			return domain.FlowTaskResultStatus.Completed()
 		},
 		nil,
 	)

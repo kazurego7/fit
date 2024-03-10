@@ -42,7 +42,7 @@ func (t *flowTask) CanSkip() bool {
 func (t *flowTask) Run() FlowTaskResult {
 	if t.CanSkip() && t.skipPresenter != nil {
 		println(t.skipPresenter())
-		return NewFlowTaskResultSkipped()
+		return FlowTaskResultStatus.Skipped()
 	}
 	result := t.taskRunner()
 	if result.IsFailed() && t.rollbackProcess != nil {
