@@ -12,7 +12,7 @@ func NewFlowTaskCreateFeatureBranch() domain.FlowTask {
 		"flowTask-createFeatureBranch",
 		"フィーチャーブランチを作成する",
 		func() bool {
-			return git.ShowCurrentBranch() != git.GetFitConfig(domain.FitSetting.MainlineType())
+			return git.ShowCurrentBranch() != git.GetConfig(domain.FitConfig().Mainline().Name())
 		},
 		func() string {
 			return "既にフィーチャーブランチが作成されているため、ブランチ作成をスキップします"
@@ -78,7 +78,7 @@ func NewFlowTaskRebaseToMainline() domain.FlowTask {
 		},
 		nil,
 		func() domain.FlowTaskResult {
-			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
+			mainline := git.GetConfig(domain.FitConfig().Mainline().Name())
 			if git.RebaseToMainline(mainline) != 0 {
 				return domain.FlowTaskResultStatus.Failed()
 			}
@@ -114,7 +114,7 @@ func NewFlowTaskSwitchMainline() domain.FlowTask {
 		},
 		nil,
 		func() domain.FlowTaskResult {
-			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
+			mainline := git.GetConfig(domain.FitConfig().Mainline().Name())
 			if git.SwitchBranch(mainline) != 0 {
 				return domain.FlowTaskResultStatus.Failed()
 			}
@@ -133,7 +133,7 @@ func NewFlowTaskUpdateMainline() domain.FlowTask {
 		},
 		nil,
 		func() domain.FlowTaskResult {
-			mainline := git.GetFitConfig(domain.FitSetting.MainlineType())
+			mainline := git.GetConfig(domain.FitConfig().Mainline().Name())
 			if git.PullFor(mainline) != 0 {
 				return domain.FlowTaskResultStatus.Failed()
 			}

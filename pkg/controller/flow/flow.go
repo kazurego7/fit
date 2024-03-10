@@ -13,7 +13,7 @@ var FlowCmd = &cobra.Command{
 	Short: "開発のワークフローに関する操作.",
 }
 
-var git = infra.Git{}
+var git domain.Git = infra.NewGit()
 var service = domain.NewService(git)
 
 func init() {

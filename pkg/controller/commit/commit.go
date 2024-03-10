@@ -11,7 +11,7 @@ var CommitCmd = &cobra.Command{
 	Short: "コミットに関する操作.",
 }
 
-var git = infra.Git{}
+var git domain.Git = infra.NewGit()
 var service = domain.NewService(git)
 
 func init() {

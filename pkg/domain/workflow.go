@@ -8,6 +8,7 @@ import (
 )
 
 type Workflow interface {
+	Name() string
 	FilterExecutable() Workflow
 	ToFlowJobList() []FlowJob
 	ExistsFlowJobByNo(no int) bool
@@ -15,11 +16,19 @@ type Workflow interface {
 }
 
 type workflow struct {
+	name       string
 	flowJobMap map[string]FlowJob
 }
 
-func NewWorkflow(flowJobList []FlowJob) Workflow {
-	return workflow{flowJobListToMap(flowJobList)}
+func NewWorkflow(name string, flowJobList []FlowJob) Workflow {
+	return workflow{
+		name:       name,
+		flowJobMap: flowJobListToMap(flowJobList),
+	}
+}
+
+func (w workflow) Name() string {
+	return w.name
 }
 
 func (w workflow) FilterExecutable() Workflow {
@@ -28,7 +37,10 @@ func (w workflow) FilterExecutable() Workflow {
 		Filter(flowJobList, func(flowJob FlowJob, _ int) bool {
 			return flowJob.CanShow()
 		})
-	return workflow{flowJobListToMap(filiterdFlowJobList)}
+	return workflow{
+		name:       w.name,
+		flowJobMap: flowJobListToMap(filiterdFlowJobList),
+	}
 }
 
 func flowJobListToMap(flowJobList []FlowJob) map[string]FlowJob {
