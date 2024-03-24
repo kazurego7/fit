@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
@@ -74,15 +75,15 @@ func GitQuery(globalFlag global.GlobalFlag, args []string) ([]byte, int, error) 
 }
 
 func InputTextLn() (string, error) {
-	var ans string
-	_, err := fmt.Scanf("%s\n", &ans)
+	reader := bufio.NewReader(os.Stdin)
+	ans, err := reader.ReadString('\n')
 	if err != nil {
 		return "", err
 	}
-	return ans, nil
+	return strings.TrimSpace(ans), nil
 }
 
-func InputYesOrNo(allwaysYes bool) (bool, error) {
+func InputEnterOrNo(allwaysYes bool) (bool, error) {
 	if allwaysYes {
 		return true, nil
 	}
@@ -92,12 +93,12 @@ func InputYesOrNo(allwaysYes bool) (bool, error) {
 			return false, err
 		}
 		switch ans {
-		case "Yes", "Y", "yes", "y":
+		case "":
 			return true, nil
 		case "No", "N", "no", "n":
 			return false, nil
 		default:
-			fmt.Println(`"yes" か "no" で入力してください`)
+			fmt.Println(`Enter キーのみか "No" で入力してください`)
 			continue
 		}
 	}

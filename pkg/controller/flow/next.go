@@ -34,8 +34,8 @@ var NextCmd = &cobra.Command{
 		fmt.Println(flowJobFormat(flowJob))
 		fmt.Print(flowTaskFormat(flowJob))
 		fmt.Println("--------------------------------------------------")
-		fmt.Println("上記のジョブを開始しますか？ (Yes/No)")
-		isJobExecute, err := util.InputYesOrNo(false)
+		fmt.Println("上記のジョブを開始しますか？ (Enter or No)")
+		isJobExecute, err := util.InputEnterOrNo(false)
 		if err != nil || !isJobExecute {
 			fmt.Println("ジョブを中止しました")
 			return
@@ -54,8 +54,8 @@ var NextCmd = &cobra.Command{
 				fmt.Println(flowJobFormat(flowJob))
 				fmt.Print(flowTaskFormat(flowJob))
 				fmt.Println("--------------------------------------------------")
-				fmt.Println("上記のタスクを開始しますか？ (Yes/No)")
-				isTaskExecute, err := util.InputYesOrNo(false)
+				fmt.Println("上記のタスクを開始しますか？ (Enter or No)")
+				isTaskExecute, err := util.InputEnterOrNo(false)
 				if err != nil || !isTaskExecute {
 					fmt.Println("タスクを中止しました")
 					return
