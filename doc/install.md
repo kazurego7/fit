@@ -15,7 +15,7 @@ fit には本体のほかに、オプションで以下の便利機能をイン�
 
 最新のfitをインストールする。
 ```
-go install github.com/kazurego7/fit/fit@latest
+go install github.com/kazurego7/fit/cmd/fit@latest
 ```
 
 ### fit コマンド補完機能のインストール
