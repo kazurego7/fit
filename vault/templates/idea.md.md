@@ -1,5 +1,5 @@
 ---
-id: "{{DATE:YYYYMMDD_HHmmss}}_{{RANDOM:4}}"
+id: "{{DATE:YYYYMMDD_HHmmss}}"
 stage: raw
 created: "{{DATE:YYYY-MM-DD HH:mm}}"
 ---
